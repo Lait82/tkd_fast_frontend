@@ -1,0 +1,23 @@
+{
+    "name": "TKDFast Dev",
+    "build": {
+        "dockerfile": "dev.Dockerfile"
+    },
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            },
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "ms-vscode.vscode-typescript-next"
+            ],
+        }
+    },
+    "forwardPorts": [
+        5173
+    ],
+    "postCreateCommand": "npm install",
+    "remoteUser": "node"
+}

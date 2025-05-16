@@ -14,10 +14,13 @@ import {
   FaLock,
   FaExclamationTriangle,
 } from "react-icons/fa"
+import { ArrowRight } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import "../styles/Auth.css"
+import FormInput from "@/components/forms/FormInput"
+import Button from "@/components/Button"
 
 const rankOptions = [
   { value: "WHITE", label: "White Belt" },
@@ -200,7 +203,17 @@ const Signup = () => {
             {step === 1 && (
               <>
                 <div className="form-row">
-                  <div className="form-group">
+                <FormInput
+                  label="First Name"
+                  name="firstname"
+                  icon={<FaUser />}
+                  value={formData.firstname}
+                  onChange={handleChange}
+                  error={formErrors.firstname}
+                  disabled={loading}
+                  placeholder="Enter your first name"
+                />
+                  {/* <div className="form-group">
                     <label htmlFor="firstname" className="form-label">
                       First Name
                     </label>
@@ -220,7 +233,7 @@ const Signup = () => {
                       />
                     </div>
                     {formErrors.firstname && <div className="form-error">{formErrors.firstname}</div>}
-                  </div>
+                  </div> */}
 
                   <div className="form-group">
                     <label htmlFor="lastname" className="form-label">
@@ -310,9 +323,14 @@ const Signup = () => {
                   {formErrors.dob && <div className="form-error">{formErrors.dob}</div>}
                 </div>
 
-                <button type="button" className="btn-primary w-full" onClick={nextStep} disabled={loading}>
+                <Button type="button"
+                  iconRight={<ArrowRight />}
+                  className="btn-primary w-full font-bold" 
+                  onClick={nextStep} 
+                  disabled={loading}
+                >
                   Next
-                </button>
+                </Button>
               </>
             )}
 

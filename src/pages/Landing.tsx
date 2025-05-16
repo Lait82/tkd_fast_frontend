@@ -14,18 +14,17 @@ const Landing = () => {
         <section className="hero">
           <div className="container hero-container">
             <div className="hero-content">
-              <h1>Simplify Your Taekwondo Tournament Experience</h1>
+              <h1>Organizá. Invitá. Competí.</h1>
               <p>
-                Register, compete, and track your progress all in one place. Join the fastest growing platform for
-                Taekwondo athletes and organizers.
+                La forma más rápida y simple de gestionar torneos de Taekwondo. Registrá usuarios, cargá competidores, y compartí las llaves en tiempo real.
               </p>
               <div className="hero-buttons">
-                <Link to="/signup" className="btn-primary">
-                  Get Started
+                <Link to="/signup" className="btn-base btn-primary">
+                  "Get Started"
                 </Link>
-                <Link to="/tournaments" className="btn-secondary">
+                {/* <Link to="/tournaments" className="btn-secondary">
                   View Tournaments
-                </Link>
+                </Link> */}
               </div>
             </div>
 

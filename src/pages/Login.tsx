@@ -110,7 +110,7 @@ const Login = () => {
               {formErrors.password && <div className="form-error">{formErrors.password}</div>}
             </div>
 
-            <button type="submit" className="btn-primary w-full" disabled={loading}>
+            <button type="submit" className="btn-base btn-primary w-full" disabled={loading}>
               {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>

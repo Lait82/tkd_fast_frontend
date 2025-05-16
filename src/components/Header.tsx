@@ -4,7 +4,9 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { FaBars, FaTimes } from "react-icons/fa"
 import { useAuth } from "../context/AuthContext"
+import {User, LogIn} from "lucide-react"
 import "../styles/Header.css"
+import ButtonLink from "./ButtonLink"
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -19,7 +21,6 @@ const Header = () => {
       <div className="container header-container">
         <Link to="/" className="logo">
           <img src="/logo.png" alt="TKD Fast" className="logo-img" />
-          <span className="logo-text">TKD Fast</span>
         </Link>
 
         <div className="mobile-toggle" onClick={toggleMenu}>
@@ -39,9 +40,9 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/tournaments" className="nav-link" onClick={() => setIsOpen(false)}>
-                Tournaments
-              </Link>
+                <Link to="/tournaments" className="nav-link" onClick={() => setIsOpen(false)}>
+                  Tournaments
+                </Link>
             </li>
             <li className="nav-item">
               <Link to="/contact" className="nav-link" onClick={() => setIsOpen(false)}>
@@ -57,12 +58,25 @@ const Header = () => {
               </button>
             ) : (
               <>
-                <Link to="/login" className="btn-secondary" onClick={() => setIsOpen(false)}>
+                <ButtonLink 
+                  to="/login" 
+                  variant="secondary"
+                  iconLeft={<LogIn size={22} />}
+                  className="btn-base btn-secondary" 
+                  onClick={() => setIsOpen(false)}
+                >
                   Login
-                </Link>
-                <Link to="/signup" className="btn-primary" onClick={() => setIsOpen(false)}>
+                </ButtonLink>
+                <ButtonLink 
+                  to="/signup" 
+                  className="btn-base btn-primary" 
+                  onClick={() => setIsOpen(false)}
+                  iconLeft={<User size={22} />}
+                  >
                   Sign Up
-                </Link>
+                </ButtonLink>
+
+
               </>
             )}
           </div>

@@ -9,7 +9,7 @@ const Footer = () => {
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">
-            <h3>TKD Fast</h3>
+            <img src="/logo.png" alt="TKD Fast" className="logo-img" />
             <p>The premier platform for Taekwondo tournament management and registration.</p>
             <div className="social-icons">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">

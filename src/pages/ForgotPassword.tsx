@@ -88,7 +88,7 @@ const ForgotPassword = () => {
                   {formError && <div className="form-error">{formError}</div>}
                 </div>
 
-                <button type="submit" className="btn-primary w-full" disabled={loading}>
+                <button type="submit" className="btn-base btn-primary w-full" disabled={loading}>
                   {loading ? "Sending..." : "Reset Password"}
                 </button>
               </form>

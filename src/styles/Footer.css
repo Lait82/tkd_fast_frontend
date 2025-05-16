@@ -40,7 +40,7 @@
 }
 
 .social-icons a:hover {
-  background-color: var(--color-warning);
+  background-color: var(--color-yellow);
   color: var(--color-background);
 }
 
@@ -58,7 +58,7 @@
 }
 
 .footer-links a:hover {
-  color: var(--color-warning);
+  color: var(--color-yellow);
 }
 
 .footer-bottom {

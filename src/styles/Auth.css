@@ -1,5 +1,5 @@
 .auth-page {
-  padding-top: 70px; /* Header height */
+  padding-top: calc(130px + 3rem); /* Header height */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -59,7 +59,7 @@
 }
 
 .form-input {
-  padding-left: 2.5rem;
+  padding-left: 2.5rem !important;
 }
 
 .input-error {
@@ -75,7 +75,7 @@
 
 .forgot-password {
   font-size: 0.875rem;
-  color: var(--color-warning);
+  color: var(--color-yellow);
 }
 
 .auth-footer {
@@ -85,7 +85,7 @@
 }
 
 .auth-link {
-  color: var(--color-warning);
+  color: var(--color-yellow);
   font-weight: 500;
 }
 
@@ -141,7 +141,7 @@
 }
 
 .progress-step.active {
-  background-color: var(--color-warning);
+  background-color: var(--color-yellow);
   color: var(--color-background);
 }
 
