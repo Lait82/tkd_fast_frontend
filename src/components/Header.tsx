@@ -1,0 +1,75 @@
+"use client"
+
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { FaBars, FaTimes } from "react-icons/fa"
+import { useAuth } from "../context/AuthContext"
+import "../styles/Header.css"
+
+const Header = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const { isAuthenticated, logout } = useAuth()
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen)
+  }
+
+  return (
+    <header className="header">
+      <div className="container header-container">
+        <Link to="/" className="logo">
+          <img src="/logo.png" alt="TKD Fast" className="logo-img" />
+          <span className="logo-text">TKD Fast</span>
+        </Link>
+
+        <div className="mobile-toggle" onClick={toggleMenu}>
+          {isOpen ? <FaTimes /> : <FaBars />}
+        </div>
+
+        <nav className={`nav ${isOpen ? "nav-open" : ""}`}>
+          <ul className="nav-list">
+            <li className="nav-item">
+              <Link to="/" className="nav-link" onClick={() => setIsOpen(false)}>
+                Home
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/about" className="nav-link" onClick={() => setIsOpen(false)}>
+                About
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/tournaments" className="nav-link" onClick={() => setIsOpen(false)}>
+                Tournaments
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link to="/contact" className="nav-link" onClick={() => setIsOpen(false)}>
+                Contact
+              </Link>
+            </li>
+          </ul>
+
+          <div className="auth-buttons">
+            {isAuthenticated ? (
+              <button className="btn-secondary" onClick={logout}>
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link to="/login" className="btn-secondary" onClick={() => setIsOpen(false)}>
+                  Login
+                </Link>
+                <Link to="/signup" className="btn-primary" onClick={() => setIsOpen(false)}>
+                  Sign Up
+                </Link>
+              </>
+            )}
+          </div>
+        </nav>
+      </div>
+    </header>
+  )
+}
+
+export default Header
