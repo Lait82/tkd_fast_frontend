@@ -4,6 +4,7 @@ import Header from "../components/Header"
 import Footer from "../components/Footer"
 import FeatureCard from "../components/FeatureCard"
 import "../styles/Landing.css"
+import ButtonLink from "@/components/ButtonLink"
 
 const Landing = () => {
   return (
@@ -19,9 +20,9 @@ const Landing = () => {
                 La forma más rápida y simple de gestionar torneos de Taekwondo. Registrá usuarios, cargá competidores, y compartí las llaves en tiempo real.
               </p>
               <div className="hero-buttons">
-                <Link to="/signup" className="btn-base btn-primary">
-                  "Get Started"
-                </Link>
+                <ButtonLink to="/signup" className="font-bold">
+                  Empieza ahora
+                </ButtonLink>
                 {/* <Link to="/tournaments" className="btn-secondary">
                   View Tournaments
                 </Link> */}

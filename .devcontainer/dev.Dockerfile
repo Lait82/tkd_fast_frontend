@@ -1,8 +1,7 @@
 FROM node:22-alpine
 
 # Instalar bash (opcional pero útil para VSCode)
-RUN apk add --no-cache bash
-RUN apk add --no-cache git
+RUN apk add --no-cache bash git
 
 # Crear carpeta de trabajo
 WORKDIR /app

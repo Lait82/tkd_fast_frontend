@@ -14,7 +14,6 @@ import {
   FaLock,
   FaExclamationTriangle,
 } from "react-icons/fa"
-import { ArrowRight } from "lucide-react"
 import { useAuth } from "../context/AuthContext"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
@@ -324,8 +323,7 @@ const Signup = () => {
                 </div>
 
                 <Button type="button"
-                  iconRight={<ArrowRight />}
-                  className="btn-primary w-full font-bold" 
+                  className="btn-primary w-full font-bold justify-center" 
                   onClick={nextStep} 
                   disabled={loading}
                 >
