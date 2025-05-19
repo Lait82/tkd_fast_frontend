@@ -12,7 +12,7 @@
   --color-red: #df5c4c;
   --color-yellow: #e3b041;
   --color-neutrallight: #f1e9e5;
-  --color-warning: #ff8c42;
+  --color-orange: #ff8c42;
 }
 @theme {
   --color-*: initial;
@@ -25,7 +25,7 @@
   --color-red: #df5c4c;
   --color-yellow: #e3b041;
   --color-neutrallight: #f1e9e5;
-  --color-warning: #ff8c42;
+  --color-orange: #ff8c42;
 }
 
 * {
@@ -114,13 +114,13 @@ a:hover {
   color: var(--color-background);
 }
 
-.btn-warning {
+.btn-orange {
   background-color: var(--color-yellow);
   color: var(--color-background);
 }
 
-.btn-warning:hover {
-  background-color: var(--color-warning);
+.btn-orange:hover {
+  background-color: var(--color-orange);
 }
 
 .btn-icon-left,

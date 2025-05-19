@@ -38,7 +38,7 @@
     left: -100px;
     width: 300px;
     height: 300px;
-    background: radial-gradient(circle, var(--color-warning) 0%, transparent 70%);
+    background: radial-gradient(circle, var(--color-orange) 0%, transparent 70%);
     animation: float 15s ease-in-out infinite;
   }
   
@@ -93,7 +93,7 @@
   .cta-content h2 {
     font-size: 3rem;
     margin-bottom: 1.5rem;
-    background: linear-gradient(to right, var(--color-text), var(--color-warning));
+    background: linear-gradient(to right, var(--color-text), var(--color-orange));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -124,7 +124,7 @@
   }
   
   .cta-buttons .btn-primary {
-    background-color: var(--color-warning);
+    background-color: var(--color-orange);
     color: var(--color-background);
     box-shadow: 0 4px 15px rgba(227, 176, 65, 0.3);
   }

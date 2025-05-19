@@ -16,7 +16,7 @@ module.exports = {
           red: "var(--color-red)",
           yellow: "var(--color-yellow)",
           neutrallight: "var(--color-neutrallight)",
-          warning: "var(--color-warning)",
+          orange: "var(--color-orange)",
         }
       }
     },

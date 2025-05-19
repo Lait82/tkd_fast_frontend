@@ -28,7 +28,7 @@ const Landing = () => {
                     loop:true
                   }}
                   getBeforeInit={(instance) => {
-                    instance.type("<span class='text-yellow'>></span> Invitar Maestros").pause(750).delete(8).pause(500).type("Instructores").pause(600).delete(18).pause(460).type("scribir Competidores").pause(950).delete(22).pause(700).type("Armar Llaves.");
+                    instance.type("<span class='text-orange'>></span> Invitar Maestros").pause(750).delete(8).pause(500).type("Instructores").pause(600).delete(18).pause(460).type("scribir Competidores").pause(950).delete(22).pause(700).type("Armar Llaves.");
                 
                     // Remember to return it!
                     return instance;
