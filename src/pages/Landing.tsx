@@ -18,7 +18,7 @@ const Landing = () => {
           <div className="container hero-container">
             <div className="hero-content">
               <h1>
-                Con <span className="logo-font">TKDFast</span> podés:
+                Con <span className="text-logo">TKDFast</span> podés:
               </h1>
                 <TypeIt
                   as={"h1"}
@@ -37,7 +37,7 @@ const Landing = () => {
               </p>
               <div className="hero-buttons">
                 <ButtonLink to="/signup" className="font-bold">
-                  Empieza ahora
+                  Empieza ahora 
                 </ButtonLink>
                 {/* <Link to="/tournaments" className="btn-secondary">
                   View Tournaments
@@ -57,7 +57,7 @@ const Landing = () => {
         <section className="features">
           <div className="container">
             <div className="section-header">
-              <h2>¿Por qué elegir <span className="logo-font">TKDFast</span>?</h2>
+              <h2>¿Por qué elegir <span className="text-logo">TKDFast</span>?</h2>
               <p>Esto recién empieza. Estamos construyendo la herramienta que moderniza la forma de organizar torneos, y vos podés ser parte desde el primer día.
               </p>
             </div>
@@ -91,7 +91,7 @@ const Landing = () => {
           </div>
         </section>
 
-        <section className="testimonials">
+        {/* <section className="testimonials">
           <div className="container">
             <div className="section-header">
               <h2>What Our Users Say</h2>
@@ -132,14 +132,14 @@ const Landing = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         <section className="cta">
           <div className="container">
-            <h2>Ready to Get Started?</h2>
-            <p>Join thousands of athletes and organizers who are already using TKD Fast</p>
-            <ButtonLink to="/signup">
-              Sign Up Now
+            <h2>¿Querés organizar tu torneo con <span className="text-logo">TKDFast</span>?</h2>
+            <p>Si sos organizador, contactanos para crear tu evento. Nosotros te damos acceso, y vos invitás a tus instructores para cargar competidores y gestionar las llaves.</p>
+            <ButtonLink to="mailto:manuexposito82@outlook.com">
+              Contactar
             </ButtonLink>
           </div>
         </section>
