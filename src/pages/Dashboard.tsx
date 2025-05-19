@@ -4,6 +4,7 @@ import { useAuth } from "../context/AuthContext"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import "../styles/Dashboard.css"
+import Button from "@/components/Button"
 
 const Dashboard = () => {
   const { user, logout } = useAuth()
@@ -15,9 +16,9 @@ const Dashboard = () => {
       <main className="dashboard-container">
         <div className="dashboard-header">
           <h1>Welcome, {user?.firstname}!</h1>
-          <button className="btn-secondary" onClick={logout}>
+          <Button className="btn-base btn-secondary" onClick={logout}>
             Logout
-          </button>
+          </Button>
         </div>
 
         <div className="dashboard-content">

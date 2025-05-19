@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom"
-import { FaTrophy, FaUserFriends, FaChartLine, FaMobileAlt } from "react-icons/fa"
+import { FaUserFriends, FaMobileAlt } from "react-icons/fa"
+import {TbTournament } from "react-icons/tb"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import FeatureCard from "../components/FeatureCard"
 import "../styles/Landing.css"
 import ButtonLink from "@/components/ButtonLink"
+import { Zap } from "lucide-react"
 
 const Landing = () => {
   return (
@@ -41,30 +42,35 @@ const Landing = () => {
         <section className="features">
           <div className="container">
             <div className="section-header">
-              <h2>Why Choose TKD Fast</h2>
-              <p>Our platform offers everything you need for a seamless tournament experience</p>
+              <h2>¿Por qué elegir TKD Fast?</h2>
+              <p>Esto recién empieza. Estamos construyendo la herramienta que moderniza la forma de organizar torneos, y vos podés ser parte desde el primer día.
+              </p>
             </div>
 
             <div className="features-grid">
               <FeatureCard
-                icon={<FaTrophy />}
-                title="Easy Registration"
-                description="Register for tournaments in minutes with our streamlined process. No more paperwork or long lines."
-              />
+                color="yellow"
+                icon={<Zap size={35} fill="var(--color-yellow)" />}
+                title="Inscripción Rápida"
+                description="Inscribite en torneos en pocos pasos. Evitá formularios largos y empezá a organizar sin complicaciones."
+                />
               <FeatureCard
+                color="green"
                 icon={<FaUserFriends />}
-                title="Connect with Athletes"
-                description="Build your network and connect with other athletes, coaches, and officials in the Taekwondo community."
+                title="Gestión de Instructores"
+                description="Invitá a maestros e instructores a colaborar en tus torneos inscribiendo a sus competidores."
+                />
+              <FeatureCard
+                color="blue"
+                icon={<TbTournament />}
+                title="Creación de Llaves"
+                description="Armá automáticamente las llaves por categoría, asegurando que los compañeros solo peleen si es necesario. Sin hojas de cálculo, sin problemas en la mesa."
               />
               <FeatureCard
-                icon={<FaChartLine />}
-                title="Track Your Progress"
-                description="Monitor your performance, view match history, and analyze your statistics to improve your skills."
-              />
-              <FeatureCard
+                color="red"
                 icon={<FaMobileAlt />}
-                title="Mobile Access"
-                description="Access your profile, tournament schedules, and results from anywhere using our mobile-friendly platform."
+                title="Acceso desde Cualquier Dispositivo"
+                description="Revisá horarios, competidores y resultados desde tu celular, tablet o computadora. Todo desde el navegador."
               />
             </div>
           </div>
@@ -117,9 +123,9 @@ const Landing = () => {
           <div className="container">
             <h2>Ready to Get Started?</h2>
             <p>Join thousands of athletes and organizers who are already using TKD Fast</p>
-            <Link to="/signup" className="btn-primary">
+            <ButtonLink to="/signup">
               Sign Up Now
-            </Link>
+            </ButtonLink>
           </div>
         </section>
       </main>

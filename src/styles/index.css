@@ -1,5 +1,21 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
+  --color-background: #131313;
+  --color-elevated: #1a1919;
+  --color-text: #f2f2f2;
+  --color-textmuted: #b4b4b4;
+  --color-accentblue: #1456b1;
+  --color-accentgreen: #518f5d;
+  --color-accentred: #df5c4c;
+  --color-yellow: #e3b041;
+  --color-neutrallight: #f1e9e5;
+  --color-warning: #ff8c42;
+}
+@theme {
+  --color-*: initial;
   --color-background: #131313;
   --color-elevated: #1a1919;
   --color-text: #f2f2f2;

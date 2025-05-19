@@ -7,6 +7,7 @@ import { useAuth } from "../context/AuthContext"
 import {User, LogIn} from "lucide-react"
 import "../styles/Header.css"
 import ButtonLink from "./ButtonLink"
+import Button from "./Button"
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -35,17 +36,17 @@ const Header = () => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link to="/about" className="nav-link" onClick={() => setIsOpen(false)}>
+              <Link to="/about" className="nav-link nav-link-green" onClick={() => setIsOpen(false)}>
                 About
               </Link>
             </li>
             <li className="nav-item">
-                <Link to="/tournaments" className="nav-link" onClick={() => setIsOpen(false)}>
+                <Link to="/tournaments" className="nav-link nav-link-blue" onClick={() => setIsOpen(false)}>
                   Tournaments
                 </Link>
             </li>
             <li className="nav-item">
-              <Link to="/contact" className="nav-link" onClick={() => setIsOpen(false)}>
+              <Link to="/contact" className="nav-link nav-link-red" onClick={() => setIsOpen(false)}>
                 Contact
               </Link>
             </li>
@@ -53,9 +54,9 @@ const Header = () => {
 
           <div className="auth-buttons">
             {isAuthenticated ? (
-              <button className="btn-secondary" onClick={logout}>
+              <Button variant="secondary" onClick={logout}>
                 Logout
-              </button>
+              </Button>
             ) : (
               <>
                 <ButtonLink 

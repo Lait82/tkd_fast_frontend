@@ -5,12 +5,14 @@ interface FeatureCardProps {
   icon: ReactNode
   title: string
   description: string
+  color: string
 }
 
-const FeatureCard = ({ icon, title, description }: FeatureCardProps) => {
+const FeatureCard = ({ icon, title, description, color }: FeatureCardProps) => {
+
   return (
     <div className="feature-card">
-      <div className="feature-icon">{icon}</div>
+      <div className={`feature-icon ${color}`}>{icon}</div>
       <h3 className="feature-title">{title}</h3>
       <p className="feature-description">{description}</p>
     </div>

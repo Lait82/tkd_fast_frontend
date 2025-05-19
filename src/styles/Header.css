@@ -10,7 +10,8 @@
 
 .header-container {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
+  justify-content: space-evenly;
   align-items: center;
   padding: 1rem;
   height: 130px;
@@ -26,7 +27,7 @@
 }
 
 .logo-img {
-  height: 40px;
+  /* height: 40px; */
 }
 
 .nav {
@@ -49,6 +50,15 @@
 
 .nav-link:hover {
   color: var(--color-yellow);
+}
+.nav-link-green:hover {
+  color: var(--color-accentgreen);
+}
+.nav-link-blue:hover {
+  color: var(--color-accentblue);
+}
+.nav-link-red:hover {
+  color: var(--color-accentred);
 }
 
 .auth-buttons {

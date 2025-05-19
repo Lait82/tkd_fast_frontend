@@ -17,7 +17,6 @@
 
 .feature-icon {
   font-size: 2.5rem;
-  color: var(--color-yellow);
   margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
@@ -25,7 +24,22 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background-color: rgba(227, 176, 65, 0.1);
+}
+.feature-card .yellow{
+  color: var(--color-yellow);
+  background-color:rgba(227, 176, 65, 0.1);
+}
+.feature-card .green{
+  color: var(--color-accentgreen);
+  background-color: rgb(41, 71, 47, 0.1);
+}
+.feature-card .blue{
+  color: var(--color-accentblue);
+  background-color:rgb(10, 43, 88, 0.1);
+}
+.feature-card .red{
+  color: var(--color-accentred);
+  background-color:rgb(127, 34, 23, 0.1);
 }
 
 .feature-title {
