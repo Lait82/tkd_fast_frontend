@@ -1,5 +1,5 @@
 .auth-page {
-  padding-top: calc(130px + 3rem); /* Header height */
+  padding-top: calc(90px + 3rem); /* Header height */
   min-height: 100vh;
   display: flex;
   flex-direction: column;

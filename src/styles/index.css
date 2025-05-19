@@ -83,31 +83,35 @@ a:hover {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: 2px solid var(--color-yellow);
+  border: 2px solid var(--color-neutrallight);
   display: inline-flex;
   align-items: center;
   text-decoration: none;
 }
+.logo-font{
+  font-family: 'Audiowide', 'Nunito';
+  font-weight: 400;
+}
 
 
 .btn-primary {
-  background-color: var(--color-yellow);
-  color: #111;
+  background-color: var(--color-neutrallight);
+  color: var(--color-background);
 }
 
 .btn-primary:hover {
   background-color: transparent;
-  color: var(--color-yellow);
+  color: var(--color-text);
 }
 
 .btn-secondary {
   background-color: transparent;
-  color: var(--color-yellow);
+  color: var(--color-text);
 }
 
 .btn-secondary:hover {
-  background-color: var(--color-yellow);
-  color: #111;
+  background-color: var(--color-neutrallight);
+  color: var(--color-background);
 }
 
 .btn-warning {

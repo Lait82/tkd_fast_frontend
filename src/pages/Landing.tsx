@@ -6,6 +6,7 @@ import FeatureCard from "../components/FeatureCard"
 import "../styles/Landing.css"
 import ButtonLink from "@/components/ButtonLink"
 import { Zap } from "lucide-react"
+import TypeIt from "typeit-react"
 
 const Landing = () => {
   return (
@@ -16,9 +17,23 @@ const Landing = () => {
         <section className="hero">
           <div className="container hero-container">
             <div className="hero-content">
-              <h1>Organizá. Invitá. Competí.</h1>
+              <h1>
+                Con <span className="logo-font">TKDFast</span> podés:
+              </h1>
+                <TypeIt
+                  as={"h1"}
+                  options={{
+                    loop:true
+                  }}
+                  getBeforeInit={(instance) => {
+                    instance.type("<span class='text-yellow'>></span> Invitar Maestros").pause(750).delete(8).pause(500).type("Instructores").pause(600).delete(18).pause(460).type("scribir Competidores").pause(950).delete(22).pause(700).type("Armar Llaves.");
+                
+                    // Remember to return it!
+                    return instance;
+                  }}
+                />
               <p>
-                La forma más rápida y simple de gestionar torneos de Taekwondo. Registrá usuarios, cargá competidores, y compartí las llaves en tiempo real.
+                La forma más rápida y simple de gestionar torneos de Taekwondo. Invitá usuario.
               </p>
               <div className="hero-buttons">
                 <ButtonLink to="/signup" className="font-bold">
@@ -42,7 +57,7 @@ const Landing = () => {
         <section className="features">
           <div className="container">
             <div className="section-header">
-              <h2>¿Por qué elegir TKD Fast?</h2>
+              <h2>¿Por qué elegir <span className="logo-font">TKDFast</span>?</h2>
               <p>Esto recién empieza. Estamos construyendo la herramienta que moderniza la forma de organizar torneos, y vos podés ser parte desde el primer día.
               </p>
             </div>
