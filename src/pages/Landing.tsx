@@ -7,6 +7,8 @@ import "../styles/Landing.css"
 import ButtonLink from "@/components/ButtonLink"
 import { Zap } from "lucide-react"
 import TypeIt from "typeit-react"
+import HowItWorks from "@/components/HowItWorks"
+import LandingCTA from "@/components/LandingCTA"
 
 const Landing = () => {
   return (
@@ -91,7 +93,7 @@ const Landing = () => {
           </div>
         </section>
 
-        {/* <section className="testimonials">
+        {/* <section className="testimonials"> TODO: remove this section and its classes
           <div className="container">
             <div className="section-header">
               <h2>What Our Users Say</h2>
@@ -134,7 +136,7 @@ const Landing = () => {
           </div>
         </section> */}
 
-        <section className="cta">
+        {/* <section className="cta">
           <div className="container">
             <h2>¿Querés organizar tu torneo con <span className="text-logo">TKDFast</span>?</h2>
             <p>Si sos organizador, contactanos para crear tu evento. Nosotros te damos acceso, y vos invitás a tus instructores para cargar competidores y gestionar las llaves.</p>
@@ -142,7 +144,9 @@ const Landing = () => {
               Contactar
             </ButtonLink>
           </div>
-        </section>
+        </section> */}
+        {/* <HowItWorks />
+        <LandingCTA /> */}
       </main>
 
       <Footer />
