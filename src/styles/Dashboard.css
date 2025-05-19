@@ -58,7 +58,7 @@
 
 .info-label {
   font-size: 0.875rem;
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   margin-bottom: 0.25rem;
 }
 
@@ -67,7 +67,7 @@
 }
 
 .empty-state {
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   text-align: center;
   padding: 2rem 0;
 }

@@ -33,7 +33,7 @@
 }
 
 .auth-header p {
-  color: var(--color-textmuted);
+  color: var(--color-muted);
 }
 
 .auth-form {
@@ -55,7 +55,7 @@
   left: 1rem;
   top: 50%;
   transform: translateY(-50%);
-  color: var(--color-textmuted);
+  color: var(--color-muted);
 }
 
 .form-input {
@@ -63,7 +63,7 @@
 }
 
 .input-error {
-  border-color: var(--color-accentred);
+  border-color: var(--color-red);
 }
 
 .password-header {
@@ -80,7 +80,7 @@
 
 .auth-footer {
   text-align: center;
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   font-size: 0.875rem;
 }
 
@@ -94,7 +94,7 @@
   align-items: center;
   gap: 0.5rem;
   background-color: rgba(223, 92, 76, 0.1);
-  color: var(--color-accentred);
+  color: var(--color-red);
   padding: 0.75rem 1rem;
   border-radius: 4px;
   margin-bottom: 1.5rem;
@@ -108,7 +108,7 @@
 
 .success-icon {
   font-size: 3rem;
-  color: var(--color-accentgreen);
+  color: var(--color-green);
   margin-bottom: 1rem;
 }
 
@@ -135,7 +135,7 @@
   height: 30px;
   border-radius: 50%;
   background-color: var(--color-background);
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   font-weight: 600;
   transition: all 0.3s ease;
 }

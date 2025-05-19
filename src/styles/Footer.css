@@ -16,11 +16,6 @@
   font-size: 1.25rem;
 }
 
-.footer-section p {
-  color: var(--color-textmuted);
-  margin-bottom: 1rem;
-}
-
 .social-icons {
   display: flex;
   gap: 1rem;
@@ -47,13 +42,25 @@
 .footer-links {
   list-style: none;
 }
+.footer-links .yellow:hover{
+  color: var(--color-yellow);
+}
+.footer-links .green:hover{
+  color: var(--color-green);
+}
+.footer-links .blue:hover{
+  color: var(--color-blue);
+}
+.footer-links .red:hover{
+  color: var(--color-red);
+}
 
 .footer-links li {
   margin-bottom: 0.75rem;
 }
 
 .footer-links a {
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   transition: color 0.2s ease;
 }
 
@@ -66,7 +73,7 @@
   padding-top: 1.5rem;
   border-top: 1px solid rgba(180, 180, 180, 0.2);
   text-align: center;
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   font-size: 0.875rem;
 }
 

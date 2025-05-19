@@ -30,7 +30,7 @@
 
 .hero p {
   font-size: 1.125rem;
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   margin-bottom: 2rem;
   max-width: 600px;
 }
@@ -71,7 +71,7 @@
 }
 
 .section-header p {
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   max-width: 700px;
   margin: 0 auto;
 }
@@ -130,7 +130,7 @@
 }
 
 .testimonial-author p {
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   font-size: 0.875rem;
   margin: 0;
 }
@@ -148,7 +148,7 @@
 }
 
 .cta p {
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   margin-bottom: 2rem;
   max-width: 700px;
   margin-left: auto;

@@ -1,4 +1,3 @@
-import { FaFacebook, FaTwitter, FaInstagram, FaYoutube } from "react-icons/fa"
 import "../styles/Footer.css"
 
 const Footer = () => {
@@ -9,9 +8,9 @@ const Footer = () => {
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">
-            <img src="/logo.png" alt="TKD Fast" className="logo-img" />
-            <p>The premier platform for Taekwondo tournament management and registration.</p>
-            <div className="social-icons">
+            <img src="/logo.png" alt="TKD Fast" className="mb-8 logo-img mb-5" />
+            <p className="text-muted"> Organizá. Inscribite. Competí. Todo en un solo lugar.</p>
+            {/* <div className="social-icons">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
                 <FaFacebook />
               </a>
@@ -24,32 +23,31 @@ const Footer = () => {
               <a href="https://youtube.com" target="_blank" rel="noopener noreferrer">
                 <FaYoutube />
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="footer-section">
-            <h3>Quick Links</h3>
+            <h3>Enlaces Rápidos</h3>
             <ul className="footer-links">
               <li>
-                <a href="/">Home</a>
+                <a className="yellow" href="/">{">  Inicio"}</a>
               </li>
               <li>
-                <a href="/about">About</a>
+                <a className="green" href="/about">{">  Nosotros"}</a>
               </li>
               <li>
-                <a href="/tournaments">Tournaments</a>
+                <a className="blue" href="/tournaments">{">  Torneos"}</a>
               </li>
               <li>
-                <a href="/contact">Contact</a>
+                <a className="red" href="/contact">{">  Contacto"}</a>
               </li>
             </ul>
           </div>
 
           <div className="footer-section">
-            <h3>Contact Us</h3>
-            <p>Email: info@tkdfast.com</p>
-            <p>Phone: +1 (123) 456-7890</p>
-            <p>Address: 123 Martial Arts St, Dojang City</p>
+            <h3>Contáctanos</h3>
+            <p>Email: manuexposito82@outlook.com</p>
+            <p>Phone: +54 2246 438109</p>
           </div>
         </div>
 

@@ -30,15 +30,15 @@
   background-color:rgba(227, 176, 65, 0.1);
 }
 .feature-card .green{
-  color: var(--color-accentgreen);
+  color: var(--color-green);
   background-color: rgb(41, 71, 47, 0.1);
 }
 .feature-card .blue{
-  color: var(--color-accentblue);
+  color: var(--color-blue);
   background-color:rgb(10, 43, 88, 0.1);
 }
 .feature-card .red{
-  color: var(--color-accentred);
+  color: var(--color-red);
   background-color:rgb(127, 34, 23, 0.1);
 }
 
@@ -49,6 +49,6 @@
 }
 
 .feature-description {
-  color: var(--color-textmuted);
+  color: var(--color-muted);
   line-height: 1.6;
 }

@@ -51,15 +51,15 @@
 }
 
 .nav-link-green:hover {
-  color: var(--color-accentgreen);
+  color: var(--color-green);
 }
 
 .nav-link-blue:hover {
-  color: var(--color-accentblue);
+  color: var(--color-blue);
 }
 
 .nav-link-red:hover {
-  color: var(--color-accentred);
+  color: var(--color-red);
 }
 
 .auth-buttons {
