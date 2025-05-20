@@ -12,7 +12,7 @@ import {
   FaSchool,
   FaCalendarAlt,
   FaLock,
-  FaExclamationTriangle,
+  FaExclamationTriangle
 } from "react-icons/fa"
 import { useAuth } from "../context/AuthContext"
 import Header from "../components/Header"
@@ -20,25 +20,34 @@ import Footer from "../components/Footer"
 import "../styles/Auth.css"
 import FormInput from "@/components/forms/FormInput"
 import Button from "@/components/Button"
+import BeltIcon from "@/components/BeltIcon"
+import { Rank } from "@/types/enums"
+import { TbUsersGroup } from "react-icons/tb"
 
 const rankOptions = [
-  { value: "WHITE", label: "White Belt" },
-  { value: "YELLOW", label: "Yellow Belt" },
-  { value: "GREEN", label: "Green Belt" },
-  { value: "BLUE", label: "Blue Belt" },
-  { value: "RED", label: "Red Belt" },
-  { value: "BLACK", label: "Black Belt" },
-  { value: "DAN_1", label: "1st Dan" },
-  { value: "DAN_2", label: "2nd Dan" },
-  { value: "DAN_3", label: "3rd Dan" },
-  { value: "DAN_4", label: "4th Dan" },
-  { value: "DAN_5", label: "5th Dan" },
+  { value: "WHITE", label: "Blanco" },
+  { value: "WHITE_YELLOW", label: "Blanco Punta Amarilla" },
+  { value: "YELLOW", label: "Amarillo" },
+  { value: "YELLOW_GREEN", label: "Amarillo Punta Verde" },
+  { value: "GREEN", label: "Verde" },
+  { value: "GREEN_BLUE", label: "Verde Punta Azul" },
+  { value: "BLUE", label: "Azul" },
+  { value: "BLUE_RED", label: "Azul Punta Roja" },
+  { value: "RED", label: "Rojo" },
+  { value: "RED_BLACK", label: "Rojo Punta Negra" },
+  { value: "DAN_1", label: "1er Dan" },
+  { value: "DAN_2", label: "2do Dan" },
+  { value: "DAN_3", label: "3er Dan" },
+  { value: "DAN_4", label: "4to Dan" },
+  { value: "DAN_5", label: "5to Dan" },
+  { value: "DAN_6", label: "6to Dan" }
 ]
 
 const federationOptions = [
   { value: "FATI", label: "FATI" },
-  { value: "ITF", label: "ITF" },
-  { value: "WTF", label: "WTF" },
+  { value: "FETRA", label: "FeTRA" },
+  // { value: "ITF", label: "ITF" },
+  // { value: "WTF", label: "WTF" },
 ]
 
 const Signup = () => {
@@ -47,13 +56,13 @@ const Signup = () => {
     lastname: "",
     email: "",
     phone: "",
-    rank: "DAN_2",
+    rank: "WHITE",
     school: "",
     id_number: "",
     password: "",
     password_confirmation: "",
-    asociation: "ATRA",
-    federation: "FATI",
+    asociation: "",
+    federation: "",
     dob: "",
     invite_token: "",
   })
@@ -72,30 +81,30 @@ const Signup = () => {
     let isValid = true
 
     if (!formData.firstname) {
-      errors.firstname = "First name is required"
+      errors.firstname = "El nombre es requerido"
       isValid = false
     }
 
     if (!formData.lastname) {
-      errors.lastname = "Last name is required"
+      errors.lastname = "El apellido es requerido"
       isValid = false
     }
 
     if (!formData.email) {
-      errors.email = "Email is required"
+      errors.email = "El email es requerido"
       isValid = false
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-      errors.email = "Email is invalid"
+      errors.email = "El email es invalido"
       isValid = false
     }
 
     if (!formData.phone) {
-      errors.phone = "Phone number is required"
+      errors.phone = "El número de teléfono es requerido"
       isValid = false
     }
 
     if (!formData.dob) {
-      errors.dob = "Date of birth is required"
+      errors.dob = "La fecha de nacimiento es requerida"
       isValid = false
     }
 
@@ -108,12 +117,12 @@ const Signup = () => {
     let isValid = true
 
     if (!formData.id_number) {
-      errors.id_number = "ID number is required"
+      errors.id_number = "El DNI es requerido"
       isValid = false
     }
 
     if (!formData.school) {
-      errors.school = "School is required"
+      errors.school = "La escuela es requerida"
       isValid = false
     }
 
@@ -126,18 +135,18 @@ const Signup = () => {
     let isValid = true
 
     if (!formData.password) {
-      errors.password = "Password is required"
+      errors.password = "La contraseña es requerida"
       isValid = false
     } else if (formData.password.length < 8) {
-      errors.password = "Password must be at least 8 characters"
+      errors.password = "La contraseña debe tener al menos 8 caracteres"
       isValid = false
     }
 
     if (!formData.password_confirmation) {
-      errors.password_confirmation = "Please confirm your password"
+      errors.password_confirmation = "Por favor, confirma tu contraseña"
       isValid = false
     } else if (formData.password !== formData.password_confirmation) {
-      errors.password_confirmation = "Passwords do not match"
+      errors.password_confirmation = "Las contraseñas no coinciden"
       isValid = false
     }
 
@@ -146,6 +155,7 @@ const Signup = () => {
   }
 
   const nextStep = () => {
+
     if (step === 1 && validateStep1()) {
       setStep(2)
     } else if (step === 2 && validateStep2()) {
@@ -175,12 +185,11 @@ const Signup = () => {
   return (
     <div className="auth-page">
       <Header />
-
       <main className="auth-container">
         <div className="auth-card">
           <div className="auth-header">
-            <h1>Create Your Account</h1>
-            <p>Join TKD Fast to register for tournaments and more</p>
+            <h1>Creá tu cuenta</h1>
+            <p>Unite a <span className="text-logo">TKD Fast</span> para inscribirte en torneos y más</p>
           </div>
 
           {error && (
@@ -192,9 +201,9 @@ const Signup = () => {
 
           <div className="signup-progress">
             <div className={`progress-step ${step >= 1 ? "active" : ""}`}>1</div>
-            <div className="progress-line"></div>
+            <div className={`progress-line ${step >= 2 ? "progress-done" : ""}`}></div>
             <div className={`progress-step ${step >= 2 ? "active" : ""}`}>2</div>
-            <div className="progress-line"></div>
+            <div className={`progress-line ${step >= 3 ? "progress-done" : ""}`}></div>
             <div className={`progress-step ${step >= 3 ? "active" : ""}`}>3</div>
           </div>
 
@@ -202,206 +211,129 @@ const Signup = () => {
             {step === 1 && (
               <>
                 <div className="form-row">
+                  <FormInput
+                    label="Nombre"
+                    name="firstname"
+                    icon={<FaUser />}
+                    value={formData.firstname}
+                    onChange={handleChange}
+                    error={formErrors.firstname}
+                    disabled={loading}
+                    placeholder="Nombre"
+                  />
+
+                  <FormInput
+                    label="Apellido"
+                    name="lastname"
+                    icon={<FaUser />}
+                    value={formData.lastname}
+                    onChange={handleChange}
+                    error={formErrors.lastname}
+                    disabled={loading}
+                    placeholder="Apellido"
+                  />
+                </div>
+
                 <FormInput
-                  label="First Name"
-                  name="firstname"
-                  icon={<FaUser />}
-                  value={formData.firstname}
+                  label="Correo electrónico"
+                  name="email"
+                  icon={<FaEnvelope />}
+                  value={formData.email}
                   onChange={handleChange}
-                  error={formErrors.firstname}
+                  error={formErrors.email}
                   disabled={loading}
-                  placeholder="Enter your first name"
+                  placeholder="Email"
                 />
-                  {/* <div className="form-group">
-                    <label htmlFor="firstname" className="form-label">
-                      First Name
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <FaUser />
-                      </span>
-                      <input
-                        type="text"
-                        id="firstname"
-                        name="firstname"
-                        className={`form-input ${formErrors.firstname ? "input-error" : ""}`}
-                        placeholder="Enter your first name"
-                        value={formData.firstname}
-                        onChange={handleChange}
-                        disabled={loading}
-                      />
-                    </div>
-                    {formErrors.firstname && <div className="form-error">{formErrors.firstname}</div>}
-                  </div> */}
 
-                  <div className="form-group">
-                    <label htmlFor="lastname" className="form-label">
-                      Last Name
-                    </label>
-                    <div className="input-group">
-                      <span className="input-icon">
-                        <FaUser />
-                      </span>
-                      <input
-                        type="text"
-                        id="lastname"
-                        name="lastname"
-                        className={`form-input ${formErrors.lastname ? "input-error" : ""}`}
-                        placeholder="Enter your last name"
-                        value={formData.lastname}
-                        onChange={handleChange}
-                        disabled={loading}
-                      />
-                    </div>
-                    {formErrors.lastname && <div className="form-error">{formErrors.lastname}</div>}
-                  </div>
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="email" className="form-label">
-                    Email
-                  </label>
-                  <div className="input-group">
-                    <span className="input-icon">
-                      <FaEnvelope />
-                    </span>
-                    <input
-                      type="email"
-                      id="email"
-                      name="email"
-                      className={`form-input ${formErrors.email ? "input-error" : ""}`}
-                      placeholder="Enter your email"
-                      value={formData.email}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-                  </div>
-                  {formErrors.email && <div className="form-error">{formErrors.email}</div>}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="phone" className="form-label">
-                    Phone Number
-                  </label>
-                  <div className="input-group">
-                    <span className="input-icon">
-                      <FaPhone />
-                    </span>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      className={`form-input ${formErrors.phone ? "input-error" : ""}`}
-                      placeholder="Enter your phone number"
-                      value={formData.phone}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-                  </div>
-                  {formErrors.phone && <div className="form-error">{formErrors.phone}</div>}
-                </div>
-
-                <div className="form-group">
-                  <label htmlFor="dob" className="form-label">
-                    Date of Birth
-                  </label>
-                  <div className="input-group">
-                    <span className="input-icon">
-                      <FaCalendarAlt />
-                    </span>
-                    <input
-                      type="date"
-                      id="dob"
-                      name="dob"
-                      className={`form-input ${formErrors.dob ? "input-error" : ""}`}
-                      value={formData.dob}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-                  </div>
-                  {formErrors.dob && <div className="form-error">{formErrors.dob}</div>}
-                </div>
-
-                <Button type="button"
-                  className="btn-primary w-full font-bold justify-center" 
-                  onClick={nextStep} 
+                <FormInput
+                  label="Teléfono"
+                  name="phone"
+                  icon={<FaPhone />}
+                  value={formData.phone}
+                  onChange={handleChange}
+                  error={formErrors.phone}
                   disabled={loading}
+                  placeholder="Teléfono"
+                />
+
+                <FormInput
+                  label="Fecha de nacimiento"
+                  name="dob"
+                  type="date"
+                  icon={<FaCalendarAlt />}
+                  value={formData.dob}
+                  onChange={handleChange}
+                  error={formErrors.dob}
+                  disabled={loading}
+                />
+
+                <Button
+                  type="button"
+                  className="btn-primary w-full font-bold justify-center"
+                  onClick={nextStep}
+                  disabled={loading}
+                  style={{marginTop:'2rem'}}
                 >
-                  Next
+                  Siguiente
                 </Button>
               </>
             )}
 
             {step === 2 && (
               <>
-                <div className="form-group">
-                  <label htmlFor="id_number" className="form-label">
-                    ID Number
-                  </label>
-                  <div className="input-group">
-                    <span className="input-icon">
-                      <FaIdCard />
-                    </span>
-                    <input
-                      type="text"
-                      id="id_number"
-                      name="id_number"
-                      className={`form-input ${formErrors.id_number ? "input-error" : ""}`}
-                      placeholder="Enter your ID number"
-                      value={formData.id_number}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-                  </div>
-                  {formErrors.id_number && <div className="form-error">{formErrors.id_number}</div>}
-                </div>
+                <FormInput
+                  label="DNI"
+                  name="id_number"
+                  icon={<FaIdCard />}
+                  value={formData.id_number}
+                  onChange={handleChange}
+                  error={formErrors.id_number}
+                  disabled={loading}
+                  placeholder="DNI"
+                />
 
-                <div className="form-group">
-                  <label htmlFor="school" className="form-label">
-                    School
-                  </label>
-                  <div className="input-group">
-                    <span className="input-icon">
-                      <FaSchool />
-                    </span>
-                    <input
-                      type="text"
-                      id="school"
-                      name="school"
-                      className={`form-input ${formErrors.school ? "input-error" : ""}`}
-                      placeholder="Enter your school"
-                      value={formData.school}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-                  </div>
-                  {formErrors.school && <div className="form-error">{formErrors.school}</div>}
-                </div>
+                <FormInput
+                  label="Escuela"
+                  name="school"
+                  icon={<FaSchool />}
+                  value={formData.school}
+                  onChange={handleChange}
+                  error={formErrors.school}
+                  disabled={loading}
+                  placeholder="Escuela"
+                />
+
 
                 <div className="form-group">
                   <label htmlFor="rank" className="form-label">
-                    Rank
+                    Grado
                   </label>
-                  <select
-                    id="rank"
-                    name="rank"
-                    className="form-input"
-                    value={formData.rank}
-                    onChange={handleChange}
-                    disabled={loading}
-                  >
-                    {rankOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
-                  </select>
+
+                  <div className="relative">
+                    <div style={{left:4}} className="absolute top-1/2 -translate-y-1/2 pointer-events-none">
+                      <BeltIcon rank={formData.rank as Rank} />
+                    </div>
+
+                    <select
+                      id="rank"
+                      name="rank"
+                      className="form-input pl-10" // espacio a la izquierda para el ícono
+                      value={formData.rank}
+                      onChange={handleChange}
+                      disabled={loading}
+                    >
+                      {rankOptions.map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
+                {/* <RankSelect onChange={handleChange} /> */}
 
                 <div className="form-group">
-                  <label htmlFor="federation" className="form-label">
-                    Federation
-                  </label>
+                  <label htmlFor="federation" className="form-label">Federación</label>
                   <select
                     id="federation"
                     name="federation"
@@ -409,6 +341,7 @@ const Signup = () => {
                     value={formData.federation}
                     onChange={handleChange}
                     disabled={loading}
+                    style={{paddingLeft:"1rem"}}
                   >
                     {federationOptions.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -418,104 +351,70 @@ const Signup = () => {
                   </select>
                 </div>
 
-                <div className="form-group">
-                  <label htmlFor="asociation" className="form-label">
-                    Association
-                  </label>
-                  <input
-                    type="text"
-                    id="asociation"
-                    name="asociation"
-                    className="form-input"
-                    placeholder="Enter your association"
-                    value={formData.asociation}
-                    onChange={handleChange}
-                    disabled={loading}
-                  />
-                </div>
+                <FormInput
+                  label="Asociación"
+                  name="asociation"
+                  icon={<TbUsersGroup />}
+                  value={formData.asociation}
+                  onChange={handleChange}
+                  disabled={loading}
+                  placeholder="Asociación: Ej: ATRA, APAT, etc.."
+                />
 
                 <div className="form-buttons">
-                  <button type="button" className="btn-secondary" onClick={prevStep} disabled={loading}>
-                    Back
-                  </button>
-                  <button type="button" className="btn-primary" onClick={nextStep} disabled={loading}>
-                    Next
-                  </button>
+                  <Button variant="secondary" onClick={prevStep} disabled={loading}>
+                    Atrás
+                  </Button>
+                  <Button  onClick={nextStep} disabled={loading}>
+                    Siguiente
+                  </Button>
                 </div>
               </>
             )}
 
             {step === 3 && (
               <>
-                <div className="form-group">
-                  <label htmlFor="password" className="form-label">
-                    Password
-                  </label>
-                  <div className="input-group">
-                    <span className="input-icon">
-                      <FaLock />
-                    </span>
-                    <input
-                      type="password"
-                      id="password"
-                      name="password"
-                      className={`form-input ${formErrors.password ? "input-error" : ""}`}
-                      placeholder="Create a password"
-                      value={formData.password}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-                  </div>
-                  {formErrors.password && <div className="form-error">{formErrors.password}</div>}
-                </div>
+                <FormInput
+                  label="Contraseña"
+                  name="password"
+                  type="password"
+                  icon={<FaLock />}
+                  value={formData.password}
+                  onChange={handleChange}
+                  error={formErrors.password}
+                  disabled={loading}
+                  placeholder="Contraseña"
+                />
 
-                <div className="form-group">
-                  <label htmlFor="password_confirmation" className="form-label">
-                    Confirm Password
-                  </label>
-                  <div className="input-group">
-                    <span className="input-icon">
-                      <FaLock />
-                    </span>
-                    <input
-                      type="password"
-                      id="password_confirmation"
-                      name="password_confirmation"
-                      className={`form-input ${formErrors.password_confirmation ? "input-error" : ""}`}
-                      placeholder="Confirm your password"
-                      value={formData.password_confirmation}
-                      onChange={handleChange}
-                      disabled={loading}
-                    />
-                  </div>
-                  {formErrors.password_confirmation && (
-                    <div className="form-error">{formErrors.password_confirmation}</div>
-                  )}
-                </div>
+                <FormInput
+                  label="Confirmá tu contraseña"
+                  name="password_confirmation"
+                  type="password"
+                  icon={<FaLock />}
+                  value={formData.password_confirmation}
+                  onChange={handleChange}
+                  error={formErrors.password_confirmation}
+                  disabled={loading}
+                  placeholder="Confirmación de contraseña"
+                />
 
-                <div className="form-group">
-                  <label htmlFor="invite_token" className="form-label">
-                    Invitation Token (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    id="invite_token"
-                    name="invite_token"
-                    className="form-input"
-                    placeholder="Enter invitation token if you have one"
-                    value={formData.invite_token}
-                    onChange={handleChange}
-                    disabled={loading}
-                  />
-                </div>
+                {/* <FormInput
+                  label="Token de invitación (opcional)"
+                  name="invite_token"
+                  value={formData.invite_token}
+                  icon={<FaTag />}
+                  onChange={handleChange}
+                  disabled={loading}
+                  placeholder="Si tenés un código de invitación, ingresalo acá"
+                /> */}
 
                 <div className="form-buttons">
-                  <button type="button" className="btn-secondary" onClick={prevStep} disabled={loading}>
-                    Back
-                  </button>
-                  <button type="submit" className="btn-primary" disabled={loading}>
-                    {loading ? "Creating Account..." : "Create Account"}
-                  </button>
+                  <Button variant="secondary" onClick={prevStep} disabled={loading}>
+                    Atrás
+                  </Button>
+                  <Button type="submit" disabled={loading}>
+                    {loading ? "Creando cuenta..." : "Crear cuenta"}
+                  </Button>
                 </div>
               </>
             )}
@@ -523,15 +422,14 @@ const Signup = () => {
 
           <div className="auth-footer">
             <p>
-              Already have an account?{" "}
+              ¿Ya tenés una cuenta?{" "}
               <Link to="/login" className="auth-link">
-                Sign In
+                Iniciá sesión
               </Link>
             </p>
           </div>
         </div>
       </main>
-
       <Footer />
     </div>
   )

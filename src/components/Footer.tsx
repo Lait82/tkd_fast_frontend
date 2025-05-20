@@ -52,7 +52,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {currentYear} TKD Fast. All rights reserved.</p>
+          <p>&copy; {currentYear} <span className="text-logo">TKD Fast</span>. All rights reserved.</p>
         </div>
       </div>
     </footer>
