@@ -4,10 +4,12 @@ import { useAuth } from "../context/AuthContext"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
 import "../styles/Dashboard.css"
-import Button from "@/components/Button"
+// import Button from "@/components/Button"
+import BeltIcon from "@/components/BeltIcon"
+import { Rank } from "@/types/enums"
 
 const Dashboard = () => {
-  const { user, logout } = useAuth()
+  const { user, _ } = useAuth()
 
   return (
     <div className="dashboard-page">
@@ -16,9 +18,9 @@ const Dashboard = () => {
       <main className="dashboard-container">
         <div className="dashboard-header">
           <h1>Welcome, {user?.firstname}!</h1>
-          <Button className="btn-base btn-secondary" onClick={logout}>
+          {/* <Button className="btn-base btn-secondary" onClick={logout}>
             Logout
-          </Button>
+          </Button> */}
         </div>
 
         <div className="dashboard-content">
@@ -45,7 +47,9 @@ const Dashboard = () => {
               </div>
               <div className="info-group">
                 <span className="info-label">Rank:</span>
-                <span className="info-value">{user?.rank}</span>
+                {/* <span className="info-value">{user?.rank}</span> */}
+                {user?.rank ? <BeltIcon rank={user.rank as Rank} /> : <span className="text-muted italic">No especificado</span>}
+                
               </div>
               <div className="info-group">
                 <span className="info-label">School:</span>
