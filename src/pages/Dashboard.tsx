@@ -1,76 +1,74 @@
 "use client"
 
+import { useState, useEffect } from "react"
 import { useAuth } from "../context/AuthContext"
 import Header from "../components/Header"
 import Footer from "../components/Footer"
+import DashboardActions from "../components/DashboardActions"
+import TournamentCard from "../components/TournamentCard"
 import "../styles/Dashboard.css"
-// import Button from "@/components/Button"
-import BeltIcon from "@/components/BeltIcon"
-import { Rank } from "@/types/enums"
+
+// Mock data for tournaments
+const mockTournaments = [
+  {
+    id: 1,
+    title: "ADCC Latin America Edition / Santiago Open",
+    date: "06 Jun",
+    daysRemaining: "Faltan 15 Días",
+    image: "https://picsum.photos/586/120",
+    status: "Competidor",
+    statusType: "competitor",
+  },
+  {
+    id: 2,
+    title: "ADCC Latin America Edition / Santiago Open",
+    date: "06 Jun",
+    daysRemaining: "Faltan 15 Días",
+    image: "https://picsum.photos/586/120",
+    status: "Competidor",
+    statusType: "competitor",
+  },
+  {
+    id: 3,
+    title: "ADCC Latin America Edition / Santiago Open",
+    date: "06 Jun",
+    daysRemaining: "Faltan 15 Días",
+    image: "https://picsum.photos/586/120",
+    status: "Instructor",
+    statusType: "instructor",
+  },
+]
 
 const Dashboard = () => {
-  const { user, _ } = useAuth()
+  const { user } = useAuth()
+
+
 
   return (
     <div className="dashboard-page">
       <Header />
 
       <main className="dashboard-container">
-        <div className="dashboard-header">
-          <h1>Welcome, {user?.firstname}!</h1>
-          {/* <Button className="btn-base btn-secondary" onClick={logout}>
-            Logout
-          </Button> */}
-        </div>
+          <div className="dashboard-content">
+            <div className="dashboard-left">
+              <div className="welcome-section">
+                <h1>Hola {user?.firstname || "Juanito"}! Que quieres hacer?</h1>
+              </div>
 
-        <div className="dashboard-content">
-          <div className="dashboard-card">
-            <h2>Your Profile</h2>
-            <div className="profile-info">
-              <div className="info-group">
-                <span className="info-label">Name:</span>
-                <span className="info-value">
-                  {user?.firstname} {user?.lastname}
-                </span>
-              </div>
-              <div className="info-group">
-                <span className="info-label">Email:</span>
-                <span className="info-value">{user?.email}</span>
-              </div>
-              <div className="info-group">
-                <span className="info-label">Phone:</span>
-                <span className="info-value">{user?.phone}</span>
-              </div>
-              <div className="info-group">
-                <span className="info-label">ID Number:</span>
-                <span className="info-value">{user?.id_number}</span>
-              </div>
-              <div className="info-group">
-                <span className="info-label">Rank:</span>
-                {/* <span className="info-value">{user?.rank}</span> */}
-                {user?.rank ? <BeltIcon rank={user.rank as Rank} /> : <span className="text-muted italic">No especificado</span>}
-                
-              </div>
-              <div className="info-group">
-                <span className="info-label">School:</span>
-                <span className="info-value">{user?.school}</span>
-              </div>
-              <div className="info-group">
-                <span className="info-label">Federation:</span>
-                <span className="info-value">{user?.federation}</span>
-              </div>
-              <div className="info-group">
-                <span className="info-label">Date of Birth:</span>
-                <span className="info-value">{user?.dob}</span>
+              <DashboardActions />
+            </div>
+
+            <div className="dashboard-right">
+              <div className="tournaments-section">
+                <h2>Mis Torneos</h2>
+                <div className="tournaments-grid">
+                  {mockTournaments.map((tournament) => (
+                    <TournamentCard key={tournament.id} tournament={tournament} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
-
-          <div className="dashboard-card">
-            <h2>Upcoming Tournaments</h2>
-            <p className="empty-state">No upcoming tournaments found.</p>
-          </div>
-        </div>
       </main>
 
       <Footer />

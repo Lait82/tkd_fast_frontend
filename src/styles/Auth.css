@@ -75,7 +75,7 @@
 
 .forgot-password {
   font-size: 0.875rem;
-  color: var(--color-yellow);
+  color: var(--color-orange);
 }
 
 .auth-footer {
@@ -85,7 +85,7 @@
 }
 
 .auth-link {
-  color: var(--color-yellow);
+  color: var(--color-orange);
   font-weight: 500;
 }
 
@@ -116,7 +116,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1rem;
-  margin-top: 1.5rem;
+  margin-top: 3.5rem;
 }
 
 /* Signup specific styles */
@@ -141,7 +141,7 @@
 }
 
 .progress-step.active {
-  background-color: var(--color-yellow);
+  background-color: var(--color-orange);
   color: var(--color-background);
 }
 
@@ -150,6 +150,9 @@
   height: 2px;
   background-color: var(--color-background);
   margin: 0 0.5rem;
+}
+.progress-done{
+  background-color: var(--color-orange);
 }
 
 @media (min-width: 768px) {

@@ -6,7 +6,7 @@ const HowItWorks = () => {
     <section className="how-it-works">
       <div className="container">
         <div className="section-header">
-          <h2>How TKD Fast Works</h2>
+          <h2>How <span className="text-logo">TKD Fast</span> Works</h2>
           <p>Simple steps to organize and manage your Taekwondo tournaments</p>
         </div>
 
