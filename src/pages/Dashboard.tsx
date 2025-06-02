@@ -25,8 +25,8 @@ const mockTournaments = [
     date: "06 Jun",
     daysRemaining: "Faltan 15 Días",
     image: "https://picsum.photos/586/120",
-    status: "Competidor",
-    statusType: "competitor",
+    status: "Master",
+    statusType: "master",
   },
   {
     id: 3,
@@ -36,6 +36,15 @@ const mockTournaments = [
     image: "https://picsum.photos/586/120",
     status: "Instructor",
     statusType: "instructor",
+  },
+    {
+    id: 4,
+    title: "ADCC Latin America Edition / Santiago Open",
+    date: "06 Jun",
+    daysRemaining: "Faltan 15 Días",
+    image: "https://picsum.photos/586/120",
+    status: "Organizer",
+    statusType: "organizer",
   },
 ]
 
@@ -52,7 +61,7 @@ const Dashboard = () => {
           <div className="dashboard-content">
             <div className="dashboard-left">
               <div className="welcome-section">
-                <h1>Hola {user?.firstname || "Juanito"}! Que quieres hacer?</h1>
+                <h1 className="text-neutrallight text-3xl">Hola {user?.firstname || "Juanito"}! Que quieres hacer?</h1>
               </div>
 
               <DashboardActions />
@@ -60,7 +69,7 @@ const Dashboard = () => {
 
             <div className="dashboard-right">
               <div className="tournaments-section">
-                <h2>Mis Torneos</h2>
+                <h1 className="text-2xl">Mis Torneos</h1>
                 <div className="tournaments-grid">
                   {mockTournaments.map((tournament) => (
                     <TournamentCard key={tournament.id} tournament={tournament} />

@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">
-            <img src="/logo.png" alt="TKD Fast" className="mb-8 logo-img mb-5" />
+            <img src="/logo.png" alt="TKDFast" className="mb-8 logo-img mb-5" />
             <p className="text-muted"> Organizá. Inscribite. Competí. Todo en un solo lugar.</p>
             {/* <div className="social-icons">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
@@ -52,7 +52,7 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <p>&copy; {currentYear} <span className="text-logo">TKD Fast</span>. All rights reserved.</p>
+          <p>&copy; {currentYear} <span className="text-logo">TKDFast</span>. All rights reserved.</p>
         </div>
       </div>
     </footer>

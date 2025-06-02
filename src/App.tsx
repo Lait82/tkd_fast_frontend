@@ -6,6 +6,7 @@ import Signup from "./pages/Signup"
 import ForgotPassword from "./pages/ForgotPassword"
 import Dashboard from "./pages/Dashboard"
 import ProtectedRoute from "./components/ProtectedRoute"
+import CreateTournament from "./pages/CreateTournament"
 
 function App() {
   return (
@@ -20,6 +21,14 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/create-tournament"
+          element={
+            <ProtectedRoute>
+              <CreateTournament />
             </ProtectedRoute>
           }
         />

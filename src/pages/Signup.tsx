@@ -8,9 +8,9 @@ import Header from "../components/Header"
 import Footer from "../components/Footer"
 import "../styles/Auth.css"
 import { SignupFormProvider, useSignupForm } from "../context/SignupFormContext"
-import StepOne from "@/components/signup/StepOne"
-import StepTwo from "@/components/signup/StepTwo"
-import StepThree from "@/components/signup/StepThree"
+import StepOne from "../components/signup/StepOne"
+import StepTwo from "../components/signup/StepTwo"
+import StepThree from "../components/signup/StepThree"
 
 // Wrapper component that provides the context
 const SignupWithProvider = () => {

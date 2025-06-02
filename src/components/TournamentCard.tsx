@@ -20,14 +20,16 @@ const TournamentCard = ({ tournament }: TournamentCardProps) => {
       <div className="tournament-image">
         <img src={tournament.image || "/placeholder.svg"} alt={tournament.title} />
         <div className="tournament-status">
-          <span className={`status-badge ${tournament.statusType}`}>{tournament.status}</span>
         </div>
       </div>
       <div className="tournament-info">
         <h3>{tournament.title}</h3>
-        <p className="text-muted tournament-date">
-          {tournament.date} - {tournament.daysRemaining}
-        </p>
+        <div className="items-center flex justify-between">
+          <span className="text-muted tournament-date">
+            {tournament.date} - {tournament.daysRemaining}
+          </span>
+          <span className={`status-badge ${tournament.statusType}`}>{tournament.status}</span>
+        </div>
       </div>
     </div>
   )

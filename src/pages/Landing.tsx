@@ -4,11 +4,11 @@ import Header from "../components/Header"
 import Footer from "../components/Footer"
 import FeatureCard from "../components/FeatureCard"
 import "../styles/Landing.css"
-import ButtonLink from "@/components/ButtonLink"
+import ButtonLink from "../components/ButtonLink"
 import { Zap } from "lucide-react"
 import TypeIt from "typeit-react"
-import HowItWorks from "@/components/HowItWorks"
-import LandingCTA from "@/components/LandingCTA"
+import HowItWorks from "../components/HowItWorks"
+import LandingCTA from "../components/LandingCTA"
 
 const Landing = () => {
   return (
@@ -22,6 +22,9 @@ const Landing = () => {
               <h1>
                 Con <span className="text-logo">TKDFast</span> podés:
               </h1>
+              <div className="bg-red-500 text-blue font-bold text-xl p-4">
+  ¿Me ves con fondo rojo, texto blanco, y negrita? ¡Tailwind anda!
+</div>
                 <TypeIt
                   as={"h1"}
                   options={{
@@ -34,7 +37,7 @@ const Landing = () => {
                     return instance;
                   }}
                 />
-              <p>
+              <p className="text-bold">
                 La forma más rápida y simple de gestionar torneos de Taekwondo. Invitá usuario.
               </p>
               <div className="hero-buttons">
