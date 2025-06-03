@@ -10,12 +10,14 @@ import CreateTournament from "./pages/CreateTournament"
 import { Toaster } from "sonner"
 import { RxCrossCircled } from "react-icons/rx";
 import { RxCheckCircled } from "react-icons/rx";
+import EditTournament from "./pages/EditTournament"
 
 
 function App() {
   return (
     <AuthProvider>
       <Toaster
+        position='top-right'
         icons={{
           error: <RxCrossCircled size={36} color="var(--color-red)" />,
           success: <RxCheckCircled size={36} color="var(--color-green)" />
@@ -48,6 +50,14 @@ function App() {
           element={
             <ProtectedRoute>
               <CreateTournament />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/edit-tournament"
+          element={
+            <ProtectedRoute>
+              <EditTournament />
             </ProtectedRoute>
           }
         />

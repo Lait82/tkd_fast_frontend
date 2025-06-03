@@ -41,7 +41,7 @@ const RankSelect = ({
         <Listbox.Label className="form-label">Grado</Listbox.Label>
         
         <div className="relative mt-1">
-          <Listbox.Button className="form-input pl-10 text-left w-full">
+          <Listbox.Button className="form-input-primary pl-10 text-left w-full">
             {/* Selected value display */}
             <div className="flex items-center gap-2">
               <span className="absolute left-2 top-1/2 -translate-y-1/2">

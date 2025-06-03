@@ -5,6 +5,7 @@ interface FormInputProps {
   label?: string
   name: string
   type?: string
+  variant?: 'primary' | 'secondary'
   icon?: React.ReactNode
   value: string
   className?: string
@@ -18,6 +19,7 @@ const FormInput: React.FC<FormInputProps> = ({
   label,
   name,
   type = "text",
+  variant = "primary",
   icon,
   value,
   onChange,
@@ -38,7 +40,7 @@ const FormInput: React.FC<FormInputProps> = ({
           type={type}
           id={name}
           name={name}
-          className={`form-input ${className} ${error ? "input-error" : ""}`}
+          className={`form-input-${variant} ${className} ${error ? "input-error" : ""}`}
           placeholder={placeholder}
           value={value}
           onChange={onChange}

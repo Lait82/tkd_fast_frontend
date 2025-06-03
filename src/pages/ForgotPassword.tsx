@@ -78,7 +78,7 @@ const ForgotPassword = () => {
                     <input
                       type="email"
                       id="email"
-                      className={`form-input ${formError ? "input-error" : ""}`}
+                      className={`form-input-primary ${formError ? "input-error" : ""}`}
                       placeholder="Enter your email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}

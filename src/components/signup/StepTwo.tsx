@@ -81,7 +81,7 @@ const StepTwo = () => {
           <select
             id="rank"
             name="rank"
-            className="form-input pl-10" // espacio a la izquierda para el ícono
+            className="form-input-primary pl-10" // espacio a la izquierda para el ícono
             value={formData.rank}
             onChange={handleChange}
             disabled={loading}
@@ -102,7 +102,7 @@ const StepTwo = () => {
         <select
           id="federation"
           name="federation"
-          className="form-input"
+          className="form-input-primary"
           value={formData.federation}
           onChange={handleChange}
           disabled={loading}

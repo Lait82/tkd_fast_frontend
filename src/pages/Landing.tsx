@@ -22,9 +22,6 @@ const Landing = () => {
               <h1>
                 Con <span className="text-logo">TKDFast</span> podés:
               </h1>
-              <div className="bg-red-500 text-blue font-bold text-xl p-4">
-  ¿Me ves con fondo rojo, texto blanco, y negrita? ¡Tailwind anda!
-</div>
                 <TypeIt
                   as={"h1"}
                   options={{

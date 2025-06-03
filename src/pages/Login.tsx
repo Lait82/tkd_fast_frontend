@@ -74,7 +74,7 @@ const Login = () => {
                 <input
                   type="email"
                   id="email"
-                  className={`form-input ${formErrors.email ? "input-error" : ""}`}
+                  className={`form-input-primary ${formErrors.email ? "input-error" : ""}`}
                   placeholder="Enter your email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -100,7 +100,7 @@ const Login = () => {
                 <input
                   type="password"
                   id="password"
-                  className={`form-input ${formErrors.password ? "input-error" : ""}`}
+                  className={`form-input-primary ${formErrors.password ? "input-error" : ""}`}
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}

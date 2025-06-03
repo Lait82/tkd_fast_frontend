@@ -27,7 +27,8 @@ const CreateTournament = () => {
 
         try {
             await claimTournament(codeValue)
-        // setSuccess(true)
+            // setSuccess(true)
+            successToast('abr si funca')
         } catch (err: any) {
         // setError(err.message || "Failed to send password reset email")
         } finally {
@@ -41,7 +42,7 @@ const CreateTournament = () => {
     }
 
     return (
-    <div className="create-tournamnet-page">
+    <div className="create-tournament-page">
         <Header />
 
         <main className="create-tournament-container">
