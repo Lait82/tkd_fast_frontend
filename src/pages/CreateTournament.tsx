@@ -11,6 +11,10 @@ import { Hash } from "lucide-react"
 import { FormEvent, useState } from "react"
 import Button from "@/components/Button"
 import { claimTournament } from "@/services/tournamentService"
+import { toast } from "sonner"
+import { RxCheckCircled } from "react-icons/rx";
+import { successToast } from "@/services/toasts"
+
 
 // Mock data for tournaments
 const CreateTournament = () => {
@@ -44,7 +48,10 @@ const CreateTournament = () => {
             <GoBack />
             <div className="bg-elevated flex justify-center create-tournament-card p-5 rounded-lg">
             <div className="welcome-section">
-                <h1 className="text-xl text-extrabold px-3">Ingresa tu código de torneo</h1>
+                <h1 className="text-3xl text-extrabold px-3">Ingresa tu código de torneo</h1>
+                <h3 onClick={() => successToast('abr si funca')}> 
+                    BRGA
+                </h3>
                 <form className="flex flex-col mt-7" onSubmit={handleSubmit}>
                     <FormInput 
                         icon={<Hash />} 

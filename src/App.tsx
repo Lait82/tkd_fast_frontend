@@ -7,10 +7,29 @@ import ForgotPassword from "./pages/ForgotPassword"
 import Dashboard from "./pages/Dashboard"
 import ProtectedRoute from "./components/ProtectedRoute"
 import CreateTournament from "./pages/CreateTournament"
+import { Toaster } from "sonner"
+import { RxCrossCircled } from "react-icons/rx";
+import { RxCheckCircled } from "react-icons/rx";
+
 
 function App() {
   return (
     <AuthProvider>
+      <Toaster
+        icons={{
+          error: <RxCrossCircled size={36} color="var(--color-red)" />,
+          success: <RxCheckCircled size={36} color="var(--color-green)" />
+        }}
+        toastOptions={{
+          style: {
+            background: '#373838',
+            border: 'none',
+            color:'var(--color-neutrallight)',
+            borderRadius:'8px'
+          },
+          duration: 5000
+        }}
+      />
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
