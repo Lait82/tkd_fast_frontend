@@ -18,7 +18,8 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   return (
     <button
-    style={style}
+      type="submit"
+      style={style}
       className={`btn-base justify-center ${variant === "primary" ? "btn-primary" : "btn-secondary"} ${className}`}
       {...props}
     >

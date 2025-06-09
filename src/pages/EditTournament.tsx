@@ -1,4 +1,4 @@
-"use client"
+    "use client"
 
 // import { useState, useEffect } from "react"
 import { useAuth } from "../context/AuthContext"
@@ -14,37 +14,51 @@ import { FaCalendarAlt, FaImage } from "react-icons/fa"
 // import { claimTournament } from "@/services/tournamentService"
 // import { toast } from "sonner"
 // import { RxCheckCircled } from "react-icons/rx";
-import { successToast } from "@/services/toasts"
+import { errorToast, successToast } from "@/services/toasts"
 import FormInput from "@/components/forms/FormInput"
 import { Form } from "react-router-dom"
 import { useState } from "react"
-
+import TextArea from "@/components/forms/TextArea"
+import Button from "@/components/Button"
+import { EditTournamentData } from "@/types/tournament"
+import { editTournament } from "@/services/organizerService"
 
 // Mock data for tournaments
 const EditTournament = () => {
     // const { user } = useAuth();
     // const [codeValue, setCodeValue] = useState<string>(''); 
     // const [loading, setLoading] = useState<boolean>()
-    const [form, setForm] = useState({name:'', startDate:'', endDate:'', address:''})
+    const [form, setForm] = useState<EditTournamentData>({
+        name:'', 
+        startDate:'', 
+        endDate:'', 
+        arena:'',
+        address:'', 
+        deadline:'', 
+        description:''
+    })
 
-    // const handleSubmit = async (e: FormEvent) => {
-    //     e.preventDefault()
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
 
-    //     try {
-    //         await claimTournament(codeValue)
-    //         // setSuccess(true)
-    //         successToast('abr si funca')
-    //     } catch (err: any) {
-    //     // setError(err.message || "Failed to send password reset email")
-    //     } finally {
-    //         setLoading(false)
-    //     }
-    //   }
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { value } = e.target
-        setForm({...form, name:value})
+        try {
+            await editTournament("62SQAHZX", form)
+            successToast("Torneo editado con éxito")
+            // setSuccess(true)
+        } catch (err: any) {
+            console.error(err)
+            errorToast("Hubo un error al actualizar el torneo.")
+            // setError(err.message || "Error al editar el torneo")
+        } finally {
+            // setLoading(false)
+        }
     }
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const { name, value } = e.target
+        setForm({ ...form, [name]: value })
+    }
+
 
 
     return (
@@ -57,26 +71,54 @@ const EditTournament = () => {
                 <h1 className="text-3xl mr-auto" >Información de Torneo</h1>
 
                 <div className="edit-form-content">
-                    <form onSubmit={() => successToast('Se actualizó correctamente')}>
+                    <form onSubmit={handleSubmit}>
                         <label htmlFor="banner" className="bg-super-elevated rounded-lg shadow-card h-15 flex justify-center items-center cursor-pointer">
                             <FaImage className="text-muted" size={46} /> 
                             <span className="text-2xl pl-2 text-muted"> Agrega un banner a tu torneo</span>
                         </label>
-                        <input id="banner" type="file" style={{display:'none'}} />
+                        <input name="banner" id="banner" type="file" style={{display:'none'}} />
                         
-                        <div className="short-fields-container">
-                            <div className="short-fields-left">
+                        <div className="grid grid-cols-2 gap-y-5 pt-2">
+                            <div className="grid grid-cols-1 grid-rows-3 gap-3">
                                 <FormInput 
+                                    label="Nombre"
+                                    required
+                                    horizontal
                                     name="name"
                                     placeholder="Nombre"
                                     value={form.name}
                                     variant="secondary"
                                     onChange={handleChange}
                                 />
+                                <FormInput 
+                                    label="Arena"
+                                    name="arena"
+                                    required
+                                    placeholder="Arena/Estadio"
+                                    horizontal
+                                    value={form.arena}
+                                    variant="secondary"
+                                    onChange={handleChange}
+                                />
+                                <FormInput 
+                                    label="Dirección"
+                                    name="address"
+                                    required
+                                    placeholder="Dirección"
+                                    horizontal
+                                    value={form.address}
+                                    variant="secondary"
+                                    onChange={handleChange}
+                                />
+                            </div>
+                            <div className="grid grid-cols-1 grid-rows-3 gap-3">
                                 <FormInput
                                     label="Fecha de inicio"
                                     name="startDate"
                                     type="date"
+                                    required
+                                    variant="secondary"
+                                    horizontal
                                     icon={<FaCalendarAlt />}
                                     value={form.startDate}
                                     onChange={handleChange}
@@ -87,21 +129,44 @@ const EditTournament = () => {
                                     label="Fecha de finalización"
                                     name="endDate"
                                     type="date"
+                                    horizontal
                                     icon={<FaCalendarAlt />}
                                     value={form.endDate}
+                                    variant="secondary"
+                                    onChange={handleChange}
+                                    // error={errors.dob}
+                                    // disabled={loading}
+                                />
+                                <FormInput
+                                    label="Cierre de inscripciones"
+                                    name="deadline"
+                                    type="date"
+                                    required
+                                    horizontal
+                                    icon={<FaCalendarAlt />}
+                                    value={form.deadline}
+                                    variant="secondary"
                                     onChange={handleChange}
                                     // error={errors.dob}
                                     // disabled={loading}
                                 />
                             </div>
-                            <div className="short-fields-right">
-                                <FormInput 
-                                    name="address"
-                                    placeholder="Dirección"
-                                    value={form.name}
-                                    variant="secondary"
+                            <div className="col-span-2">
+                                <TextArea
+                                    name="description"
+                                    label="Descripción"
+                                    required
+                                    placeholder="Descripción del torneo..."
+                                    value={form.description}
+                                    // variant="secondary"
+                                    rows={10}
                                     onChange={handleChange}
                                 />
+                            </div>
+                            <div className="col-span-2 ml-auto mr-5">
+                                <Button>
+                                    Crear Torneo
+                                </Button>
                             </div>
                         </div>
                     </form>

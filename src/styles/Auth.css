@@ -57,6 +57,12 @@
   transform: translateY(-50%);
   color: var(--color-muted);
 }
+.input-icon-secondary {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-muted);
+}
 
 .form-input {
   /* padding-left: 3.5rem !important; */
