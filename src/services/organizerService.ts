@@ -8,14 +8,13 @@ const api = axios.create({
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
-    "Authorization": localStorage.getItem("token")
+    "Authorization": `Bearer ${localStorage.getItem("token")}`
   },
 })
 
 export const editTournament = async (code: string, data: EditTournamentData) => {
   try {
-    console.log(localStorage.getItem("token"));
-    const response = await api.put(`/organizer/tournament/${code}`, { data })
+    const response = await api.put(`/organizer/tournament/${code}`, { ...data })
     return response.data
   } catch (error: any) {
     throw new Error(error.response?.data?.message || "'Fallo al crear el torneo.")

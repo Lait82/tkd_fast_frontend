@@ -18,3 +18,19 @@ export type Rank =
     | 'DAN_7'
     | 'DAN_8'
     | 'DAN_9'
+
+export type Role = 
+    | 'ORGANIZER'
+    | 'MASTER'
+    | 'INSTRUCTOR'
+    | 'COMPETITOR'
+    | 'NONE'
+
+export type TournamentActions = 
+    | 'editCategories'
+    | 'editCompetitors'
+    | 'editTournament'
+    | 'inviteInstructor'
+    | 'inviteMaster'
+    | 'enroll'
+    | 'view'

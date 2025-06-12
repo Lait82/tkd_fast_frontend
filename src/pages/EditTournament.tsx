@@ -47,7 +47,7 @@ const EditTournament = () => {
             // setSuccess(true)
         } catch (err: any) {
             console.error(err)
-            errorToast("Hubo un error al actualizar el torneo.")
+            errorToast(err.message)
             // setError(err.message || "Error al editar el torneo")
         } finally {
             // setLoading(false)

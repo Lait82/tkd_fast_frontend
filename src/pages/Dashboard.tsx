@@ -58,7 +58,7 @@ const Dashboard = () => {
       <Header />
 
       <main className="dashboard-container">
-          <div className="dashboard-content">
+          <div className="dashboard-content p-4">
             <div className="dashboard-left">
               <div className="welcome-section">
                 <h1 className="text-neutrallight text-3xl">Hola {user?.firstname || "Juanito"}! Que quieres hacer?</h1>
