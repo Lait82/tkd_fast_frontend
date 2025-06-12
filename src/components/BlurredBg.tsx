@@ -6,7 +6,7 @@
     
     const BlurredBg: React.FC<BlurredBgProps> = ({
       children,
-      src=''
+      src
     }) => {
       return (
         <div

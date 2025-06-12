@@ -21,7 +21,8 @@
     "sonner": "^2.0.4",
     "tailwindcss": "^4.1.8",
     "typeit-react": "^2.7.8",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@types/node": "^20.10.0",

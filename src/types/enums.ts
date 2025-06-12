@@ -27,10 +27,10 @@ export type Role =
     | 'NONE'
 
 export type TournamentActions = 
-    | 'editCategories'
-    | 'editCompetitors'
-    | 'editTournament'
-    | 'inviteInstructor'
-    | 'inviteMaster'
-    | 'enroll'
-    | 'view'
+    | 'EDIT_CATEGORIES'
+    | 'EDIT_COMPETITORS'
+    | 'EDIT_TOURNAMENT'
+    | 'INVITE_INSTRUCTOR'
+    | 'INVITE_MASTER'
+    | 'ENROLL'
+    | 'VIEW'

@@ -45,7 +45,7 @@ const Dashboard = () => {
         icon: <FaGear />,
         title: "Invitar Instructores",
         description: "Invitá a todos tus instructores enviandoles un link para que puedan inscribir a sus alumnos.",
-        allowed: can('inviteInstructor'),
+        allowed: can('INVITE_INSTRUCTOR'),
         action: () => navigate("/"),
         },
         {
@@ -89,7 +89,9 @@ const Dashboard = () => {
                     <div>
                         <span className={`status-badge ${`organizer`}`}>{`Organizer`}</span>
                           {/* Capa de fondo con blur y oscurecimiento */}
-                            <BlurredBg>
+                            <BlurredBg
+
+                            >
                                 <div className="relative p-1 text-white mt-1">
                                     <h1 className="text-xl font-bold">ADCC Latin America Edition/Santiago Open</h1>
                                     <span className="text-muted">06 Jun - Faltan 15 días</span>

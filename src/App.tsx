@@ -18,66 +18,65 @@ import { TournamentProvider } from "./context/TournamentContext"
 function App() {
   return (
     <AuthProvider>
-        
-            <Toaster
-            position='top-right'
-            icons={{
-                error: <RxCrossCircled size={36} color="var(--color-red)" />,
-                success: <RxCheckCircled size={36} color="var(--color-green)" />
-            }}
-            toastOptions={{
-                style: {
-                background: '#373838',
-                border: 'none',
-                color:'var(--color-neutrallight)',
-                borderRadius:'8px'
-                },
-                duration: 5000
-            }}
-            />
-            <Routes>
-                <Route path="/" element={<Landing />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<Signup />} />
-                <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Toaster
+        position='top-right'
+        icons={{
+            error: <RxCrossCircled size={36} color="var(--color-red)" />,
+            success: <RxCheckCircled size={36} color="var(--color-green)" />
+        }}
+        toastOptions={{
+            style: {
+            background: '#373838',
+            border: 'none',
+            color:'var(--color-neutrallight)',
+            borderRadius:'8px'
+            },
+            duration: 5000
+        }}
+        />
+        <Routes>
+            <Route path="/" element={<Landing />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-                <Route
-                path="/dashboard"
+            <Route
+            path="/dashboard"
+            element={
+                <ProtectedRoute>
+                <Dashboard />
+                </ProtectedRoute>
+            }
+            />
+            <Route
+            path="/create-tournament"
+            element={
+                <ProtectedRoute>
+                <CreateTournament />
+                </ProtectedRoute>
+            }
+            />
+            <Route
+                path="/:tournamentCode/edit-tournament"
                 element={
-                    <ProtectedRoute>
-                    <Dashboard />
-                    </ProtectedRoute>
+                    <TournamentProvider>
+                        <ProtectedRoute>
+                            <EditTournament />
+                        </ProtectedRoute>
+                    </TournamentProvider>
                 }
-                />
-                <Route
-                path="/create-tournament"
+            />
+            <Route
+                path="/:tournamentCode/dashboard"
                 element={
-                    <ProtectedRoute>
-                    <CreateTournament />
-                    </ProtectedRoute>
+                    <TournamentProvider>
+                        <ProtectedRoute>
+                            <TournamentDashboard />
+                        </ProtectedRoute>
+                    </TournamentProvider>
                 }
-                />
-                <Route
-                    path="/:tournamentCode/edit-tournament"
-                    element={
-                        <TournamentProvider>
-                            <ProtectedRoute>
-                                <EditTournament />
-                            </ProtectedRoute>
-                        </TournamentProvider>
-                    }
-                />
-                <Route
-                    path="/:tournamentCode/dashboard"
-                    element={
-                        <TournamentProvider>
-                            <ProtectedRoute>
-                                <TournamentDashboard />
-                            </ProtectedRoute>
-                        </TournamentProvider>
-                    }
-                />
-            </Routes>
+            />
+        </Routes>
     </AuthProvider>
   )
 }
