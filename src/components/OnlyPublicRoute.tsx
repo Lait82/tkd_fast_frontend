@@ -5,18 +5,18 @@ import { Navigate } from "react-router-dom";
 // import { useAuth } from "../context/AuthContext"
 import { useAuthStore } from "@/states/useAuthStore";
 
-interface ProtectedRouteProps {
+interface OnlyPublicRouteProps {
 	children: ReactNode;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const OnlyPublicRoute = ({ children }: OnlyPublicRouteProps) => {
 	const { isAuthenticated } = useAuthStore();
 
-	if (!isAuthenticated) {
-		return <Navigate to="/login" replace />;
+	if (isAuthenticated) {
+		return <Navigate to="/dashboard" replace />;
 	}
 
 	return <>{children}</>;
 };
 
-export default ProtectedRoute;
+export default OnlyPublicRoute;
