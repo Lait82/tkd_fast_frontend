@@ -300,3 +300,9 @@ input.form-input-secondary[type="date"] {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 3rem;
+  }
+}

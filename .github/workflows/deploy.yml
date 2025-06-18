@@ -34,3 +34,10 @@ jobs:
                   cp -r dist/* ../build-dir
 
                   # Iniciar repo limpio en el director
+                  cd ../build-dir
+                  git init
+                  git checkout -b build
+                  git remote add origin https://github.com/${{ github.repository }}.git
+                  git add .
+                  git commit -m "Deploy build from ${{ github.sha }}"
+                  git push --force origin build

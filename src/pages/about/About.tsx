@@ -17,9 +17,9 @@ const About = () => {
 							<span className="text-orange">{">>>"}</span>
 						</h1>
 
-						<div className="flex gap-2">
+						<div className="flex flex-col lg:!flex-row items-stretch gap-2">
 							<img
-								className="max-w-1/3 rounded-lg shadow-card"
+								className="h-auto lg:max-w-1/3 rounded-lg shadow-card"
 								src="/about_us.jpg"
 								alt="about_us"
 								style={{ objectFit: "cover" }}

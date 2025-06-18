@@ -68,7 +68,7 @@ const Header = () => {
 					</ul>
 				</nav>
 
-				<div className="auth-buttons">
+				<div className="auth-buttons hidden md:flex">
 					<Button variant="primary" disabled={true}>
 						Próximamente
 					</Button>

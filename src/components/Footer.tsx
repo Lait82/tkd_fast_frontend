@@ -13,7 +13,7 @@ const Footer = () => {
 						<img
 							src="/logo.png"
 							alt="TKDFast"
-							className="mb-8 logo-img mb-5"
+							className="mb-2 logo-img"
 						/>
 						<p className="text-muted">
 							{" "}
