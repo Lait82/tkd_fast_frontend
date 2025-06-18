@@ -83,7 +83,11 @@ export const useAuthStore = create<AuthState>()(
 		}),
 		{
 			name: "auth-storage", // clave en localStorage
-			partialize: (state) => ({ token: state.token, user: state.user }), // podés persistir solo lo necesario
+			partialize: (state) => ({
+				token: state.token,
+				user: state.user,
+				isAuthenticated: state.isAuthenticated,
+			}), // podés persistir solo lo necesario
 		}
 	)
 );

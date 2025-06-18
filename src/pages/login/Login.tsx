@@ -4,9 +4,9 @@ import { useState, type FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaExclamationTriangle } from "react-icons/fa";
 // import { useAuth } from "../context/AuthContext"
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import "../styles/Auth.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import "@/styles/Auth.css";
 import { useAuthStore } from "@/states/useAuthStore";
 
 const Login = () => {

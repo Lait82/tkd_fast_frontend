@@ -1,10 +1,10 @@
 import { FaUserFriends, FaMobileAlt } from "react-icons/fa";
 import { TbTournament } from "react-icons/tb";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import FeatureCard from "../components/FeatureCard";
-import "../styles/Landing.css";
-import ButtonLink from "../components/ButtonLink";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import FeatureCard from "./components/FeatureCard";
+import "@/styles/Landing.css";
+import ButtonLink from "@/components/ButtonLink";
 import { Zap } from "lucide-react";
 import TypeItComponent from "typeit-react";
 import type { FC } from "react";

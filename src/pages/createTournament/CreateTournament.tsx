@@ -2,10 +2,10 @@
 
 // import { useState, useEffect } from "react"
 // import { useAuth } from "../context/AuthContext"
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import GoBack from "../components/GoBack";
-import "../styles/CreateTournament.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import GoBack from "@/components/GoBack";
+import "@/styles/CreateTournament.css";
 import FormInput from "@/components/forms/FormInput";
 import { Hash } from "lucide-react";
 import { FormEvent, useState } from "react";

@@ -7,10 +7,10 @@ import {
 	FaCheckCircle,
 	FaExclamationTriangle,
 } from "react-icons/fa";
-import { forgotPassword } from "../services/authService";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import "../styles/Auth.css";
+import { forgotPassword } from "@/services/authService";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import "@/styles/Auth.css";
 
 const ForgotPassword = () => {
 	const [email, setEmail] = useState("");

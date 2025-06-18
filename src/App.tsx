@@ -1,20 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 // import { AuthProvider } from "./context/AuthContext"
-import Landing from "./pages/Landing";
-// import Login from "./pages/Login";
-// import Signup from "./pages/Signup";
-// import ForgotPassword from "./pages/ForgotPassword";
-// import Dashboard from "./pages/Dashboard";
-// import ProtectedRoute from "./components/ProtectedRoute";
-// import CreateTournament from "./pages/CreateTournament";
-// import TournamentDashboard from "./pages/tournamentSelected/Dashboard";
-// import { Toaster } from "sonner";
-// import { RxCrossCircled } from "react-icons/rx";
-// import { RxCheckCircled } from "react-icons/rx";
-// import EditTournament from "./pages/EditTournament";
-// import { TournamentProvider } from "./context/TournamentContext";
+import Landing from "@/pages/landing/Landing";
+import Login from "./pages/login/Login";
+import Signup from "./pages/signup/Signup";
+import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
+import Dashboard from "./pages/basicDashboard/Dashboard";
+import ProtectedRoute from "./components/ProtectedRoute";
+import CreateTournament from "./pages/createTournament/CreateTournament";
+import TournamentDashboard from "./pages/tournamentDashboard/Dashboard";
+import EditTournament from "./pages/editTournament/EditTournament";
 import OnlyPublicRoute from "./components/OnlyPublicRoute";
-// import TournamentLoader from "./components/TournamentLoader";
+import TournamentLoader from "./components/TournamentLoader";
 import About from "./pages/about/About";
 
 function App() {
@@ -57,7 +53,7 @@ function App() {
 					</OnlyPublicRoute>
 				}
 			/>
-			{/* <Route
+			<Route
 				path="/login"
 				element={
 					<OnlyPublicRoute>
@@ -80,10 +76,9 @@ function App() {
 						<ForgotPassword />
 					</OnlyPublicRoute>
 				}
-			/> */}
+			/>
 
-			{/* <ProtectedRoute> */}
-			{/* <Route
+			<Route
 				path="/dashboard"
 				element={
 					<ProtectedRoute>
@@ -107,8 +102,7 @@ function App() {
 					<TournamentDashboard />
 					// </TournamentProvider>
 				}
-			/> */}
-			{/* </ProtectedRoute> */}
+			/>
 		</Routes>
 		// </AuthProvider>
 	);

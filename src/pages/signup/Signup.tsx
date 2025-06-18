@@ -4,16 +4,13 @@ import type { FormEvent } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaExclamationTriangle } from "react-icons/fa";
 // import { useAuth } from "../context/AuthContext"
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import "../styles/Auth.css";
-import {
-	SignupFormProvider,
-	useSignupForm,
-} from "../context/SignupFormContext";
-import StepOne from "../components/signup/StepOne";
-import StepTwo from "../components/signup/StepTwo";
-import StepThree from "../components/signup/StepThree";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import "@/styles/Auth.css";
+import { SignupFormProvider, useSignupForm } from "@/context/SignupFormContext";
+import StepOne from "@/pages/signup/components/StepOne";
+import StepTwo from "@/pages/signup/components/StepTwo";
+import StepThree from "@/pages/signup/components/StepThree";
 import { useAuthStore } from "@/states/useAuthStore";
 
 // Wrapper component that provides the context

@@ -1,8 +1,8 @@
 "use client";
-import Header from "../components/Header";
-import Footer from "../components/Footer";
-import GoBack from "../components/GoBack";
-import "../styles/EditTournament.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import GoBack from "@/components/GoBack";
+import "@/styles/EditTournament.css";
 import { FaCalendarAlt, FaImage } from "react-icons/fa";
 import { errorToast, successToast } from "@/services/toasts";
 import FormInput from "@/components/forms/FormInput";

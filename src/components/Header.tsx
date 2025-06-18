@@ -2,15 +2,15 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { FaBars, FaTimes } from "react-icons/fa";
 // import { useAuth } from "../context/AuthContext"
-// import { User, LogIn } from "lucide-react";
+import { User, LogIn } from "lucide-react";
 import "../styles/Header.css";
-// import ButtonLink from "./ButtonLink";
+import ButtonLink from "./ButtonLink";
 import Button from "./Button";
-// import { useAuthStore } from "@/states/useAuthStore";
+import { useAuthStore } from "@/states/useAuthStore";
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	// const { isAuthenticated, logout } = useAuthStore();
+	const { isAuthenticated, logout } = useAuthStore();
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
@@ -47,7 +47,7 @@ const Header = () => {
 								Nosotros
 							</Link>
 						</li>
-						{/* <li className="nav-item">
+						<li className="nav-item">
 							<Link
 								to="/tournaments"
 								className="nav-link nav-link-blue"
@@ -64,15 +64,12 @@ const Header = () => {
 							>
 								Contacto
 							</Link>
-						</li> */}
+						</li>
 					</ul>
 				</nav>
 
 				<div className="auth-buttons hidden md:flex">
-					<Button variant="primary" disabled={true}>
-						Próximamente
-					</Button>
-					{/* {isAuthenticated ? (
+					{isAuthenticated ? (
 						<Button variant="secondary" onClick={logout}>
 							Cerrar Sesión
 						</Button>
@@ -96,7 +93,7 @@ const Header = () => {
 								Regístrate
 							</ButtonLink>
 						</>
-					)} */}
+					)}
 				</div>
 			</div>
 		</header>
