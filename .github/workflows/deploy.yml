@@ -31,10 +31,11 @@ jobs:
 
                   # Crear un directorio temporal con el contenido de dist/
                   mkdir ../build-dir
+                  export SOURCE_DIR=$(pwd)
                   git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git ../build-dir
                   cd ../build-dir
                   git checkout build
-                  cp -r ../dist/* .
+                  cp -r $SOURCE_DIR/dist/* 
 
                   # Iniciar repo limpio en el director
                   git add .
