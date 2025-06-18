@@ -31,19 +31,12 @@ jobs:
 
                   # Crear un directorio temporal con el contenido de dist/
                   mkdir ../build-dir
-
-                  # Clonar el branch build
-                  git clone --branch build https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git ../build-dir
-
+                  git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git ../build-dir
                   cd ../build-dir
-
-                  # Borrar todo (excepto .git)
-                  find . -maxdepth 1 ! -name .git ! -name . -exec rm -rf {} +
-
-                  # Copiar el nuevo build
+                  git checkout build
                   cp -r ../dist/* .
 
-                  # Commit y push si hay cambios
+                  # Iniciar repo limpio en el director
                   git add .
-                  git commit -m "Deploy build from ${{ github.sha }}" || echo "No changes to commit"
+                  git commit -m "Deploy build from ${{ github.sha }}"
                   git push origin build
