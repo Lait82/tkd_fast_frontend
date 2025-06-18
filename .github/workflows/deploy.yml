@@ -37,6 +37,10 @@ jobs:
                   git checkout build
                   cp -r $SOURCE_DIR/dist/* .
 
+                  echo "===> Archivos copiados:"
+                  ls -la
+                  echo $(pwd)
+
                   # Iniciar repo limpio en el director
                   git add .
                   git commit -m "Deploy build from ${{ github.sha }}" || echo "No changes to commit"
