@@ -17,8 +17,7 @@ const Footer = () => {
 						/>
 						<p className="text-muted">
 							{" "}
-							Organizá. Inscribite. Competí. Todo en un solo
-							lugar.
+							Organizá. Invitá. Inscribí. Todo en un solo lugar.
 						</p>
 						{/* <div className="social-icons">
               <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
