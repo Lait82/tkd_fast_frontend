@@ -11,8 +11,8 @@ const About = () => {
 			<main>
 				<section className="flex flex-col pt-3 gap-2 p-4">
 					<GoBack />
-					<div className="p-4 pt-3 bg-elevated shadow-card rounded-lg">
-						<h1 className="text-4xl mb-4 font-bold">
+					<div className="p-2 lg:p-4 pt-2 lg:pt-3 bg-elevated shadow-card rounded-lg">
+						<h1 className="text-4xl mb-2 lg:mb-4 font-bold">
 							Sobre Nosotros{" "}
 							<span className="text-orange">{">>>"}</span>
 						</h1>
