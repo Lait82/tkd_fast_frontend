@@ -87,9 +87,9 @@ const Landing = () => {
 							</h2>
 							<p>
 								Esto recién empieza. Estamos construyendo la
-								herramienta que moderniza la forma de organizar
-								torneos, y vos vas a poder ser parte desde el
-								primer día.
+								herramienta que realmente facilita la forma de
+								organizar torneos, y vos vas a poder ser parte
+								desde el primer día.
 							</p>
 						</div>
 

@@ -37,7 +37,7 @@ jobs:
                   cd ../build-dir
                   git init
                   git checkout -b build
-                  git remote add origin https://github.com/${{ github.repository }}.git
+                  git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
                   git add .
                   git commit -m "Deploy build from ${{ github.sha }}"
                   git push --force origin build
