@@ -98,30 +98,11 @@ body {
   color: var(--color-text);
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
 p {
   margin-bottom: 1rem;
   line-height: 1.5;
 }
 
-a {
-  color: var(--color-blue);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-a:hover {
-  color: var(--color-yellow);
-}
 
 /* button {
   cursor: pointer;
@@ -296,22 +277,6 @@ input.form-input-secondary[type="date"] {
 
 .justify-between {
   justify-content: space-between;
-}
-
-.gap-8 {
-  gap: 2rem;
-}
-
-.mb-2 {
-  margin-bottom: 0.5rem;
-}
-
-.mb-4 {
-  margin-bottom: 1rem;
-}
-
-.mb-8 {
-  margin-bottom: 2rem;
 }
 
 .w-full {

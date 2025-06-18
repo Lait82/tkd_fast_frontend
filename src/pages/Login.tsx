@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaEnvelope, FaLock, FaExclamationTriangle } from "react-icons/fa";
 // import { useAuth } from "../context/AuthContext"
 import Header from "../components/Header";
@@ -16,6 +16,7 @@ const Login = () => {
 		email?: string;
 		password?: string;
 	}>({});
+	const navigate = useNavigate();
 
 	const { login, loading, error } = useAuthStore();
 
@@ -44,7 +45,7 @@ const Login = () => {
 		e.preventDefault();
 
 		if (validateForm()) {
-			await login(email, password);
+			await login(email, password, navigate);
 		}
 	};
 

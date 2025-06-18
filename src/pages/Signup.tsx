@@ -1,7 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaExclamationTriangle } from "react-icons/fa";
 // import { useAuth } from "../context/AuthContext"
 import Header from "../components/Header";
@@ -19,7 +19,7 @@ import { useAuthStore } from "@/states/useAuthStore";
 // Wrapper component that provides the context
 const SignupWithProvider = () => {
 	const { signup, loading, error } = useAuthStore();
-
+	const navigate = useNavigate();
 	const handleSubmit = async (formData: any) => {
 		// Format date from yyyy-mm-dd to dd-mm-yyyy
 		const formattedData = { ...formData };
@@ -28,7 +28,7 @@ const SignupWithProvider = () => {
 			formattedData.dob = `${day}-${month}-${year}`;
 		}
 
-		await signup(formattedData);
+		await signup(formattedData, navigate);
 	};
 
 	return (

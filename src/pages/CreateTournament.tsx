@@ -11,15 +11,15 @@ import { Hash } from "lucide-react";
 import { FormEvent, useState } from "react";
 import Button from "@/components/Button";
 import { claimTournament } from "@/services/tournamentService";
-import { toast } from "sonner";
-import { RxCheckCircled } from "react-icons/rx";
+// import { toast } from "sonner";
+// import { RxCheckCircled } from "react-icons/rx";
 import { errorToast, successToast } from "@/services/toasts";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "@/states/useAuthStore";
+// import { useAuthStore } from "@/states/useAuthStore";
 
 // Mock data for tournaments
 const CreateTournament = () => {
-	const { user } = useAuthStore();
+	// const { user } = useAuthStore();
 	const [codeValue, setCodeValue] = useState<string>("");
 	const [loading, setLoading] = useState<boolean>();
 	const navigate = useNavigate();

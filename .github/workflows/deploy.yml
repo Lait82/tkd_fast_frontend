@@ -1,0 +1,36 @@
+name: Build and Deploy to 'build' branch
+
+on:
+    push:
+        branches: [production]
+
+jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+
+        steps:
+            - name: Checkout source code
+              uses: actions/checkout@v3
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 22
+
+            - name: Install dependencies
+              run: npm ci
+
+            - name: Build project
+              run: npm run build
+
+            - name: Deploy to 'build' branch
+              run: |
+                  # Preparar git para hacer push a otro branch
+                  git config --global user.name 'github-actions'
+                  git config --global user.email 'github-actions@github.com'
+
+                  # Crear un directorio temporal con el contenido de dist/
+                  mkdir ../build-dir
+                  cp -r dist/* ../build-dir
+
+                  # Iniciar repo limpio en el director

@@ -87,7 +87,7 @@ const EditTournament = () => {
 										horizontal
 										name="name"
 										placeholder="Nombre"
-										value={form.name}
+										value={form.name ?? ""}
 										variant="secondary"
 										onChange={handleChange}
 									/>
@@ -97,7 +97,7 @@ const EditTournament = () => {
 										required
 										placeholder="Arena/Estadio"
 										horizontal
-										value={form.arena}
+										value={form.arena ?? ""}
 										variant="secondary"
 										onChange={handleChange}
 									/>
@@ -107,7 +107,7 @@ const EditTournament = () => {
 										required
 										placeholder="Dirección"
 										horizontal
-										value={form.address}
+										value={form.address ?? ""}
 										variant="secondary"
 										onChange={handleChange}
 									/>
@@ -121,7 +121,7 @@ const EditTournament = () => {
 										variant="secondary"
 										horizontal
 										icon={<FaCalendarAlt />}
-										value={form.startDate}
+										value={form.startDate ?? ""}
 										onChange={handleChange}
 										// error={errors.dob}
 										// disabled={loading}
@@ -132,7 +132,7 @@ const EditTournament = () => {
 										type="date"
 										horizontal
 										icon={<FaCalendarAlt />}
-										value={form.endDate}
+										value={form.endDate ?? ""}
 										variant="secondary"
 										onChange={handleChange}
 										// error={errors.dob}
@@ -145,7 +145,7 @@ const EditTournament = () => {
 										required
 										horizontal
 										icon={<FaCalendarAlt />}
-										value={form.deadline}
+										value={form.deadline ?? ""}
 										variant="secondary"
 										onChange={handleChange}
 										// error={errors.dob}
@@ -158,7 +158,7 @@ const EditTournament = () => {
 										label="Descripción"
 										required
 										placeholder="Descripción del torneo..."
-										value={form.description}
+										value={form.description ?? ""}
 										// variant="secondary"
 										rows={10}
 										onChange={handleChange}

@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/states/useAuthStore";
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/api/v1";
+const API_URL = "https://localhost:8000/api/v1";
 const token = useAuthStore.getState().token;
 
 const api = axios.create({

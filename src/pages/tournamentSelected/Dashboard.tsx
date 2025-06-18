@@ -11,7 +11,7 @@ import { FaGear } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 import BlurredBg from "@/components/BlurredBg";
 // import { useTournament } from "@/context/TournamentContext";
-import { TournamentActions } from "@/types/enums";
+// import { TournamentActions } from "@/types/enums";
 import { useAuthStore } from "@/states/useAuthStore";
 import { useTournamentStore } from "@/states/useTournamentStore";
 
