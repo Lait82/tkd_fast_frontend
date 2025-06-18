@@ -35,7 +35,7 @@ jobs:
                   git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git ../build-dir
                   cd ../build-dir
                   git checkout build
-                  cp -r $SOURCE_DIR/dist/* 
+                  cp -r $SOURCE_DIR/dist/* .
 
                   # Iniciar repo limpio en el director
                   git add .
