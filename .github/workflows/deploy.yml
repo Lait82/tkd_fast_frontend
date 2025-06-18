@@ -39,5 +39,5 @@ jobs:
 
                   # Iniciar repo limpio en el director
                   git add .
-                  git commit -m "Deploy build from ${{ github.sha }}"
+                  git commit -m "Deploy build from ${{ github.sha }}" || echo "No changes to commit"
                   git push origin build
