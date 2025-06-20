@@ -1,23 +1,24 @@
-export type Rank =
-	| "WHITE"
-	| "WHITE_YELLOW"
-	| "YELLOW"
-	| "YELLOW_GREEN"
-	| "GREEN"
-	| "GREEN_BLUE"
-	| "BLUE"
-	| "BLUE_RED"
-	| "RED"
-	| "RED_BLACK"
-	| "DAN_1"
-	| "DAN_2"
-	| "DAN_3"
-	| "DAN_4"
-	| "DAN_5"
-	| "DAN_6"
-	| "DAN_7"
-	| "DAN_8"
-	| "DAN_9";
+export enum Rank {
+	WHITE = "WHITE",
+	WHITE_YELLOW = "WHITE_YELLOW",
+	YELLOW = "YELLOW",
+	YELLOW_GREEN = "YELLOW_GREEN",
+	GREEN = "GREEN",
+	GREEN_BLUE = "GREEN_BLUE",
+	BLUE = "BLUE",
+	BLUE_RED = "BLUE_RED",
+	RED = "RED",
+	RED_BLACK = "RED_BLACK",
+	DAN_1 = "DAN_1",
+	DAN_2 = "DAN_2",
+	DAN_3 = "DAN_3",
+	DAN_4 = "DAN_4",
+	DAN_5 = "DAN_5",
+	DAN_6 = "DAN_6",
+	DAN_7 = "DAN_7",
+	DAN_8 = "DAN_8",
+	DAN_9 = "DAN_9",
+}
 
 // export type Role =
 //     | 'ORGANIZER'
@@ -33,11 +34,12 @@ export enum Role {
 	NONE = "NONE",
 }
 
-export type TournamentActions =
-	| "EDIT_CATEGORIES"
-	| "EDIT_COMPETITORS"
-	| "EDIT_TOURNAMENT"
-	| "INVITE_INSTRUCTOR"
-	| "INVITE_MASTER"
-	| "ENROLL"
-	| "VIEW";
+export enum TournamentActions {
+	MANAGE_CATEGORIES = "MANAGE_CATEGORIES",
+	MANAGE_COMPETITORS = "MANAGE_COMPETITORS",
+	MANAGE_TOURNAMENT = "MANAGE_TOURNAMENT",
+	INVITE_INSTRUCTOR = "INVITE_INSTRUCTOR",
+	INVITE_MASTER = "INVITE_MASTER",
+	// ENROLL = "ENROLL",
+	// VIEW = "VIEW",
+}

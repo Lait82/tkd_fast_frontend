@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { mapTo } from "@/utils/utils";
-import { Role } from "@/types/enums";
+import { Role, TournamentActions } from "@/types/enums";
 import { Tournament } from "@/types/tournament";
 import { getTournamentInfo } from "@/services/tournamentService";
 import { tournamentMap } from "@/types/modelMaps/tournamentMap";
@@ -16,11 +16,12 @@ type TournamentState = {
 	loading: boolean;
 	error: string | null;
 	getTournamentInfo: (code: string) => Promise<void>;
+	can: (action: TournamentActions) => boolean;
 };
 
 export const useTournamentStore = create<TournamentState>()(
 	persist(
-		(set, _) => ({
+		(set, get) => ({
 			tournament: tournamentMap,
 			role: [Role.NONE],
 			loading: false,
@@ -45,6 +46,36 @@ export const useTournamentStore = create<TournamentState>()(
 				} finally {
 					set({ loading: false });
 				}
+			},
+
+			can: (action: TournamentActions) => {
+				const { role } = get();
+				if (role.includes(Role.ORGANIZER)) return true;
+
+				const permissions = {
+					// Competitors
+					[TournamentActions.MANAGE_COMPETITORS]: [
+						Role.INSTRUCTOR,
+						Role.MASTER,
+						Role.ORGANIZER,
+					],
+
+					// Tournament
+					[TournamentActions.MANAGE_CATEGORIES]: [Role.ORGANIZER], // Added for scalability and legibility as all of the only organizer's permits.
+					[TournamentActions.MANAGE_TOURNAMENT]: [Role.ORGANIZER],
+
+					// Invites
+					[TournamentActions.INVITE_INSTRUCTOR]: [
+						Role.MASTER,
+						Role.ORGANIZER,
+					],
+					[TournamentActions.INVITE_MASTER]: [Role.ORGANIZER],
+				};
+
+				// If one of the specified list of roles appear in the user's tournament roles returns true.
+				return permissions[action].some((allowedRole) =>
+					role.includes(allowedRole)
+				);
 			},
 		}),
 		{

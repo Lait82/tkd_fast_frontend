@@ -16,11 +16,14 @@ import { useAuthStore } from "@/states/useAuthStore";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import dayjs from "dayjs";
 import RoleBadge from "@/components/forms/RoleBadge";
+import { TournamentActions } from "@/types/enums";
+import ActionItem from "./components/ActionItem";
+import GoBack from "@/components/GoBack";
 
 const Dashboard = () => {
 	const { user } = useAuthStore();
 	const navigate = useNavigate();
-	const { tournament } = useTournamentStore();
+	const { tournament, can } = useTournamentStore();
 	// TODO: Organizar los permisos de acciones de torneo
 	const actions = [
 		{
@@ -52,14 +55,14 @@ const Dashboard = () => {
 			title: "Invitar Instructores",
 			description:
 				"Invitá a todos tus instructores enviandoles un link para que puedan inscribir a sus alumnos.",
-			allowed: "INVITE_INSTRUCTOR",
+			allowed: can(TournamentActions.INVITE_INSTRUCTOR),
 			action: () => navigate("/"),
 		},
 		{
 			icon: <FaGear />,
 			title: "Administrar Competidores y Equipos",
 			description: `Inscribí competidores, ADSGADGADGADG. ${tournament?.code}`,
-			allowed: true,
+			allowed: can(TournamentActions.MANAGE_COMPETITORS),
 			action: () => navigate("/"),
 		},
 		{
@@ -67,7 +70,7 @@ const Dashboard = () => {
 			title: "Administrar Categorias",
 			description:
 				"Agregá categorias, editá los pesos y cinturones de cada categoría.",
-			allowed: true,
+			allowed: can(TournamentActions.MANAGE_CATEGORIES),
 			action: () => navigate("/"),
 		},
 		{
@@ -75,14 +78,14 @@ const Dashboard = () => {
 			title: "Invitar Maestros",
 			description:
 				"Invita formalmente a maestros de otras escuelas/asociaciones para que puedan invitar a sus instructores.",
-			allowed: true,
+			allowed: can(TournamentActions.INVITE_MASTER),
 			action: () => navigate("/"),
 		},
 		{
 			icon: <FaGear />,
 			title: "Administrar Torneo",
 			description: "Modifica la información disponible del torneo.",
-			allowed: true,
+			allowed: can(TournamentActions.MANAGE_TOURNAMENT),
 			action: () => navigate(`/${tournament.code}/edit-tournament`),
 		},
 	];
@@ -90,10 +93,10 @@ const Dashboard = () => {
 	return (
 		<div className="dashboard-page">
 			<Header />
-
-			<main className="dashboard-container">
-				<div className="dashboard-content gap-2 p-4">
-					<div className="welcome-section items-end col-span-2 grid grid-cols-2">
+			<main className="flex flex-col gap-2 py-2 px-1.5 max-w-100 w-full my-0 mx-auto">
+				<GoBack />
+				<div className="grid grid-cols-2 items-start bg-elevated shadow-card rounded-lg  gap-2 p-4">
+					<div className="welcome-section items-end col-span-2 grid gap-2 grid-cols-2">
 						<h1 className="text-neutrallight text-3xl">
 							Hola{" "}
 							<span className="capitalize">
@@ -131,25 +134,25 @@ const Dashboard = () => {
 					</div>
 
 					{actions.map((action, index) => (
-						<div
-							key={index}
-							className="action-item"
-							onClick={action.action}
-						>
-							<span className="action-icon">{action.icon}</span>
-							<div className="action-content">
-								{/* {action.badge && <span className="action-badge">{action.badge}</span>} */}
-								<h3 className="text-xl">{action.title}</h3>
-								<p>
-									{action.description}{" "}
-									<span className="action-highlight font-black">{`>>>`}</span>
-								</p>
-							</div>
-						</div>
+						// <div
+						// 	key={index}
+						// 	className="action-item"
+						// 	onClick={action.action}
+						// >
+						// 	<span className="action-icon">{action.icon}</span>
+						// 	<div className="action-content">
+						// 		{/* {action.badge && <span className="action-badge">{action.badge}</span>} */}
+						// 		<h3 className="text-xl">{action.title}</h3>
+						// 		<p>
+						// 			{action.description}{" "}
+						// 			<span className="action-highlight font-black">{`>>>`}</span>
+						// 		</p>
+						// 	</div>
+						// </div>
+						<ActionItem action={action} index={index} />
 					))}
 				</div>
 			</main>
-
 			<Footer />
 		</div>
 	);

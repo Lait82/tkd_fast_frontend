@@ -92,8 +92,12 @@ const Dashboard = () => {
 					<div className="dashboard-left">
 						<div className="welcome-section">
 							<h1 className="text-neutrallight text-3xl">
-								Hola {user?.firstname || "Juanito"}! Que quieres
-								hacer?
+								Hola{" "}
+								<span className="capitalize">
+									{" "}
+									{user?.firstname || "Juanito"}
+								</span>
+								! Que quieres hacer?
 							</h1>
 						</div>
 

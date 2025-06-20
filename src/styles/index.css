@@ -51,9 +51,11 @@
   --color-yellow: #e3b041;
   --color-neutrallight: #f1e9e5;
   --color-orange: #ff8c42;
+  --color-transparent: transparent;
 
-  --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
+  --ease-fluid: cubic-bezier(0.7, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
+  --tw-translate-y: 1px;
 
   --card: box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
