@@ -1,7 +1,7 @@
 import { useAuthStore } from "@/states/useAuthStore";
 import axios from "axios";
 
-const API_URL = "https://localhost:8000/api/v1";
+const API_URL = "http://localhost:8000/api/v1";
 const token = useAuthStore.getState().token;
 
 const api = axios.create({
@@ -44,6 +44,17 @@ export const getTournamentInfo = async (code: string) => {
 		throw new Error(
 			error.response?.data?.message ||
 				"'Fallo al obtener información del torneo."
+		);
+	}
+};
+
+export const getMyTournaments = async () => {
+	try {
+		const response = await api.get(`/user/tournaments`);
+		return response.data;
+	} catch (error: any) {
+		throw new Error(
+			error.response?.data?.message || "'Fallo al obtener mis torneos."
 		);
 	}
 };

@@ -1,38 +1,38 @@
+import { Tournament } from "@/types/tournament";
 import "../styles/TournamentCard.css";
-
-interface Tournament {
-	id: number;
-	title: string;
-	date: string;
-	daysRemaining: string;
-	image: string;
-	status: string;
-	statusType: "competitor" | "instructor";
-}
+import { useNavigate } from "react-router-dom";
+import RoleBadge from "./forms/RoleBadge";
 
 interface TournamentCardProps {
-	tournament: object;
+	tournament: Tournament;
 }
 
 const TournamentCard = ({ tournament }: TournamentCardProps) => {
+	const navigate = useNavigate();
+	const route = `/${tournament.code}/dashboard`;
 	return (
-		<div className="tournament-card">
+		<div className="tournament-card" onClick={() => navigate(route)}>
 			<div className="tournament-image">
 				<img
-					src={tournament.image || "/placeholder.svg"}
-					alt={tournament.title}
+					src={"https://picsum.photos/586/120"}
+					alt={tournament.name ?? ""}
 				/>
 				<div className="tournament-status"></div>
 			</div>
 			<div className="tournament-info">
-				<h3>{tournament.title}</h3>
+				<h3>{tournament.name}</h3>
 				<div className="items-center flex justify-between">
 					<span className="text-muted tournament-date">
-						{tournament.date} - {tournament.daysRemaining}
+						{tournament.date_of_event ?? (
+							<i className="text-muted">Todavía sin definir</i>
+						)}{" "}
+						- N dias restantes
 					</span>
-					<span className={`status-badge ${tournament.statusType}`}>
-						{tournament.status}
-					</span>
+					<div className="flex gap-1">
+						{tournament.roles.map((role) => (
+							<RoleBadge role={role} />
+						))}
+					</div>
 				</div>
 			</div>
 		</div>

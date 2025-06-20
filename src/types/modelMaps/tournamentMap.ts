@@ -1,3 +1,4 @@
+import { Role } from "../enums";
 import { Tournament } from "../tournament";
 
 export const tournamentMap: Tournament = {
@@ -14,5 +15,5 @@ export const tournamentMap: Tournament = {
 	created_at: "",
 	updated_at: "",
 	organizer_uuid: null,
-	role: ["NONE"], // 👈 este es el rol del usuario respecto al torneo
+	roles: [Role.NONE], // 👈 este es el rol del usuario respecto al torneo
 };
