@@ -14,6 +14,9 @@ const TournamentLoader = ({ children }: TournamentLoaderProps) => {
 		useTournamentStore();
 
 	useEffect(() => {
+		console.log("tournamentCode ===> ", tournamentCode);
+		console.log("tournament ===> ", tournament);
+
 		if (
 			tournamentCode &&
 			(!tournament || tournament.code !== tournamentCode)

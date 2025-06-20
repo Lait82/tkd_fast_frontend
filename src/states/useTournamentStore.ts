@@ -11,8 +11,8 @@ import { tournamentMap } from "@/types/modelMaps/tournamentMap";
 // let initializedCodes = new Set<string>();
 
 type TournamentState = {
-	tournament: Tournament | null;
-	roles: Role[];
+	tournament: Tournament;
+	role: Role[];
 	loading: boolean;
 	error: string | null;
 	getTournamentInfo: (code: string) => Promise<void>;
@@ -21,8 +21,8 @@ type TournamentState = {
 export const useTournamentStore = create<TournamentState>()(
 	persist(
 		(set, _) => ({
-			tournament: null,
-			roles: ["NONE"],
+			tournament: tournamentMap,
+			role: [Role.NONE],
 			loading: false,
 			error: null,
 
@@ -34,7 +34,7 @@ export const useTournamentStore = create<TournamentState>()(
 					const tournament = mapTo(tournamentMap, rawRes);
 					set({
 						tournament: tournament,
-						roles: tournament.role || ["NONE"],
+						role: tournament.role || [Role.NONE],
 					});
 				} catch (err: any) {
 					set({
@@ -51,7 +51,7 @@ export const useTournamentStore = create<TournamentState>()(
 			name: "tournament-storage", // clave en localStorage
 			partialize: (state) => ({
 				tournament: state.tournament,
-				roles: state.roles,
+				role: state.role,
 			}),
 		}
 	)

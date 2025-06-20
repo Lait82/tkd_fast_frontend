@@ -29,7 +29,7 @@ const TournamentCard = ({ tournament }: TournamentCardProps) => {
 						- N dias restantes
 					</span>
 					<div className="flex gap-1">
-						{tournament.roles.map((role) => (
+						{tournament.role.map((role) => (
 							<RoleBadge role={role} />
 						))}
 					</div>

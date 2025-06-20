@@ -98,9 +98,9 @@ function App() {
 			<Route
 				path="/:tournamentCode/dashboard"
 				element={
-					// <TournamentProvider>
-					<TournamentDashboard />
-					// </TournamentProvider>
+					<TournamentLoader>
+						<TournamentDashboard />
+					</TournamentLoader>
 				}
 			/>
 		</Routes>

@@ -15,5 +15,5 @@ export const tournamentMap: Tournament = {
 	created_at: "",
 	updated_at: "",
 	organizer_uuid: null,
-	roles: [Role.NONE], // 👈 este es el rol del usuario respecto al torneo
+	role: [Role.NONE], // 👈 este es el rol del usuario respecto al torneo
 };

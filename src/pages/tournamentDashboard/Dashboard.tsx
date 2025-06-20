@@ -14,16 +14,18 @@ import BlurredBg from "@/components/BlurredBg";
 // import { TournamentActions } from "@/types/enums";
 import { useAuthStore } from "@/states/useAuthStore";
 import { useTournamentStore } from "@/states/useTournamentStore";
+import dayjs from "dayjs";
+import RoleBadge from "@/components/forms/RoleBadge";
 
 const Dashboard = () => {
 	const { user } = useAuthStore();
 	const navigate = useNavigate();
 	const { tournament } = useTournamentStore();
-
+	// TODO: Organizar los permisos de acciones de torneo
 	const actions = [
 		{
 			icon: <FaMapMarkerAlt />,
-			title: "Ver llaves/Cronograma",
+			title: "Ver llaves / cronograma",
 			description:
 				"Aca vas a poder ver las llaves cuando esten disponibles y el cronograma de tus torneos.",
 			allowed: true,
@@ -81,7 +83,7 @@ const Dashboard = () => {
 			title: "Administrar Torneo",
 			description: "Modifica la información disponible del torneo.",
 			allowed: true,
-			action: () => navigate("/"),
+			action: () => navigate(`/${tournament.code}/edit-tournament`),
 		},
 	];
 
@@ -93,21 +95,35 @@ const Dashboard = () => {
 				<div className="dashboard-content gap-2 p-4">
 					<div className="welcome-section items-end col-span-2 grid grid-cols-2">
 						<h1 className="text-neutrallight text-3xl">
-							Hola {user?.firstname || "Juanito"}! Que quieres
-							hacer?
+							Hola{" "}
+							<span className="capitalize">
+								{user?.firstname || "Juanito"}!
+							</span>{" "}
+							Que quieres hacer?
 						</h1>
 						<div>
-							<span
-								className={`status-badge ${`organizer`}`}
-							>{`Organizer`}</span>
+							<div className="flex gap-1">
+								{tournament.role.map((role) => (
+									<RoleBadge role={role} />
+								))}
+							</div>
 							{/* Capa de fondo con blur y oscurecimiento */}
 							<BlurredBg>
 								<div className="relative p-1 text-white mt-1">
 									<h1 className="text-xl font-bold">
-										ADCC Latin America Edition/Santiago Open
+										{tournament.name}
 									</h1>
 									<span className="text-muted">
-										06 Jun - Faltan 15 días
+										{dayjs(tournament.created_at).format(
+											"D MMMM YYYY"
+										)}{" "}
+										- Faltan{" "}
+										{dayjs(tournament.created_at).diff(
+											dayjs()
+										) /
+											1000 /
+											3600}{" "}
+										días
 									</span>
 								</div>
 							</BlurredBg>

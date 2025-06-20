@@ -14,7 +14,7 @@ export interface Tournament {
 	created_at: string;
 	updated_at: string;
 	organizer_uuid: string | null;
-	roles: Role[]; // 👈 este es el rol del usuario respecto al torneo
+	role: Role[]; // 👈 este es el rol del usuario respecto al torneo
 }
 
 export interface EditTournamentData {
