@@ -7,7 +7,7 @@ interface RoleBadgeProps {
 
 const RoleBadge: React.FC<RoleBadgeProps> = ({ role = Role.NONE }) => {
 	return (
-		<span className={`status-badge ${role.toLowerCase()}`}>
+		<span className={`status-badge w-fit ${role.toLowerCase()}`}>
 			{role.toLowerCase()}
 		</span>
 	);

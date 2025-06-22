@@ -53,11 +53,11 @@
   --color-orange: #ff8c42;
   --color-transparent: transparent;
 
-  --ease-fluid: cubic-bezier(0.7, 0, 0, 1);
+  --ease-fluid: cubic-bezier(0.25, 0.1, 0.25, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
   --tw-translate-y: 1px;
 
-  --card: box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --card: box-shadow: 0 4px 6px rgba(255, 0, 0, 0.2);
 }
 input:-webkit-autofill {
   box-shadow: 0 0 0px 1000px var(--color-elevated) inset !important;
@@ -97,14 +97,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--color-background);
-  color: var(--color-text);
+  color: var(--color-neutrallight);
 }
 
-p {
-  margin-bottom: 1rem;
-  line-height: 1.5;
-}
-
+/* .shadow-card {
+box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+} */
 
 /* button {
   cursor: pointer;

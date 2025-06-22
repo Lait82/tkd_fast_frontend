@@ -2,9 +2,9 @@
 
 // import { useState, useEffect } from "react"
 // import { useAuth } from "../../context/AuthContext"
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import "../../styles/Dashboard.css";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import "@/styles/Dashboard.css";
 import { FaMapMarkerAlt, FaTrophy } from "react-icons/fa";
 import { Hash } from "lucide-react";
 import { FaGear } from "react-icons/fa6";
@@ -40,7 +40,7 @@ const Dashboard = () => {
 			description:
 				"UMira información detallada del torneo en el perfil del evento.",
 			allowed: true,
-			action: () => navigate("/"),
+			action: () => navigate(`/${tournament.code}/info`),
 		},
 		{
 			icon: <Hash />,

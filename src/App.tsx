@@ -7,11 +7,12 @@ import ForgotPassword from "./pages/forgotPassword/ForgotPassword";
 import Dashboard from "./pages/basicDashboard/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 import CreateTournament from "./pages/createTournament/CreateTournament";
-import TournamentDashboard from "./pages/tournamentDashboard/Dashboard";
+import TournamentDashboard from "./pages/tournament/dashboard/Dashboard";
 import EditTournament from "./pages/editTournament/EditTournament";
 import OnlyPublicRoute from "./components/OnlyPublicRoute";
 import TournamentLoader from "./components/TournamentLoader";
 import About from "./pages/about/About";
+import Info from "./pages/tournament/info/Info";
 
 function App() {
 	return (
@@ -100,6 +101,14 @@ function App() {
 				element={
 					<TournamentLoader>
 						<TournamentDashboard />
+					</TournamentLoader>
+				}
+			/>
+			<Route
+				path="/:tournamentCode/info"
+				element={
+					<TournamentLoader>
+						<Info />
 					</TournamentLoader>
 				}
 			/>

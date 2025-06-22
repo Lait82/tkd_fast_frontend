@@ -34,6 +34,14 @@ export enum Role {
 	NONE = "NONE",
 }
 
+export const RoleHierarchy: Record<Role, number> = {
+	[Role.ORGANIZER]: 1,
+	[Role.MASTER]: 2,
+	[Role.INSTRUCTOR]: 3,
+	[Role.COMPETITOR]: 4,
+	[Role.NONE]: 5,
+};
+
 export enum TournamentActions {
 	MANAGE_CATEGORIES = "MANAGE_CATEGORIES",
 	MANAGE_COMPETITORS = "MANAGE_COMPETITORS",

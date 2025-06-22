@@ -1,3 +1,5 @@
+import { Role, RoleHierarchy } from "@/types/enums";
+
 export function mapTo<T>(map: T, raw: any): T {
 	const result = {} as T;
 	for (const key in map) {
@@ -7,4 +9,12 @@ export function mapTo<T>(map: T, raw: any): T {
 		result[key] = raw[key];
 	}
 	return result;
+}
+
+export function getHighestRole(roles: Role[]): Role {
+	return roles.reduce(
+		(carry, role) =>
+			RoleHierarchy[role] < RoleHierarchy[carry] ? role : carry,
+		Role.NONE
+	);
 }

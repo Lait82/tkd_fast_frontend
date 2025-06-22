@@ -12,7 +12,7 @@ const GoBack: React.FC<GoBackProps> = ({ className = "", ...props }) => {
 	return (
 		<span
 			style={{ transform: "all 0.2s ease" }}
-			className={`font-bold transition-all ease-fluid ${className} cursor-pointer hover:text-orange font-extrabold`}
+			className={`font-bold w-full transition-all ease-fluid ${className} cursor-pointer hover:text-orange font-extrabold`}
 			onClick={() => navigate(-1)}
 			{...props}
 		>

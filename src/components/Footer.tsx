@@ -63,7 +63,10 @@ const Footer = () => {
 
 					<div className="footer-section">
 						<h3>Contáctanos</h3>
-						<a href="mailto:manuexposito82@outlook.com">
+						<a
+							className="mb-2"
+							href="mailto:manuexposito82@outlook.com"
+						>
 							<p className="flex gap-1 transition-all ease-fluid hover:text-orange">
 								<FaEnvelope size={22} />
 								manuexposito82@outlook.com
