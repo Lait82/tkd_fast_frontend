@@ -1,8 +1,3 @@
-import RoleBadge from "@/components/forms/RoleBadge";
-import { Role } from "@/types/enums";
-import { getHighestRole } from "@/utils/utils";
-import dayjs from "dayjs";
-import { Edit } from "lucide-react";
 import Category from "./Category";
 import { useEffect, useState } from "react";
 import { getCompetitorsByCategory } from "@/services/tournamentService";

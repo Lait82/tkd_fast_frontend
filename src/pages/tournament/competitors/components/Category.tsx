@@ -1,11 +1,7 @@
 import BeltIcon from "@/components/BeltIcon";
-import RoleBadge from "@/components/forms/RoleBadge";
-import { Rank, Role } from "@/types/enums";
 import { categorySchema, CompetitorSchema } from "@/types/schemas";
-import { buildCategoryName, getHighestRole, getRankName } from "@/utils/utils";
-import { count } from "console";
+import { buildCategoryName, getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
-import { Edit } from "lucide-react";
 
 interface CategoryProps {
 	category: categorySchema;

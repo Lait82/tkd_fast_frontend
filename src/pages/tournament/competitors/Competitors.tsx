@@ -2,14 +2,13 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GoBack from "@/components/GoBack";
-import { useTournamentStore } from "@/states/useTournamentStore";
+// import { useTournamentStore } from "@/states/useTournamentStore";
 import TournamentNavbar from "@/components/TournamentNavbar";
 import Enrolled from "./components/Enrolled";
-import { useEffect } from "react";
 
 // Mock data for tournaments
 const Competitors = () => {
-	const { tournament } = useTournamentStore();
+	// const { tournament } = useTournamentStore();
 	return (
 		<div className="create-tournament-page">
 			<Header />
