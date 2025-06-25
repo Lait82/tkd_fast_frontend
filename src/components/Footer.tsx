@@ -67,7 +67,7 @@ const Footer = () => {
 							className="mb-2"
 							href="mailto:manuexposito82@outlook.com"
 						>
-							<p className="flex gap-1 transition-all ease-fluid hover:text-orange">
+							<p className="flex gap-1 transition-all ease-fluid mb-1 hover:text-orange">
 								<FaEnvelope size={22} />
 								manuexposito82@outlook.com
 							</p>

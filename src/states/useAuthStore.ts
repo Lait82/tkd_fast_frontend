@@ -3,12 +3,11 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { loginUser, signupUser } from "@/services/authService";
 import { User } from "@/types/user";
-import { mapTo } from "@/utils/utils";
 import {
-	LoginUserResponseMap,
-	SignupUserResponseMap,
-} from "@/services/responseMaps/authMap";
-import { userMap } from "@/types/modelMaps/userMap";
+	loginUserResponseSchema,
+	signupUserResponseSchema,
+	userSchema,
+} from "@/types/schemas";
 // import type { User } from "@/types/user";
 
 type AuthState = {
@@ -39,8 +38,8 @@ export const useAuthStore = create<AuthState>()(
 				set({ loading: true, error: null });
 				try {
 					const rawRes = await loginUser(email, password);
-					const loginResponse = mapTo(LoginUserResponseMap, rawRes);
-					const user = mapTo(userMap, loginResponse.user);
+					const loginResponse = loginUserResponseSchema.parse(rawRes);
+					const user = userSchema.parse(loginResponse.user);
 					set({
 						user: user || null,
 						token: loginResponse.access_token,
@@ -58,11 +57,9 @@ export const useAuthStore = create<AuthState>()(
 				set({ loading: true, error: null });
 				try {
 					const rawRes = await signupUser(userData);
-
-					// const rawRes = await loginUser(email, password);
-					const signupResponse = mapTo(SignupUserResponseMap, rawRes);
-					const user = mapTo(userMap, signupResponse.user);
-
+					const signupResponse =
+						signupUserResponseSchema.parse(rawRes);
+					const user = userSchema.parse(signupResponse.user);
 					set({
 						user: user,
 						token: signupResponse.access_token,

@@ -1,15 +1,5 @@
-import { Role, RoleHierarchy } from "@/types/enums";
-
-export function mapTo<T>(map: T, raw: any): T {
-	const result = {} as T;
-	for (const key in map) {
-		if (!(key in raw)) {
-			throw new Error(`Missing field '${key}' in response`);
-		}
-		result[key] = raw[key];
-	}
-	return result;
-}
+import { Discipline, Gender, Rank, Role, RoleHierarchy } from "@/types/enums";
+import { categorySchema } from "@/types/schemas";
 
 export function getHighestRole(roles: Role[]): Role {
 	return roles.reduce(
@@ -17,4 +7,46 @@ export function getHighestRole(roles: Role[]): Role {
 			RoleHierarchy[role] < RoleHierarchy[carry] ? role : carry,
 		Role.NONE
 	);
+}
+
+export function getRankName(rank: Rank) {
+	const ranks = {
+		[Rank.WHITE]: "Blanco",
+		[Rank.WHITE_YELLOW]: "Blanco Pta. Amarilla",
+		[Rank.YELLOW]: "Amarillo",
+		[Rank.YELLOW_GREEN]: "Amarillo Pta. Verde",
+		[Rank.GREEN]: "Verde",
+		[Rank.GREEN_BLUE]: "Verde Pta. Azul",
+		[Rank.BLUE]: "Azul",
+		[Rank.BLUE_RED]: "Azul Pta. Roja",
+		[Rank.RED]: "Rojo",
+		[Rank.RED_BLACK]: "Rojo Pta. Negra",
+		[Rank.DAN_1]: "1er Dan",
+		[Rank.DAN_2]: "2do Dan",
+		[Rank.DAN_3]: "3er Dan",
+		[Rank.DAN_4]: "4to Dan",
+		[Rank.DAN_5]: "5to Dan",
+		[Rank.DAN_6]: "6to Dan",
+		[Rank.DAN_7]: "7mo Dan",
+		[Rank.DAN_8]: "8vo Dan",
+		[Rank.DAN_9]: "9no Dan",
+	};
+	return ranks[rank];
+}
+
+export function buildCategoryName(category: categorySchema) {
+	const discipline = {
+		[Discipline.COMBAT]: "Lucha",
+		[Discipline.PATTERNS]: "Formas",
+	};
+	const gender = {
+		[Gender.FEMALE]: "Femenino",
+		[Gender.MALE]: "Masculino",
+	};
+	const teamOrIndividual = category.is_team ? "Equipos" : "Individual";
+	return `${discipline[category.discipline]} ${teamOrIndividual} | ${
+		gender[category.gender]
+	} | ${getRankName(category.min_rank)} - ${getRankName(
+		category.max_rank
+	)} | ${category.min_weight} Kg - ${category.max_weight} Kg`;
 }

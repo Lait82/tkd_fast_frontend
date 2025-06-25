@@ -14,22 +14,22 @@ const TournamentNavbar = () => {
 	// };
 	const info = {
 		text: "Info",
-		route: `${tournament.code}/info`,
+		route: `/${tournament.code}/info`,
 		view: "info",
 	};
 	const competitors = {
 		text: "Competidores",
-		route: `${tournament.code}/competitors`,
+		route: `/${tournament.code}/competitors`,
 		view: "competitors",
 	};
 	const categories = {
 		text: "Categorías",
-		route: `${tournament.code}/cagtegories`,
+		route: `/${tournament.code}/cagtegories`,
 		view: "cagtegories",
 	};
 	const invites = {
 		text: "Invitaciones",
-		route: `${tournament.code}/invites`,
+		route: `/${tournament.code}/invites`,
 		view: "invites",
 	};
 

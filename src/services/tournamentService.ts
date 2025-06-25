@@ -59,4 +59,15 @@ export const getMyTournaments = async () => {
 	}
 };
 
+export const getCompetitorsByCategory = async (code: string) => {
+	try {
+		const response = await api.get(`/tournament/${code}/competitors`);
+		return response.data;
+	} catch (error: any) {
+		throw new Error(
+			error.response?.data?.message || "'Fallo al obtener mis torneos."
+		);
+	}
+};
+
 export default api;

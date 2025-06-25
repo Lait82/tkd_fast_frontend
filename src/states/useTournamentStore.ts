@@ -1,11 +1,11 @@
 // store/authStore.ts
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { mapTo } from "@/utils/utils";
 import { Role, TournamentActions } from "@/types/enums";
 import { Tournament } from "@/types/tournament";
 import { getTournamentInfo } from "@/services/tournamentService";
 import { tournamentMap } from "@/types/modelMaps/tournamentMap";
+import { tournamentSchema } from "@/types/schemas";
 // import type { User } from "@/types/user";
 
 // let initializedCodes = new Set<string>();
@@ -32,7 +32,7 @@ export const useTournamentStore = create<TournamentState>()(
 
 				try {
 					const rawRes = await getTournamentInfo(code);
-					const tournament = mapTo(tournamentMap, rawRes);
+					const tournament = tournamentSchema.parse(rawRes);
 					set({
 						tournament: tournament,
 						role: tournament.role || [Role.NONE],

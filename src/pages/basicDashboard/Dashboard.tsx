@@ -10,9 +10,10 @@ import "@/styles/Dashboard.css";
 import { useAuthStore } from "@/states/useAuthStore";
 import { useEffect, useState } from "react";
 import { getMyTournaments } from "@/services/tournamentService";
-import { mapTo } from "@/utils/utils";
+// import { mapTo } from "@/utils/utils";
 import { tournamentMap } from "@/types/modelMaps/tournamentMap";
 import { Tournament } from "@/types/tournament";
+import { tournamentSchema } from "@/types/schemas";
 
 // Mock data for tournaments
 const mockTournaments = [
@@ -64,10 +65,7 @@ const Dashboard = () => {
 		const fetchTournaments = async () => {
 			try {
 				const res = await getMyTournaments();
-				console.log(res);
-				const tournamentsArr = res.map((tournament: object) =>
-					mapTo(tournamentMap, tournament)
-				);
+				const tournamentsArr = tournamentSchema.array().parse(res);
 				if (isMounted) setTournaments(tournamentsArr);
 			} catch (error) {
 				console.error("Error al obtener torneos:", error);
@@ -108,14 +106,18 @@ const Dashboard = () => {
 						<div className="tournaments-section flex flex-col gap-2">
 							<h1 className="text-2xl">Mis Torneos</h1>
 							<div className="tournaments-grid">
-								{loading
-									? "Cargando..."
-									: tournaments.map((tournament) => (
-											<TournamentCard
-												key={tournament.id}
-												tournament={tournament}
-											/>
-									  ))}
+								{loading ? (
+									<div className="w-full h-full font-black">
+										"Cargando..."
+									</div>
+								) : (
+									tournaments.map((tournament) => (
+										<TournamentCard
+											key={tournament.id}
+											tournament={tournament}
+										/>
+									))
+								)}
 							</div>
 						</div>
 					</div>

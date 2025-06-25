@@ -13,6 +13,7 @@ import OnlyPublicRoute from "./components/OnlyPublicRoute";
 import TournamentLoader from "./components/TournamentLoader";
 import About from "./pages/about/About";
 import Info from "./pages/tournament/info/Info";
+import Competitors from "./pages/tournament/competitors/Competitors";
 
 function App() {
 	return (
@@ -109,6 +110,14 @@ function App() {
 				element={
 					<TournamentLoader>
 						<Info />
+					</TournamentLoader>
+				}
+			/>
+			<Route
+				path="/:tournamentCode/competitors"
+				element={
+					<TournamentLoader>
+						<Competitors />
 					</TournamentLoader>
 				}
 			/>
