@@ -4,7 +4,7 @@ import Footer from "@/components/Footer";
 import GoBack from "@/components/GoBack";
 // import { useTournamentStore } from "@/states/useTournamentStore";
 import TournamentNavbar from "@/components/TournamentNavbar";
-import Enrolled from "./components/Enrolled";
+import EnrolledCompetitors from "./components/EnrolledCompetitors";
 
 // Mock data for tournaments
 const Competitors = () => {
@@ -21,7 +21,7 @@ const Competitors = () => {
 					</div>
 				</div>
 				<div className="flex flex-col">
-					<Enrolled />
+					<EnrolledCompetitors />
 				</div>
 			</main>
 

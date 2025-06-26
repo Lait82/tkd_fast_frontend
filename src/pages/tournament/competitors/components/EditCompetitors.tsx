@@ -7,7 +7,7 @@ import {
 	competitorsByCategoryResponseSchema,
 } from "@/types/schemas";
 
-const Enrolled = () => {
+const EnrolledCompetitors = () => {
 	const { tournament } = useTournamentStore();
 	const [categoriesWithCompetitors, setCategoriesWithCompetitors] =
 		useState<CompetitorsByCategoryResponseSchema>([]);
@@ -59,4 +59,4 @@ const Enrolled = () => {
 	);
 };
 
-export default Enrolled;
+export default EnrolledCompetitors;
