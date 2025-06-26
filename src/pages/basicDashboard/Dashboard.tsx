@@ -9,9 +9,7 @@ import TournamentCard from "@/components/TournamentCard";
 import "@/styles/Dashboard.css";
 import { useAuthStore } from "@/states/useAuthStore";
 import { useEffect, useState } from "react";
-import { getMyTournaments } from "@/services/tournamentService";
-// import { mapTo } from "@/utils/utils";
-import { tournamentMap } from "@/types/modelMaps/tournamentMap";
+import { getUserTournaments } from "@/services/userService";
 import { Tournament } from "@/types/tournament";
 import { tournamentSchema } from "@/types/schemas";
 
@@ -64,7 +62,7 @@ const Dashboard = () => {
 		let isMounted = true;
 		const fetchTournaments = async () => {
 			try {
-				const res = await getMyTournaments();
+				const res = await getUserTournaments();
 				const tournamentsArr = tournamentSchema.array().parse(res);
 				if (isMounted) setTournaments(tournamentsArr);
 			} catch (error) {

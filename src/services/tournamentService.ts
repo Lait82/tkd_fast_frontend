@@ -48,20 +48,11 @@ export const getTournamentInfo = async (code: string) => {
 	}
 };
 
-export const getMyTournaments = async () => {
-	try {
-		const response = await api.get(`/user/tournaments`);
-		return response.data;
-	} catch (error: any) {
-		throw new Error(
-			error.response?.data?.message || "'Fallo al obtener mis torneos."
-		);
-	}
-};
-
 export const getCompetitorsByCategory = async (code: string) => {
 	try {
-		const response = await api.get(`/tournament/${code}/competitors`);
+		const response = await api.get(
+			`/tournament/${code}/categories/competitors`
+		);
 		return response.data;
 	} catch (error: any) {
 		throw new Error(
