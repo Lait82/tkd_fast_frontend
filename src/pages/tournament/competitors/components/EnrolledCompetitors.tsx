@@ -6,6 +6,7 @@ import {
 	CompetitorsByCategoryResponseSchema,
 	competitorsByCategoryResponseSchema,
 } from "@/types/schemas";
+import { errorToast } from "@/services/toasts";
 
 const EnrolledCompetitors = () => {
 	const { tournament } = useTournamentStore();
@@ -24,6 +25,7 @@ const EnrolledCompetitors = () => {
 				if (isMounted)
 					setCategoriesWithCompetitors(competitorsByCategory);
 			} catch (error) {
+				errorToast("Error al obtener categorias/competidores.");
 				console.error(
 					"Error al obtener categorias/competidores:",
 					error

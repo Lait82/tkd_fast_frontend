@@ -22,7 +22,8 @@ type AuthState = {
 		navigate: (path: string) => void
 	) => Promise<void>;
 	signup: (userData: any, navigate: (path: string) => void) => Promise<void>;
-	logout: (navigate: (path: string) => void) => void;
+	// logout: (navigate: (path: string) => void) => void;
+	logout: () => void;
 };
 
 export const useAuthStore = create<AuthState>()(
@@ -73,9 +74,9 @@ export const useAuthStore = create<AuthState>()(
 				}
 			},
 
-			logout: (navigate) => {
+			logout: () => {
 				set({ user: null, token: null, isAuthenticated: false });
-				navigate("/");
+				window.location.href = "/login";
 			},
 		}),
 		{

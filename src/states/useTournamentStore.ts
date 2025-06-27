@@ -6,6 +6,7 @@ import { Tournament } from "@/types/tournament";
 import { getTournamentInfo } from "@/services/tournamentService";
 import { tournamentMap } from "@/types/modelMaps/tournamentMap";
 import { tournamentSchema } from "@/types/schemas";
+import { error } from "console";
 // import type { User } from "@/types/user";
 
 // let initializedCodes = new Set<string>();

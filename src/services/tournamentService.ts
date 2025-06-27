@@ -1,33 +1,10 @@
-import { useAuthStore } from "@/states/useAuthStore";
-import axios from "axios";
-
-const API_URL = "http://localhost:8000/api/v1";
-const token = useAuthStore.getState().token;
-
-const api = axios.create({
-	baseURL: API_URL,
-	headers: {
-		"Content-Type": "application/json",
-		Accept: "application/json",
-		Authorization: `Bearer ${token}`,
-	},
-});
-
-// // Add token to requests if available
-// api.interceptors.request.use(
-//   (config) => {
-//     const token = localStorage.getItem("token")
-//     if (token) {
-//       config.headers.Authorization = `Bearer ${token}`
-//     }
-//     return config
-//   },
-//   (error) => Promise.reject(error),
-// )
+import tkdfastProtectedApi from "@/apis/tkdfastProtectedApi";
 
 export const claimTournament = async (code: string) => {
 	try {
-		const response = await api.post("/tournaments/claim", { code });
+		const response = await tkdfastProtectedApi.post("/tournaments/claim", {
+			code,
+		});
 		return response.data;
 	} catch (error: any) {
 		throw new Error(
@@ -38,7 +15,7 @@ export const claimTournament = async (code: string) => {
 
 export const getTournamentInfo = async (code: string) => {
 	try {
-		const response = await api.get(`/tournaments/${code}`);
+		const response = await tkdfastProtectedApi.get(`/tournaments/${code}`);
 		return response.data;
 	} catch (error: any) {
 		throw new Error(
@@ -50,7 +27,7 @@ export const getTournamentInfo = async (code: string) => {
 
 export const getCompetitorsByCategory = async (code: string) => {
 	try {
-		const response = await api.get(
+		const response = await tkdfastProtectedApi.get(
 			`/tournament/${code}/categories/competitors`
 		);
 		return response.data;
@@ -60,5 +37,3 @@ export const getCompetitorsByCategory = async (code: string) => {
 		);
 	}
 };
-
-export default api;

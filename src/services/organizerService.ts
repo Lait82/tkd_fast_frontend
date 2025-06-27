@@ -1,25 +1,17 @@
+import tkdfastProtectedApi from "@/apis/tkdfastProtectedApi";
 import { EditTournamentData } from "@/types/tournament";
-import axios from "axios";
-
-const API_URL = "https://localhost:8000/api/v1";
-
-const api = axios.create({
-	baseURL: API_URL,
-	headers: {
-		"Content-Type": "application/json",
-		Accept: "application/json",
-		Authorization: `Bearer ${localStorage.getItem("token")}`,
-	},
-});
 
 export const editTournament = async (
 	code: string,
 	data: EditTournamentData
 ) => {
 	try {
-		const response = await api.put(`/organizer/tournament/${code}`, {
-			...data,
-		});
+		const response = await tkdfastProtectedApi.put(
+			`/organizer/tournament/${code}`,
+			{
+				...data,
+			}
+		);
 		return response.data;
 	} catch (error: any) {
 		throw new Error(
@@ -27,5 +19,3 @@ export const editTournament = async (
 		);
 	}
 };
-
-export default api;

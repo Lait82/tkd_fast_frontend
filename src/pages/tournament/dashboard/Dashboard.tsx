@@ -63,7 +63,7 @@ const Dashboard = () => {
 			title: "Administrar Competidores y Equipos",
 			description: `Inscribí competidores, ADSGADGADGADG. ${tournament?.code}`,
 			allowed: can(TournamentActions.MANAGE_COMPETITORS),
-			action: () => navigate("/"),
+			action: () => navigate(`/${tournament.code}/competitors`),
 		},
 		{
 			icon: <FaGear />,

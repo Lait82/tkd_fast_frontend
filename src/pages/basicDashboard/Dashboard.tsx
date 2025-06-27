@@ -8,10 +8,12 @@ import DashboardActions from "./components/DashboardActions";
 import TournamentCard from "@/components/TournamentCard";
 import "@/styles/Dashboard.css";
 import { useAuthStore } from "@/states/useAuthStore";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { getUserTournaments } from "@/services/userService";
 import { Tournament } from "@/types/tournament";
 import { tournamentSchema } from "@/types/schemas";
+import { errorToast } from "@/services/toasts";
+import TypeItComponent from "typeit-react";
 
 // Mock data for tournaments
 const mockTournaments = [
@@ -58,6 +60,8 @@ const Dashboard = () => {
 	const [tournaments, setTournaments] = useState<Tournament[]>([]);
 	const [loading, setLoading] = useState(true);
 
+	const TypeIt = TypeItComponent as FC<any>;
+
 	useEffect(() => {
 		let isMounted = true;
 		const fetchTournaments = async () => {
@@ -67,6 +71,9 @@ const Dashboard = () => {
 				if (isMounted) setTournaments(tournamentsArr);
 			} catch (error) {
 				console.error("Error al obtener torneos:", error);
+				errorToast(
+					"Ha ocurrido un error al obtener los torneos, por favor recarga la página."
+				);
 			} finally {
 				if (isMounted) setLoading(false);
 			}
@@ -105,8 +112,26 @@ const Dashboard = () => {
 							<h1 className="text-2xl">Mis Torneos</h1>
 							<div className="tournaments-grid">
 								{loading ? (
-									<div className="w-full h-full font-black">
-										"Cargando..."
+									<div className=" flex justify-center items-center w-full h-full font-black">
+										<TypeIt
+											as={"h1"}
+											options={{
+												loop: true,
+											}}
+											getBeforeInit={(instance: any) => {
+												instance
+													.type("Cargando")
+													.pause(250)
+													.type(".")
+													.pause(200)
+													.type(".")
+													.pause(300)
+													.type(".")
+													.pause(200)
+													.delete(3);
+												return instance;
+											}}
+										/>
 									</div>
 								) : (
 									tournaments.map((tournament) => (
