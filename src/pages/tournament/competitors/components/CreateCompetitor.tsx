@@ -1,4 +1,5 @@
 import BeltIcon from "@/components/BeltIcon";
+import Datepicker from "@/components/Datepicker";
 import FormInput from "@/components/forms/FormInput";
 import IconSelect from "@/components/IconSelect";
 import RankSelect from "@/components/RankSelect";
@@ -74,14 +75,15 @@ const CreateCompetitor = () => {
 							<span className="text-muted">
 								Fecha de Nacimiento
 							</span>
-							<FormInput
+							{/* <FormInput
 								variant="secondary"
 								name="dob"
 								type="date"
 								icon={<FaCalendarAlt />}
 								value={newCompetitor.dob}
 								onChange={handleChange}
-							/>
+							/> */}
+							<Datepicker />
 						</div>
 						<div className="flex items-center gap-1">
 							<span className="text-muted">DNI</span>
