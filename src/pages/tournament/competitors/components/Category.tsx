@@ -1,11 +1,14 @@
 import BeltIcon from "@/components/BeltIcon";
-import { categorySchema, CompetitorSchema } from "@/types/schemas";
+import {
+	categorySchema,
+	CompetitorWithUserSchema,
+} from "@/types/schemas/primitiveSchemas";
 import { buildCategoryName, getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
 
 interface CategoryProps {
 	category: categorySchema;
-	competitors: CompetitorSchema[];
+	competitors: CompetitorWithUserSchema[];
 }
 
 const Category = ({ category, competitors }: CategoryProps) => {

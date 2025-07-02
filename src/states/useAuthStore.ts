@@ -7,7 +7,7 @@ import {
 	loginUserResponseSchema,
 	signupUserResponseSchema,
 	userSchema,
-} from "@/types/schemas";
+} from "@/types/schemas/primitiveSchemas";
 // import type { User } from "@/types/user";
 
 type AuthState = {

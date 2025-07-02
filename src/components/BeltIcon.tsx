@@ -183,7 +183,7 @@ const rankColors: Record<
 };
 
 const BeltIcon: React.FC<BeltIconProps> = ({
-	rank = "WHITE",
+	rank = Rank.WHITE,
 	size = 36,
 	className = "",
 }) => {

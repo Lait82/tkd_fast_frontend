@@ -5,7 +5,7 @@ import { useTournamentStore } from "@/states/useTournamentStore";
 import {
 	CompetitorsByCategoryResponseSchema,
 	competitorsByCategoryResponseSchema,
-} from "@/types/schemas";
+} from "@/types/schemas/primitiveSchemas";
 import { errorToast } from "@/services/toasts";
 
 const EnrolledCompetitors = () => {

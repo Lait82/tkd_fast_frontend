@@ -1,5 +1,5 @@
 import { Discipline, Gender, Rank, Role, RoleHierarchy } from "@/types/enums";
-import { categorySchema } from "@/types/schemas";
+import { categorySchema } from "@/types/schemas/primitiveSchemas";
 
 export function getHighestRole(roles: Role[]): Role {
 	return roles.reduce(

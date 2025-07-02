@@ -6,6 +6,7 @@ import { useTournamentStore } from "@/states/useTournamentStore";
 import TournamentNavbar from "@/components/TournamentNavbar";
 import EnrolledCompetitors from "./components/EnrolledCompetitors";
 import { TournamentActions } from "@/types/enums";
+import ManageCompetitors from "./components/ManageCompetitors";
 
 // Mock data for tournaments
 const Competitors = () => {
@@ -22,7 +23,7 @@ const Competitors = () => {
 					</div>
 				</div>
 				{can(TournamentActions.MANAGE_COMPETITORS) ? (
-					<span> MOSTRAR VISTA DE ORGANIZADOR</span>
+					<ManageCompetitors />
 				) : null}
 				<div className="flex flex-col">
 					<EnrolledCompetitors />

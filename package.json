@@ -21,6 +21,7 @@
     "react-icons": "^4.12.0",
     "react-leaflet": "^5.0.0",
     "react-router-dom": "^6.20.0",
+    "react-select": "^5.10.1",
     "sonner": "^2.0.4",
     "tailwindcss": "^4.1.8",
     "typeit-react": "^2.7.8",

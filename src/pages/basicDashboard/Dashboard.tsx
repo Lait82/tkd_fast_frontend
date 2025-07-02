@@ -11,7 +11,7 @@ import { useAuthStore } from "@/states/useAuthStore";
 import { FC, useEffect, useState } from "react";
 import { getUserTournaments } from "@/services/userService";
 import { Tournament } from "@/types/tournament";
-import { tournamentSchema } from "@/types/schemas";
+import { tournamentSchema } from "@/types/schemas/primitiveSchemas";
 import { errorToast } from "@/services/toasts";
 import TypeItComponent from "typeit-react";
 

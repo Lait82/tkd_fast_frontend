@@ -1,29 +1,31 @@
 import { Listbox } from "@headlessui/react";
 import BeltIcon from "./BeltIcon";
 import { Rank } from "@/types/enums";
+import { getRankName } from "@/utils/utils";
 
-interface RankOption {
-	value: Rank;
-	label: string;
-}
-const rankOptions: RankOption[] = [
-	{ value: "WHITE", label: "Blanco" },
-	{ value: "WHITE_YELLOW", label: "Blanco Punta Amarilla" },
-	{ value: "YELLOW", label: "Amarillo" },
-	{ value: "YELLOW_GREEN", label: "Amarillo Punta Verde" },
-	{ value: "GREEN", label: "Verde" },
-	{ value: "GREEN_BLUE", label: "Verde Punta Azul" },
-	{ value: "BLUE", label: "Azul" },
-	{ value: "BLUE_RED", label: "Azul Punta Roja" },
-	{ value: "RED", label: "Rojo" },
-	{ value: "RED_BLACK", label: "Rojo Punta Negra" },
-	{ value: "DAN_1", label: "1er Dan" },
-	{ value: "DAN_2", label: "2do Dan" },
-	{ value: "DAN_3", label: "3er Dan" },
-	{ value: "DAN_4", label: "4to Dan" },
-	{ value: "DAN_5", label: "5to Dan" },
-	{ value: "DAN_6", label: "6to Dan" },
-];
+// interface RankOption {
+// 	value: Rank;
+// }
+const rankOptions: Rank[] = Object.values(Rank);
+//[
+// { value: Rank.WHITE },
+// { value: Rank.WHITE_YELLOW },
+// { value: Rank.YELLOW },
+// { value: Rank.YELLOW_GREEN },
+// { value: Rank.GREEN },
+// { value: Rank.GREEN_BLUE },
+// { value: Rank.BLUE },
+// { value: Rank.BLUE_RED },
+// { value: Rank.RED },
+// { value: Rank.RED_BLACK },
+// { value: Rank.DAN_1 },
+// { value: Rank.DAN_2 },
+// { value: Rank.DAN_3 },
+// { value: Rank.DAN_4 },
+// { value: Rank.DAN_5 },
+// { value: Rank.DAN_6 },
+
+// ];
 
 const RankSelect = ({
 	value,
@@ -46,22 +48,16 @@ const RankSelect = ({
 							<span className="absolute left-2 top-1/2 -translate-y-1/2">
 								<BeltIcon rank={value} size={20} />
 							</span>
-							<span className="pl-6">
-								{
-									rankOptions.find(
-										(opt) => opt.value === value
-									)?.label
-								}
-							</span>
+							<span className="pl-6">{getRankName(value)}</span>
 						</div>
 					</Listbox.Button>
 
 					{/* Dropdown options */}
 					<Listbox.Options className="absolute w-full py-1 mt-1 max-h-60 overflow-auto rounded-md bg-white shadow-lg border border-gray-200 z-10">
-						{rankOptions.map((option) => (
+						{rankOptions.map((rank) => (
 							<Listbox.Option
-								key={option.value}
-								value={option.value}
+								key={rank}
+								value={rank}
 								className={({ active }) =>
 									`relative cursor-default select-none py-2 pl-10 pr-4 ${
 										active ? "bg-gray-100" : ""
@@ -72,7 +68,7 @@ const RankSelect = ({
 									<div className="flex items-center gap-2">
 										<span className="absolute left-2">
 											<BeltIcon
-												rank={option.value as Rank}
+												rank={rank}
 												size={20}
 												className={
 													selected
@@ -88,7 +84,7 @@ const RankSelect = ({
 													: "font-normal"
 											}`}
 										>
-											{option.label}
+											{getRankName(rank)}
 										</span>
 									</div>
 								)}

@@ -2,17 +2,17 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Role, TournamentActions } from "@/types/enums";
-import { Tournament } from "@/types/tournament";
 import { getTournamentInfo } from "@/services/tournamentService";
-import { tournamentMap } from "@/types/modelMaps/tournamentMap";
-import { tournamentSchema } from "@/types/schemas";
-import { error } from "console";
+import {
+	TournamentSchema,
+	tournamentSchema,
+} from "@/types/schemas/primitiveSchemas";
 // import type { User } from "@/types/user";
 
 // let initializedCodes = new Set<string>();
 
 type TournamentState = {
-	tournament: Tournament;
+	tournament: TournamentSchema;
 	role: Role[];
 	loading: boolean;
 	error: string | null;
@@ -23,7 +23,7 @@ type TournamentState = {
 export const useTournamentStore = create<TournamentState>()(
 	persist(
 		(set, get) => ({
-			tournament: tournamentMap,
+			tournament: tournamentSchema.parse({}),
 			role: [Role.NONE],
 			loading: false,
 			error: null,

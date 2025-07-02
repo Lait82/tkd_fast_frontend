@@ -24,7 +24,7 @@ export const getUserTournaments = async () => {
 	}
 };
 
-export const getUserTournamentCompetitors = async (code: string) => {
+export const getUserCompetitors = async (code: string) => {
 	try {
 		const response = await tkdfastProtectedApi.get(
 			`/user/tournament/${code}/competitors`
@@ -34,6 +34,20 @@ export const getUserTournamentCompetitors = async (code: string) => {
 		throw new Error(
 			error.response?.data?.message ||
 				"'Fallo al obtener competidores del usuario."
+		);
+	}
+};
+
+export const getCompetitor = async (competitorUuid: string) => {
+	try {
+		const response = await tkdfastProtectedApi.get(
+			`/competitors/${competitorUuid}`
+		);
+		return response.data;
+	} catch (error: any) {
+		throw new Error(
+			error.response?.data?.message ||
+				"'Fallo al obtener info del competidor."
 		);
 	}
 };
