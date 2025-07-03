@@ -3,33 +3,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import GoBack from "@/components/GoBack";
 import "@/styles/EditTournament.css";
-import {
-	FaCalendarAlt,
-	FaEnvelope,
-	FaImage,
-	FaMapMarkerAlt,
-	FaMarker,
-	FaWhatsapp,
-} from "react-icons/fa";
-import { errorToast, successToast } from "@/services/toasts";
-import FormInput from "@/components/forms/FormInput";
-import { useState } from "react";
-import TextArea from "@/components/forms/TextArea";
-import Button from "@/components/Button";
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
-import { EditTournamentData } from "@/types/tournament";
-import { editTournament } from "@/services/organizerService";
-import { useTournamentStore } from "@/states/useTournamentStore";
 import TournamentNavbar from "@/components/TournamentNavbar";
-import RoleBadge from "@/components/forms/RoleBadge";
-import dayjs from "dayjs";
-import { Edit, User } from "lucide-react";
-import { TbBuildingStadium } from "react-icons/tb";
-import { getHighestRole } from "@/utils/utils";
-import { Role } from "@/types/enums";
 import LocationCard from "./components/LocationCard";
 import OrganizationCard from "./components/OrganizationCard";
 import Banner from "./components/Banner";
+import { useTournamentStore } from "@/states/useTournamentStore";
 
 // Mock data for tournaments
 const Info = () => {
@@ -37,7 +15,6 @@ const Info = () => {
 	// const [codeValue, setCodeValue] = useState<string>('');
 	// const [loading, setLoading] = useState<boolean>()
 	const { tournament } = useTournamentStore();
-
 	return (
 		<div className="create-tournament-page">
 			<Header />

@@ -14,8 +14,8 @@ type Tournament = {
   inscriptions_deadline: string | null;
   description: string | null;
   date_of_finish: string | null;
-  created_at: string;
-  updated_at: string;
+  created_at?: string;
+  updated_at?: string;
   organizer_uuid: string | null;
   role: Role[]; // 👈 este es el rol del usuario respecto al torneo
 };

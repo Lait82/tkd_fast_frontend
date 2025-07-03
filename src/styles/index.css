@@ -64,6 +64,16 @@ input:-webkit-autofill {
   -webkit-text-fill-color: var(--color-text) !important;
 }
 
+::-moz-selection {
+  background: var(--color-yellow);
+  color: var(--color-elevated);
+}
+
+::selection {
+  background: var(--color-yellow);
+  color: var(--color-elevated);
+}
+
 * {
   /* margin: 0; */
   /* padding: 0; */

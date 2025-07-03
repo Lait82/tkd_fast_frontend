@@ -1,10 +1,10 @@
-import { Tournament } from "@/types/tournament";
+import { TournamentSchema } from "@/types/schemas/primitiveSchemas";
 import { FaMapMarkerAlt } from "react-icons/fa";
 import { TbBuildingStadium } from "react-icons/tb";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
 interface LocationCardProps {
-	tournament: Tournament;
+	tournament: TournamentSchema;
 }
 
 const LocationCard = ({ tournament }: LocationCardProps) => {

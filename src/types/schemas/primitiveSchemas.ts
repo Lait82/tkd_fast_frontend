@@ -13,8 +13,8 @@ export const userSchema = z.object({
 	federation: z.string().nullable().default(""),
 	dob: z.string().default(""),
 	uuid: z.string().default(""),
-	created_at: z.string().default(""),
-	updated_at: z.string().default(""),
+	created_at: z.string().optional().default(""),
+	updated_at: z.string().optional().default(""),
 });
 export type UserSchema = z.infer<typeof userSchema>;
 
@@ -44,8 +44,8 @@ export const tournamentSchema = z.object({
 	inscriptions_deadline: z.string().nullable().default(null),
 	description: z.string().nullable().default(null),
 	date_of_finish: z.string().nullable().default(null),
-	created_at: z.string().default(""),
-	updated_at: z.string().default(""),
+	created_at: z.string().optional().default(""),
+	updated_at: z.string().optional().default(""),
 	organizer_uuid: z.string().nullable().default(null),
 	role: z.array(z.enum(Role)).default([Role.NONE]),
 });
@@ -73,8 +73,8 @@ export const categorySchema = z.object({
 	min_weight: z.number(),
 	max_weight: z.number(),
 	gender: z.enum(Gender),
-	created_at: z.string(),
-	updated_at: z.string(),
+	created_at: z.string().optional(),
+	updated_at: z.string().optional(),
 	min_rank: z.enum(Rank),
 	max_rank: z.enum(Rank),
 	min_age: z.number(),
@@ -104,8 +104,8 @@ export const competitorSchema = z.object({
 	tournament_uuid: z.string().default(""),
 	registered_by_uuid: z.string().default(""),
 	access_code: z.string().default(""),
-	created_at: z.string().default(""),
-	updated_at: z.string().default(""),
+	created_at: z.string().optional().default(""),
+	updated_at: z.string().optional().default(""),
 	user: userSchema.default(userSchema.parse({})),
 });
 export type CompetitorSchema = z.infer<typeof competitorSchema>;

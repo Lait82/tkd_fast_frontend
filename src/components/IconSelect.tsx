@@ -1,5 +1,5 @@
 // IconSelect.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select, { SingleValue, components } from "react-select";
 import { OptionProps } from "react-select";
 import { Rank } from "@/types/enums";
@@ -55,18 +55,40 @@ const customOption = (props: OptionProps<IconOption, false>) => {
 	);
 };
 
-const IconSelect = () => {
-	const [selected, setSelected] = useState<IconOption | null>(null);
+// Adaptar el nuevo select a que cambie la data del dropdown
+const IconSelect = ({
+	name,
+	value,
+	onChange,
+}: {
+	name: string;
+	value: Rank | null;
+	onChange: (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+	) => void;
+}) => {
+	const optionValue = options.filter((option) => option.value === value)[0];
 
-	const handleChange = (option: SingleValue<IconOption>) => {
-		setSelected(option);
+	const [selected, setSelected] = useState<IconOption | null>(optionValue);
+
+	const _handleChange = (selectedOption: SingleValue<IconOption>) => {
+		if (!selectedOption) return;
+		setSelected(selectedOption);
+		const event = {
+			target: {
+				name,
+				value: selectedOption.value,
+			},
+		} as React.ChangeEvent<HTMLInputElement>;
+
+		onChange(event);
 	};
 
 	return (
 		<Select
 			options={options}
 			value={selected}
-			onChange={handleChange}
+			onChange={_handleChange}
 			isSearchable={false}
 			className="w-full"
 			placeholder="Graduación"
@@ -119,6 +141,7 @@ const IconSelect = () => {
 					border: state.isFocused
 						? "1px solid var(--color-orange)"
 						: "1px solid transparent",
+					borderRadius: state.isFocused ? "8px" : "0",
 					"&:hover": {
 						border: state.isFocused
 							? "1px solid var(--color-orange)"

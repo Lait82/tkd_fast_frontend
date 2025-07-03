@@ -18,15 +18,16 @@ const EditTournament = () => {
 	// const { user } = useAuth();
 	// const [codeValue, setCodeValue] = useState<string>('');
 	// const [loading, setLoading] = useState<boolean>()
-	const { tournament } = useTournamentStore();
-	const [form, setForm] = useState<EditTournamentData>({
+	const { tournament, getTournamentInfo } = useTournamentStore();
+	const [form, setForm] = useState<EditTournamentData>({ // TODO: reemplazar por schema de zod
 		name: tournament?.name || "",
-		startDate: "",
-		endDate: "",
+		date_of_event: "",
+		date_of_finish: "",
 		arena: tournament?.arena || "",
-		address: tournament?.location || "",
-		deadline: "",
+		location: tournament?.location || "",
+		inscriptions_deadline: tournament?.inscriptions_deadline || "",
 		description: tournament?.description || "",
+
 	});
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -35,7 +36,10 @@ const EditTournament = () => {
 		try {
 			await editTournament(tournament.code, form);
 			successToast("Torneo editado con éxito");
+			await getTournamentInfo(tournament.code);
+			window.location.href = `/${tournament.code}/info`;
 		} catch (err: any) {
+			console.log(err);
 			console.error(err);
 			errorToast(err.message);
 			// setError(err.message || "Error al editar el torneo")
@@ -103,11 +107,11 @@ const EditTournament = () => {
 									/>
 									<FormInput
 										label="Dirección"
-										name="address"
+										name="location"
 										required
 										placeholder="Dirección"
 										horizontal
-										value={form.address ?? ""}
+										value={form.location ?? ""}
 										variant="secondary"
 										onChange={handleChange}
 									/>
@@ -115,24 +119,24 @@ const EditTournament = () => {
 								<div className="grid grid-cols-1 grid-rows-3 gap-3">
 									<FormInput
 										label="Fecha de inicio"
-										name="startDate"
+										name="date_of_event"
 										type="date"
 										required
 										variant="secondary"
 										horizontal
 										icon={<FaCalendarAlt />}
-										value={form.startDate ?? ""}
+										value={form.date_of_event ?? ""}
 										onChange={handleChange}
 										// error={errors.dob}
 										// disabled={loading}
 									/>
 									<FormInput
 										label="Fecha de finalización"
-										name="endDate"
+										name="date_of_finish"
 										type="date"
 										horizontal
 										icon={<FaCalendarAlt />}
-										value={form.endDate ?? ""}
+										value={form.date_of_finish ?? ""}
 										variant="secondary"
 										onChange={handleChange}
 										// error={errors.dob}
@@ -140,12 +144,12 @@ const EditTournament = () => {
 									/>
 									<FormInput
 										label="Cierre de inscripciones"
-										name="deadline"
-										type="date"
+										name="inscriptions_deadline"
+										type="datetime-local"
 										required
 										horizontal
 										icon={<FaCalendarAlt />}
-										value={form.deadline ?? ""}
+										value={form.inscriptions_deadline ?? ""}
 										variant="secondary"
 										onChange={handleChange}
 										// error={errors.dob}
