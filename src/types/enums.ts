@@ -61,3 +61,13 @@ export enum TournamentActions {
 	// ENROLL = "ENROLL",
 	// VIEW = "VIEW",
 }
+
+export enum ManageCompetitorModes {
+	CREATE = "CREATE",
+	EDIT = "EDIT",
+}
+
+export enum CategoryStatus {
+	AVAILABLE = "AVAILABLE",
+	UNAVAILABLE = "UNAVAILABLE",
+}

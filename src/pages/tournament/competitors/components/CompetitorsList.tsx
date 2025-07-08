@@ -3,38 +3,50 @@ import {
 	competitorSchema,
 	CompetitorSchema,
 } from "@/types/schemas/primitiveSchemas";
-import { getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
+import { useManageCompetitors } from "./ManageCompetitorContext";
+import { useState } from "react";
+import { ManageCompetitorModes } from "@/types/enums";
+import { RiBoxingFill } from "react-icons/ri";
+import BoxingGlovesAdd from "@/components/icons/BoxingGlovesAdd";
 
-interface CompetitorsListProps {
-	competitors: CompetitorSchema[];
-	loading: boolean;
-	selectCompetitor: React.Dispatch<React.SetStateAction<CompetitorSchema>>;
-	selectedCompetitor: CompetitorSchema;
-}
+const CompetitorsList = () => {
+	const {
+		userCompetitors,
+		competitorDraft,
+		setCompetitorDraft,
+		mode,
+		setMode,
+	} = useManageCompetitors();
 
-const CompetitorsList = ({
-	competitors,
-	loading,
-	selectCompetitor,
-	selectedCompetitor,
-}: CompetitorsListProps) => {
+	const [loading, setLoading] = useState<boolean>(true);
+
+	const handleClick = (competitor: CompetitorSchema) => {
+		if (mode === ManageCompetitorModes.CREATE)
+			setMode(ManageCompetitorModes.EDIT);
+		setCompetitorDraft(competitor);
+	};
+	setTimeout(() => {
+		setLoading(false);
+	}, 2000);
 	return (
 		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center create-tournament-card p-3 rounded-lg">
-			<h1 className="font-extrabold text-2xl">Competidores</h1>
+			<h1 className="font-extrabold flex gap-1 items-center text-2xl">
+				<RiBoxingFill /> Competidores
+			</h1>
 			<div className="flex flex-col gap-1">
 				{loading ? (
 					<div> Cargando competidores</div>
 				) : (
-					competitors.map((competitor, i) => (
+					userCompetitors.map((competitor, i) => (
 						<div
 							key={`${i}-category`}
-							className={`grid grid-cols-4 px-2 py-0.5 rounded-lg transition-all ease-fluid cursor-pointer justify-items-center items-center font-bold border-1 ${
-								selectedCompetitor?.uuid === competitor.uuid
+							className={`grid grid-cols-4 px-1 py-0.5 rounded-lg transition-all ease-fluid cursor-pointer justify-items-center items-center font-bold border-1 ${
+								competitorDraft?.uuid === competitor.uuid
 									? "border-orange"
 									: "border-transparent"
 							} hover:border-orange`}
-							onClick={() => selectCompetitor(competitor)}
+							onClick={() => handleClick(competitor)}
 						>
 							{/* Fullname */}
 							<div className="flex items-center col-span-2 justify-start w-full gap-1">
@@ -66,13 +78,19 @@ const CompetitorsList = ({
 				)}
 
 				<div
-					className={`grid grid-cols-4 px-2 py-0.5 rounded-lg transition-all ease-fluid cursor-pointer justify-items-center items-center font-bold border-1 border-transparent
+					className={`px-1 py-0.5 rounded-lg transition-all ease-fluid cursor-pointer justify-items-center items-center font-bold border-1 border-transparent
 					 hover:border-orange`}
-					onClick={() => selectCompetitor(competitorSchema.parse({}))}
+					onClick={() => {
+						setMode(ManageCompetitorModes.CREATE);
+						setCompetitorDraft(competitorSchema.parse({}));
+					}}
 				>
 					{/* Fullname */}
-					<div className="flex items-center col-span-2 justify-start w-full gap-1">
-						<div className="font-black capitalize">Rollback</div>
+					<div className="flex items-center justify-start w-full gap-1">
+						<div className="flex gap-2 items-center capitalize text-muted italic">
+							<BoxingGlovesAdd size={5} />
+							Agregar nuevo competidor
+						</div>
 					</div>
 				</div>
 			</div>

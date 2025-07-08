@@ -1,13 +1,13 @@
 import BeltIcon from "@/components/BeltIcon";
 import {
-	categorySchema,
+	CategorySchema,
 	CompetitorWithUserSchema,
 } from "@/types/schemas/primitiveSchemas";
 import { buildCategoryName, getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
 
 interface CategoryProps {
-	category: categorySchema;
+	category: CategorySchema;
 	competitors: CompetitorWithUserSchema[];
 }
 

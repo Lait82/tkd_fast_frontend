@@ -1,5 +1,5 @@
 import { Discipline, Gender, Rank, Role, RoleHierarchy } from "@/types/enums";
-import { categorySchema } from "@/types/schemas/primitiveSchemas";
+import { CategorySchema } from "@/types/schemas/primitiveSchemas";
 
 export function getHighestRole(roles: Role[]): Role {
 	return roles.reduce(
@@ -34,7 +34,7 @@ export function getRankName(rank: Rank) {
 	return ranks[rank];
 }
 
-export function buildCategoryName(category: categorySchema) {
+export function buildCategoryName(category: CategorySchema) {
 	const discipline = {
 		[Discipline.COMBAT]: "Lucha",
 		[Discipline.PATTERNS]: "Formas",

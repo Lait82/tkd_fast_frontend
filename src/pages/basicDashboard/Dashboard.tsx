@@ -15,46 +15,6 @@ import { tournamentSchema } from "@/types/schemas/primitiveSchemas";
 import { errorToast } from "@/services/toasts";
 import TypeItComponent from "typeit-react";
 
-// Mock data for tournaments
-const mockTournaments = [
-	{
-		id: 1,
-		title: "ADCC Latin America Edition / Santiago Open",
-		date: "06 Jun",
-		daysRemaining: "Faltan 15 Días",
-		image: "https://picsum.photos/586/120",
-		status: "Competidor",
-		statusType: "competitor",
-	},
-	{
-		id: 2,
-		title: "ADCC Latin America Edition / Santiago Open",
-		date: "06 Jun",
-		daysRemaining: "Faltan 15 Días",
-		image: "https://picsum.photos/586/120",
-		status: "Master",
-		statusType: "master",
-	},
-	{
-		id: 3,
-		title: "ADCC Latin America Edition / Santiago Open",
-		date: "06 Jun",
-		daysRemaining: "Faltan 15 Días",
-		image: "https://picsum.photos/586/120",
-		status: "Instructor",
-		statusType: "instructor",
-	},
-	{
-		id: 4,
-		title: "ADCC Latin America Edition / Santiago Open",
-		date: "06 Jun",
-		daysRemaining: "Faltan 15 Días",
-		image: "https://picsum.photos/586/120",
-		status: "Organizer",
-		statusType: "organizer",
-	},
-];
-
 const Dashboard = () => {
 	const { user } = useAuthStore();
 	const [tournaments, setTournaments] = useState<Tournament[]>([]);

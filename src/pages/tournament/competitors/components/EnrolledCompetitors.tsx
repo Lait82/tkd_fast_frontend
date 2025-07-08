@@ -21,7 +21,6 @@ const EnrolledCompetitors = () => {
 				const res = await getCompetitorsByCategory(tournament.code);
 				const competitorsByCategory =
 					competitorsByCategoryResponseSchema.parse(res);
-				console.log(competitorsByCategory);
 				if (isMounted)
 					setCategoriesWithCompetitors(competitorsByCategory);
 			} catch (error) {

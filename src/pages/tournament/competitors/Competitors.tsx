@@ -7,10 +7,11 @@ import TournamentNavbar from "@/components/TournamentNavbar";
 import EnrolledCompetitors from "./components/EnrolledCompetitors";
 import { TournamentActions } from "@/types/enums";
 import ManageCompetitors from "./components/ManageCompetitors";
+import { ManageCompetitorsProvider } from "./components/ManageCompetitorContext";
 
 // Mock data for tournaments
 const Competitors = () => {
-	const { tournament, can } = useTournamentStore();
+	const { can } = useTournamentStore();
 	return (
 		<div className="create-tournament-page">
 			<Header />
@@ -23,7 +24,9 @@ const Competitors = () => {
 					</div>
 				</div>
 				{can(TournamentActions.MANAGE_COMPETITORS) ? (
-					<ManageCompetitors />
+					<ManageCompetitorsProvider>
+						<ManageCompetitors />
+					</ManageCompetitorsProvider>
 				) : null}
 				<div className="flex flex-col">
 					<EnrolledCompetitors />

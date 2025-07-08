@@ -73,14 +73,12 @@ export const categorySchema = z.object({
 	min_weight: z.number(),
 	max_weight: z.number(),
 	gender: z.enum(Gender),
-	created_at: z.string().optional(),
-	updated_at: z.string().optional(),
 	min_rank: z.enum(Rank),
 	max_rank: z.enum(Rank),
 	min_age: z.number(),
 	max_age: z.number(),
 });
-export type categorySchema = z.infer<typeof categorySchema>;
+export type CategorySchema = z.infer<typeof categorySchema>;
 
 export const categoryWithCompetitorsSchema = z.object({
 	category: categorySchema,
@@ -107,5 +105,23 @@ export const competitorSchema = z.object({
 	created_at: z.string().optional().default(""),
 	updated_at: z.string().optional().default(""),
 	user: userSchema.default(userSchema.parse({})),
+	inscriptions: z
+		.array(
+			z.object({
+				uuid: z.uuid(),
+				category_uuid: z.uuid(),
+				competitor_uuid: z.uuid(),
+			})
+		)
+		.default([]),
+	teams: z
+		.array(
+			z.object({
+				uuid: z.uuid(),
+				name: z.string(),
+				created_by_uuid: z.uuid(),
+			})
+		)
+		.default([]),
 });
 export type CompetitorSchema = z.infer<typeof competitorSchema>;
