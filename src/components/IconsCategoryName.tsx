@@ -3,7 +3,13 @@ import { Discipline, Gender } from "@/types/enums";
 import { CategorySchema } from "@/types/schemas/primitiveSchemas";
 import { getRankName } from "@/utils/utils";
 
-const IconsCategoryName = ({ category }: { category: CategorySchema }) => {
+const IconsCategoryName = ({
+	category,
+	className = "",
+}: {
+	category: CategorySchema;
+	className?: string;
+}) => {
 	const discipline = {
 		[Discipline.COMBAT]: "Lucha",
 		[Discipline.PATTERNS]: "Formas",
@@ -14,7 +20,7 @@ const IconsCategoryName = ({ category }: { category: CategorySchema }) => {
 	};
 	const teamOrIndividual = category.is_team ? "Equipos" : "Individual";
 	return (
-		<span className="flex items-center gap-0.5">
+		<span className={`flex items-center gap-0.5 ${className}`}>
 			<span className="text-orange font-black">{"> "}</span>
 			{`${discipline[category.discipline]} ${teamOrIndividual} | `}
 			{` ${gender[category.gender]} | `}

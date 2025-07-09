@@ -13,6 +13,7 @@ import {
 import Button from "@/components/Button";
 import IconsCategoryName from "@/components/IconsCategoryName";
 import { Trash2 } from "lucide-react";
+import { buildCategoryName } from "@/utils/utils";
 
 const EnrolledCategory = ({ category }: { category: CategorySchema }) => {
 	let [isOpen, setIsOpen] = useState(false);
@@ -88,10 +89,18 @@ const EnrolledCategory = ({ category }: { category: CategorySchema }) => {
 									</DialogTitle>
 									<div className="mt-1">
 										<p className="text-md text-muted text-center">
-											¿Estas seguro que quieres eliminar
-											la inscripcion de NOMBRE Y APELLIDO
-											DEL COMPETIDOR a esta categoria?
-											NOMBRE DE LA CATEGORIA
+											{`¿Estas seguro que quieres eliminar
+											la inscripción de `}
+											<span className="text-neutrallight capitalize italic">{`${competitorDraft.user.firstname} ${competitorDraft.user.lastname} `}</span>
+											a la siguiente categoria?
+											<br />
+											<br />
+											<span className="text-orange font-black">
+												{"> "}
+											</span>
+											<span className="text-neutrallight">
+												{buildCategoryName(category)}
+											</span>
 										</p>
 									</div>
 

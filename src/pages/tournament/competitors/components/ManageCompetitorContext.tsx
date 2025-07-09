@@ -10,6 +10,7 @@ import {
 	competitorSchema,
 	CompetitorSchema,
 } from "@/types/schemas/primitiveSchemas";
+import dayjs, { Dayjs } from "dayjs";
 import React, {
 	createContext,
 	Dispatch,
@@ -26,7 +27,7 @@ interface NewCompetitor {
 	categories?: string[];
 	firstname: string;
 	lastname: string;
-	dob: string;
+	dob: Dayjs;
 	rank: Rank;
 }
 
@@ -66,7 +67,10 @@ export const ManageCompetitorsProvider = ({
 		categories: z.array(z.uuid()).default([]),
 		firstname: z.string().default(""),
 		lastname: z.string().default(""),
-		dob: z.string().default(""),
+		dob: z
+			.string()
+			.default(dayjs().format("YYYY-MM-DD")) // fecha por defecto en formato ISO corto
+			.transform((val) => dayjs(val)),
 		rank: z.enum(Rank).default(Rank.WHITE),
 	});
 

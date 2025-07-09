@@ -16,7 +16,7 @@ const Competitors = () => {
 		<div className="create-tournament-page">
 			<Header />
 
-			<main className="create-tournament-container">
+			<main className="create-tournament-container flex flex-col gap-2">
 				<div className="grid grid-cols-3 items-center">
 					<GoBack />
 					<div className="flex justify-center w-ful">

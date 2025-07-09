@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useManageCompetitors } from "./ManageCompetitorContext";
 import { BiCategoryAlt } from "react-icons/bi";
 import Button from "@/components/Button";
-import { CategoryStatus } from "@/types/enums";
+import { CategoryStatus, ManageCompetitorModes } from "@/types/enums";
 import EnrollableCategory from "./EnrollableCategory";
 import EnrolledCategory from "./EnrolledCategory";
 import { errorToast, successToast } from "@/services/toasts";
@@ -27,6 +27,7 @@ const AvailableCategories = () => {
 		competitorCategoriesDraft,
 		setCompetitorDraft,
 		setCompetitorCategoriesDraft,
+		mode,
 	} = useManageCompetitors();
 	const [enrolledCategories, setEnrolledCategories] = useState<
 		CategoryWithStatus[]
@@ -92,7 +93,8 @@ const AvailableCategories = () => {
 	};
 
 	return (
-		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center create-tournament-card p-3 rounded-lg">
+		// <div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
+		<div className="col-span-3 col-start-1 row-start-2 bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
 			<div className="flex flex-col gap-3">
 				<h1 className="font-extrabold flex items-center gap-1 text-2xl">
 					<BiCategoryAlt /> Categorías
@@ -119,16 +121,18 @@ const AvailableCategories = () => {
 							)
 					)
 				)}
-				<div className="w-full flex justify-end">
-					<Button
-						disabled={!competitorDraft.id}
-						onClick={() => {
-							enroll();
-						}}
-					>
-						Enroll
-					</Button>
-				</div>
+				{mode === ManageCompetitorModes.EDIT && (
+					<div className="w-full flex justify-end">
+						<Button
+							disabled={!competitorDraft.id}
+							onClick={() => {
+								enroll();
+							}}
+						>
+							Enroll
+						</Button>
+					</div>
+				)}
 			</div>
 		</div>
 	);

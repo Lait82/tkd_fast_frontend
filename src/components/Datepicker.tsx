@@ -1,35 +1,52 @@
 import "react-datepicker/dist/react-datepicker.css";
-import "../styles/components/DatepickerOverrides.css"
+import "../styles/components/DatepickerOverrides.css";
 
-import { useState } from "react";
-import DatePicker from "react-datepicker";
+import dayjs, { Dayjs } from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+import { es } from "date-fns/locale/es";
 import { FaCalendar } from "react-icons/fa";
-import {es} from "date-fns/locale/es";
+import DatePicker from "react-datepicker";
 
-const Datepicker = () => {
-	const [startDate, setStartDate] = useState<Date | null>(null);
+type Props = {
+	name: string;
+	value: Dayjs;
+	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
 
+const Datepicker = ({ name, value, onChange }: Props) => {
+	dayjs.extend(customParseFormat);
 	return (
-		<div className="w-full text-sm text-white">
+		<div className="w-full text-sm text-neutrallight">
 			<DatePicker
-				selected={startDate}
-				onChange={(date) => setStartDate(date)}
+				selected={
+					value
+						? dayjs(value, "DD-MM-YYYY").toDate()
+						: dayjs().toDate()
+				}
+				onChange={(date) => {
+					if (!date) return;
+					const syntheticEvent = {
+						target: {
+							name,
+							value: dayjs(date).format("DD-MM-YYYY"),
+						},
+					} as React.ChangeEvent<HTMLInputElement>;
+
+					onChange(syntheticEvent);
+				}}
+				name={name}
 				showIcon
 				showMonthDropdown
 				showYearDropdown
 				dropdownMode="select"
-				icon={
-					<FaCalendar className="text-neutrallight" />
-				}
+				icon={<FaCalendar className="text-neutrallight" />}
 				placeholderText="  Seleccionar fecha"
 				className="bg-elevated cursor-pointer w-full border border-transparent border-b-orange focus:outline-none"
 				calendarClassName="bg-elevated border border-orange rounded-lg"
-				// dayClassName={(date) =>
-				// 	"text-neutrallight hover:bg-orange hover:text-white transition-all"
-				// }
 				dayClassName={() => "!text-[var(--color-neutrallight)]"}
-				// popoverPlacement="bottom"
-				locale={es} // si querés soporte en español
+				locale={es}
+				dateFormat="dd/MM/yyyy"
 			/>
 		</div>
 	);

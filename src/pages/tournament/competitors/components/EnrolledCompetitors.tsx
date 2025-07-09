@@ -41,8 +41,8 @@ const EnrolledCompetitors = () => {
 		};
 	}, []);
 	return (
-		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center create-tournament-card p-3 rounded-lg">
-			<h1 className="font-extrabold text-2xl">Competidores</h1>
+		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
+			<h1 className="font-extrabold text-3xl">Competidores</h1>
 			<div className="flex flex-col gap-3">
 				{categoriesWithCompetitors.map((categoryWComp, i) =>
 					loading ? (

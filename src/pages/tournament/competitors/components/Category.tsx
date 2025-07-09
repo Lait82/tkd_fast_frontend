@@ -1,10 +1,95 @@
+// import BeltIcon from "@/components/BeltIcon";
+// import {
+// 	CategorySchema,
+// 	CompetitorWithUserSchema,
+// } from "@/types/schemas/primitiveSchemas";
+// import { buildCategoryName, getRankName } from "@/utils/utils";
+// import dayjs from "dayjs";
+
+// interface CategoryProps {
+// 	category: CategorySchema;
+// 	competitors: CompetitorWithUserSchema[];
+// }
+
+// const Category = ({ category, competitors }: CategoryProps) => {
+// 	return (
+// 		<div className="flex flex-col">
+// 			<h2 className="font-semibold text-lg mb-1">
+// 				<span className="text-orange font-black">{">"}</span>{" "}
+// 				{buildCategoryName(category)}
+// 			</h2>
+// 			{competitors.length ? (
+// 				competitors.map((competitor, i) => (
+// 					<div
+// 						key={`${i}-category`}
+// 						className="grid grid-cols-4 justify-items-center items-center pl-3 font-bold"
+// 					>
+// 						{/* Fullname */}
+// 						<div className="flex items-center justify-start w-full gap-1">
+// 							<div className="rounded-full font-black items-center bg-background flex h-3 w-3 justify-center text-orange uppercase">
+// 								{`${competitor.firstname.charAt(
+// 									0
+// 								)}${competitor.lastname.charAt(0)}`}
+// 							</div>
+// 							<div className="font-semibold capitalize">{`${competitor.firstname} ${competitor.lastname}`}</div>
+// 						</div>
+
+// 						{/* Rank */}
+// 						<div className="flex items-center justify-start w-full ml-[50%] gap-1">
+// 							<BeltIcon
+// 								key={`${i}-belt`}
+// 								rank={competitor.rank}
+// 							/>
+// 							{getRankName(competitor.rank) + " "}
+// 						</div>
+
+// 						{/* Age */}
+// 						<div>
+// 							{dayjs().diff(competitor.dob, "years").toString()}{" "}
+// 							Años
+// 						</div>
+
+// 						{/* School */}
+// 						<div>
+// 							{competitor.school ?? (
+// 								<i className="text-muted font-normal">
+// 									No especifica
+// 								</i>
+// 							)}
+// 						</div>
+// 					</div>
+// 				))
+// 			) : (
+// 				<div className="flex pl-3">
+// 					{/* Fullname */}
+// 					<div className="items-center flex justify-center">
+// 						<i className="text-muted">
+// 							Todavía no hay competidores anotados
+// 						</i>
+// 					</div>
+// 				</div>
+// 			)}
+// 		</div>
+// 	);
+// };
+
+// export default Category;
+
+import {
+	Disclosure,
+	DisclosureButton,
+	DisclosurePanel,
+	Transition,
+} from "@headlessui/react";
 import BeltIcon from "@/components/BeltIcon";
 import {
 	CategorySchema,
 	CompetitorWithUserSchema,
 } from "@/types/schemas/primitiveSchemas";
-import { buildCategoryName, getRankName } from "@/utils/utils";
+import { getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
+import { ChevronDownIcon } from "lucide-react";
+import IconsCategoryName from "@/components/IconsCategoryName";
 
 interface CategoryProps {
 	category: CategorySchema;
@@ -13,63 +98,92 @@ interface CategoryProps {
 
 const Category = ({ category, competitors }: CategoryProps) => {
 	return (
-		<div className="flex flex-col">
-			<h2 className="font-semibold text-lg mb-1">
-				<span className="text-orange font-black">{">"}</span>{" "}
-				{buildCategoryName(category)}
-			</h2>
-			{competitors.length ? (
-				competitors.map((competitor, i) => (
-					<div
-						key={`${i}-category`}
-						className="grid grid-cols-4 justify-items-center items-center pl-3 font-bold"
+		<Disclosure defaultOpen>
+			{({ open }) => (
+				<div className="flex flex-col overflow-hidden">
+					<DisclosureButton className="transition-all ease-fluid p-2 rounded-lg flex border border-transparent hover:border-orange cursor-pointer items-center justify-between w-full font-semibold">
+						<h2 className="text-xl">
+							<IconsCategoryName category={category} />
+						</h2>
+						<ChevronDownIcon
+							size={32}
+							className={`text-orange transform transition-transform ${
+								open ? "rotate-180" : ""
+							}`}
+						/>
+					</DisclosureButton>
+					<Transition
+						show={open}
+						enter="transition-all duration-300 ease-in-out"
+						enterFrom="max-h-0 opacity-0"
+						enterTo="max-h-[500px] opacity-100"
+						leave="transition-all duration-200 ease-in-out"
+						leaveFrom="max-h-[500px] opacity-100"
+						leaveTo="max-h-0 opacity-0"
 					>
-						{/* Fullname */}
-						<div className="flex items-center justify-start w-full gap-1">
-							<div className="rounded-full font-black items-center bg-background flex h-3 w-3 justify-center text-orange uppercase">
-								{`${competitor.firstname.charAt(
-									0
-								)}${competitor.lastname.charAt(0)}`}
-							</div>
-							<div className="font-semibold capitalize">{`${competitor.firstname} ${competitor.lastname}`}</div>
-						</div>
+						<DisclosurePanel
+							transition
+							className="transition-all duration-900 ease-in-out px-4 py-2 space-y-2"
+						>
+							{competitors.length ? (
+								competitors.map((competitor, i) => (
+									<div
+										key={`${i}-category`}
+										className="grid grid-cols-4 justify-items-center items-center pl-3 font-bold"
+									>
+										{/* Fullname */}
+										<div className="flex items-center justify-start w-full gap-1">
+											<div className="rounded-full font-black items-center bg-background flex h-3 w-3 justify-center text-orange uppercase">
+												{`${competitor.firstname.charAt(
+													0
+												)}${competitor.lastname.charAt(
+													0
+												)}`}
+											</div>
+											<div className="font-semibold capitalize">{`${competitor.firstname} ${competitor.lastname}`}</div>
+										</div>
 
-						{/* Rank */}
-						<div className="flex items-center justify-start w-full ml-[50%] gap-1">
-							<BeltIcon
-								key={`${i}-belt`}
-								rank={competitor.rank}
-							/>
-							{getRankName(competitor.rank) + " "}
-						</div>
+										{/* Rank */}
+										<div className="flex items-center justify-start w-full ml-[50%] gap-1">
+											<BeltIcon
+												key={`${i}-belt`}
+												rank={competitor.rank}
+											/>
+											{getRankName(competitor.rank) + " "}
+										</div>
 
-						{/* Age */}
-						<div>
-							{dayjs().diff(competitor.dob, "years").toString()}{" "}
-							Años
-						</div>
+										{/* Age */}
+										<div>
+											{dayjs()
+												.diff(competitor.dob, "years")
+												.toString()}{" "}
+											Años
+										</div>
 
-						{/* School */}
-						<div>
-							{competitor.school ?? (
-								<i className="text-muted font-normal">
-									No especifica
-								</i>
+										{/* School */}
+										<div>
+											{competitor.school ?? (
+												<i className="text-muted font-normal">
+													No especifica
+												</i>
+											)}
+										</div>
+									</div>
+								))
+							) : (
+								<div className="flex pl-3">
+									<div className="items-center flex justify-center">
+										<i className="text-muted">
+											Todavía no hay competidores anotados
+										</i>
+									</div>
+								</div>
 							)}
-						</div>
-					</div>
-				))
-			) : (
-				<div className="flex pl-3">
-					{/* Fullname */}
-					<div className="items-center flex justify-center">
-						<i className="text-muted">
-							Todavía no hay competidores anotados
-						</i>
-					</div>
+						</DisclosurePanel>
+					</Transition>
 				</div>
 			)}
-		</div>
+		</Disclosure>
 	);
 };
 

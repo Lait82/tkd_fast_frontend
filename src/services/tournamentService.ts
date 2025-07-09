@@ -41,7 +41,7 @@ export const getCompetitorsByCategory = async (code: string) => {
 export const createCompetitor = async (code: string, data: object) => {
 	try {
 		const response = await tkdfastProtectedApi.post(
-			`/tournament/${code}/competitors/create`,
+			`/tournament/${code}/competitors`,
 			{ ...data }
 		);
 		return response.data;

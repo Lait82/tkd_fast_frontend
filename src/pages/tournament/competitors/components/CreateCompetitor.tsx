@@ -43,7 +43,7 @@ const CreateCompetitor = () => {
 		}
 	};
 	return (
-		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center create-tournament-card p-3 rounded-lg">
+		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
 			<div className="flex flex-col gap-3">
 				<h1 className="font-extrabold text-2xl">Agregar Competidor</h1>
 				<div className="flex gap-2">
@@ -109,7 +109,11 @@ const CreateCompetitor = () => {
 								value={competitorDraft.user.dob}
 								onChange={handleChange}
 							/> */}
-							<Datepicker />
+							<Datepicker
+								name="dob"
+								value={newCompetitor.dob}
+								onChange={handleChange}
+							/>
 						</div>
 						<div className="flex items-center gap-1">
 							<span className="text-muted">Email</span>

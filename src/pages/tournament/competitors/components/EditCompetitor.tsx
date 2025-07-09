@@ -2,11 +2,29 @@ import BeltIcon from "@/components/BeltIcon";
 import { getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
 import { useManageCompetitors } from "./ManageCompetitorContext";
+// import "dayjs/locale/es";
+import es from "dayjs/locale/es";
 
 const EditCompetitor = ({}) => {
+	dayjs.locale({
+		...es,
+		months: es.months?.map((m) => m.charAt(0).toUpperCase() + m.slice(1)),
+		monthsShort: es.monthsShort?.map(
+			(m) => m.charAt(0).toUpperCase() + m.slice(1)
+		),
+		weekdays: es.weekdays?.map(
+			(m) => m.charAt(0).toUpperCase() + m.slice(1)
+		),
+		weekdaysShort: es.weekdaysShort?.map(
+			(m) => m.charAt(0).toUpperCase() + m.slice(1)
+		),
+		weekdaysMin: es.weekdaysMin?.map(
+			(m) => m.charAt(0).toUpperCase() + m.slice(1)
+		),
+	});
 	const { competitorDraft } = useManageCompetitors();
 	return (
-		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center create-tournament-card p-3 rounded-lg">
+		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
 			<div className="flex flex-col gap-3">
 				<h1 className="font-extrabold text-2xl">
 					Información Personal
@@ -39,9 +57,9 @@ const EditCompetitor = ({}) => {
 							<span className="text-muted">
 								Fecha de Nacimiento
 							</span>
-							{dayjs(competitorDraft.user.dob).format(
-								"D MMMM YYYY"
-							)}
+							{dayjs(competitorDraft.user.dob)
+								.locale("es")
+								.format("D MMMM YYYY")}
 						</div>
 						<div className="flex items-center gap-1">
 							<span className="text-muted">DNI</span>
