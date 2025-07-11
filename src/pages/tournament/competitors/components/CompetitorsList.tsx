@@ -17,6 +17,7 @@ const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
 		setCompetitorDraft,
 		mode,
 		setMode,
+		setSelectedCategories,
 	} = useManageCompetitors();
 
 	const [loading, setLoading] = useState<boolean>(true);
@@ -25,6 +26,7 @@ const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
 		if (mode === ManageCompetitorModes.CREATE)
 			setMode(ManageCompetitorModes.EDIT);
 		setCompetitorDraft(competitor);
+		setSelectedCategories([]);
 	};
 	useEffect(() => {
 		if (userCompetitors) setLoading(false);
@@ -89,8 +91,11 @@ const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
 						className={`px-1 py-0.5 rounded-lg transition-all ease-fluid cursor-pointer justify-items-center items-center font-bold border-1 border-transparent
 					 hover:border-orange`}
 						onClick={() => {
-							setMode(ManageCompetitorModes.CREATE);
+							if (mode === ManageCompetitorModes.EDIT)
+								setMode(ManageCompetitorModes.CREATE);
+
 							setCompetitorDraft(competitorSchema.parse({}));
+							setSelectedCategories([]);
 						}}
 					>
 						{/* Fullname */}

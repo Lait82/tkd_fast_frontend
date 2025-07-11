@@ -1,18 +1,20 @@
-import React from "react"
+import React, { ReactNode } from "react";
 
 interface LabelProps {
-  label: string
-  name: string
-  required: boolean | undefined
-  horizontal?: boolean | undefined
+	title: ReactNode | string;
+	name: string;
+	className?: string;
 }
 
-const Label: React.FC<LabelProps> = ({name, required, label, horizontal}) => {
-  return(
-  <label htmlFor={name} className={`${horizontal ? "form-label-horizontal mr-2" : "form-label"}`}>
-    {required && <span className="text-orange">{'* '}</span>}
-      {label}
-    </label>
-)}
+const Label: React.FC<LabelProps> = ({ title, name, className }) => {
+	if (typeof title === "string") {
+		return (
+			<label htmlFor={name}>
+				<span className={`text-muted${" " + className}`}>{title}</span>
+			</label>
+		);
+	}
+	return <label htmlFor={name}>{title}</label>;
+};
 
-export default Label
+export default Label;

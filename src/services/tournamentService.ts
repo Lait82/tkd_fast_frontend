@@ -33,7 +33,8 @@ export const getCompetitorsByCategory = async (code: string) => {
 		return response.data;
 	} catch (error: any) {
 		throw new Error(
-			error.response?.data?.message || "Fallo al obtener mis torneos."
+			error.response?.data?.message ||
+				"Fallo al obtener categorías y competidores."
 		);
 	}
 };

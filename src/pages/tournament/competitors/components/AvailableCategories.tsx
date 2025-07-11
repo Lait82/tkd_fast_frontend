@@ -24,9 +24,9 @@ const AvailableCategories = () => {
 	const {
 		competitorDraft,
 		categories,
-		competitorCategoriesDraft,
+		selectedCategories,
 		setCompetitorDraft,
-		setCompetitorCategoriesDraft,
+		setSelectedCategories,
 		mode,
 	} = useManageCompetitors();
 	const [enrolledCategories, setEnrolledCategories] = useState<
@@ -73,7 +73,7 @@ const AvailableCategories = () => {
 		try {
 			const payload = {
 				competitor_uuid: competitorDraft.uuid,
-				categories: competitorCategoriesDraft,
+				categories: selectedCategories,
 			};
 			const res = await enrollCompetitor(tournament.code, payload);
 
@@ -82,7 +82,7 @@ const AvailableCategories = () => {
 			setCompetitorDraft(competitorDraftResponse);
 
 			// Clear de las categorias seleccionadas
-			setCompetitorCategoriesDraft([]);
+			setSelectedCategories([]);
 			successToast(`Competidor inscripto exitosamente.`);
 		} catch (error) {
 			console.error(error);
@@ -122,14 +122,21 @@ const AvailableCategories = () => {
 					)
 				)}
 				{mode === ManageCompetitorModes.EDIT && (
-					<div className="w-full flex justify-end">
+					<div className="w-full flex justify-end mt-2">
 						<Button
 							disabled={!competitorDraft.id}
 							onClick={() => {
 								enroll();
 							}}
 						>
-							Enroll
+							Inscribir
+						</Button>
+					</div>
+				)}
+				{mode === ManageCompetitorModes.CREATE && (
+					<div className="w-full flex justify-end mt-2">
+						<Button form="create-competitor-form" type="submit">
+							Crear competidor
 						</Button>
 					</div>
 				)}

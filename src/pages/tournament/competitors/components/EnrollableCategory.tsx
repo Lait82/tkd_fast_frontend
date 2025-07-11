@@ -5,44 +5,25 @@ import IconsCategoryName from "@/components/IconsCategoryName";
 import { ManageCompetitorModes } from "@/types/enums";
 
 const EnrollableCategory = ({ category }: { category: CategorySchema }) => {
-	const {
-		newCompetitor,
-		setNewCompetitor,
-		mode,
-		setCompetitorCategoriesDraft,
-		competitorCategoriesDraft,
-	} = useManageCompetitors();
+	const { mode, setSelectedCategories, selectedCategories } =
+		useManageCompetitors();
 
 	const handleToggle = (categoryUuid: string) => {
-		// newCompetitor.categories = uuid[];
-
-		// competitorDraft.inscriptions = {uuid:'', ...}[]
-
 		if (mode === ManageCompetitorModes.CREATE) {
-			const currentCategories = newCompetitor.categories || [];
+			const currentCategories: string[] = Array.from(selectedCategories);
 			const updated = currentCategories.includes(categoryUuid)
 				? currentCategories.filter((uuid) => uuid !== categoryUuid)
 				: [...currentCategories, categoryUuid];
 
-			setNewCompetitor({
-				...newCompetitor,
-				categories: updated,
-			});
+			setSelectedCategories(updated);
 		} else if (mode === ManageCompetitorModes.EDIT) {
-			console.log("competitorCategoriesDraft");
-			console.log(competitorCategoriesDraft);
-			const currentCategories: string[] = Array.from(
-				competitorCategoriesDraft
-			);
+			const currentCategories: string[] = Array.from(selectedCategories);
 
 			const updated = currentCategories.includes(categoryUuid) // Si la category ya esta incluida
 				? currentCategories.filter((uuid) => uuid !== categoryUuid) // la filtro
 				: [...currentCategories, categoryUuid]; // sino la agrego.
 
-			console.log("updated");
-			console.log(updated);
-
-			setCompetitorCategoriesDraft(updated);
+			setSelectedCategories(updated);
 		}
 	};
 	return (
@@ -53,11 +34,7 @@ const EnrollableCategory = ({ category }: { category: CategorySchema }) => {
 			>
 				<IconsCategoryName category={category} />
 				<Checkbox
-					checked={
-						mode === ManageCompetitorModes.CREATE
-							? newCompetitor.categories?.includes(category.uuid)
-							: competitorCategoriesDraft.includes(category.uuid)
-					}
+					checked={selectedCategories.includes(category.uuid)}
 					name={`category-${category.id}`}
 					onChange={() => handleToggle(category.uuid)}
 					className="group block size-2 rounded border bg-transparent border-neutrallight data-checked:border-orange

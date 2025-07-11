@@ -14,8 +14,28 @@ import TournamentLoader from "./components/TournamentLoader";
 import About from "./pages/about/About";
 import Info from "./pages/tournament/info/Info";
 import Competitors from "./pages/tournament/competitors/Competitors";
+import dayjs from "dayjs";
+import es from "dayjs/locale/es";
+import customParseFormat from "dayjs/plugin/customParseFormat";
 
 function App() {
+	dayjs.locale({
+		...es,
+		months: es.months?.map((m) => m.charAt(0).toUpperCase() + m.slice(1)),
+		monthsShort: es.monthsShort?.map(
+			(m) => m.charAt(0).toUpperCase() + m.slice(1)
+		),
+		weekdays: es.weekdays?.map(
+			(m) => m.charAt(0).toUpperCase() + m.slice(1)
+		),
+		weekdaysShort: es.weekdaysShort?.map(
+			(m) => m.charAt(0).toUpperCase() + m.slice(1)
+		),
+		weekdaysMin: es.weekdaysMin?.map(
+			(m) => m.charAt(0).toUpperCase() + m.slice(1)
+		),
+	});
+	dayjs.extend(customParseFormat);
 	return (
 		// <AuthProvider>
 		<Routes>

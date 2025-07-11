@@ -21,35 +21,38 @@ import React, {
 } from "react";
 import { z } from "zod/v4";
 
-interface NewCompetitor {
-	email: string;
-	id_number: string;
-	categories?: string[];
-	firstname: string;
-	lastname: string;
-	dob: Dayjs;
-	rank: Rank;
-}
+const newCompetitorSchema = z.object({
+	email: z.email("Por favor, ingresa un email válido."),
+	id_number: z.string(),
+	firstname: z.string().min(2, "El nombre es demasiado corto."),
+	lastname: z.string().min(2, "El apellido es demasiado corto."),
+	dob: z.preprocess(
+		(val: string) => dayjs(val, "DD-MM-YYYY"),
+		z
+			.custom<Dayjs>((val) => dayjs.isDayjs(val))
+			.refine((val) => val.isBefore(dayjs().subtract(3, "years")), {
+				message: "El competidor no puede ser menor a 3 años.",
+			})
+	),
+
+	rank: z.enum(Rank).default(Rank.WHITE),
+});
 
 interface ManageCompetitorsContextType {
 	competitorDraft: CompetitorSchema;
 	setCompetitorDraft: (c: CompetitorSchema) => void;
 
-	newCompetitor: NewCompetitor;
-	setNewCompetitor: (c: NewCompetitor) => void;
-
 	userCompetitors: CompetitorSchema[];
-	setUserCompetitors: // (
-	// 	c: CompetitorSchema[]
-	// ) => void |
-	React.Dispatch<React.SetStateAction<CompetitorSchema[]>>;
+	setUserCompetitors: React.Dispatch<
+		React.SetStateAction<CompetitorSchema[]>
+	>;
 
 	mode: ManageCompetitorModes;
 	setMode: (m: ManageCompetitorModes) => void;
-	resetNewCompetitor: () => void;
 	categories: CategorySchema[];
-	setCompetitorCategoriesDraft: Dispatch<SetStateAction<string[]>>;
-	competitorCategoriesDraft: string[];
+	setSelectedCategories: Dispatch<SetStateAction<string[]>>;
+	selectedCategories: string[];
+	newCompetitorSchema: z.ZodObject;
 }
 
 const ManageCompetitorsContext = createContext<
@@ -61,22 +64,6 @@ export const ManageCompetitorsProvider = ({
 }: {
 	children: React.ReactNode;
 }) => {
-	const newCompetitorSchema = z.object({
-		email: z.string().default(""),
-		id_number: z.string().default(""),
-		categories: z.array(z.uuid()).default([]),
-		firstname: z.string().default(""),
-		lastname: z.string().default(""),
-		dob: z
-			.string()
-			.default(dayjs().format("YYYY-MM-DD")) // fecha por defecto en formato ISO corto
-			.transform((val) => dayjs(val)),
-		rank: z.enum(Rank).default(Rank.WHITE),
-	});
-
-	const [newCompetitor, setNewCompetitor] = useState<NewCompetitor>(
-		newCompetitorSchema.parse({})
-	);
 	const [mode, setMode] = useState<ManageCompetitorModes>(
 		ManageCompetitorModes.CREATE
 	);
@@ -85,16 +72,10 @@ export const ManageCompetitorsProvider = ({
 		[]
 	);
 	const [categories, setCategories] = useState<CategorySchema[]>([]);
+	const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 	const [competitorDraft, setCompetitorDraft] = useState<CompetitorSchema>(
 		competitorSchema.parse({})
 	);
-	const [competitorCategoriesDraft, setCompetitorCategoriesDraft] = useState<
-		string[]
-	>([]);
-
-	const resetNewCompetitor = () => {
-		setNewCompetitor(newCompetitorSchema.parse({}));
-	};
 
 	const { tournament } = useTournamentStore();
 
@@ -132,7 +113,6 @@ export const ManageCompetitorsProvider = ({
 				const res = await getAvailableCategories(tournament.code);
 				const availableCategories = categorySchema.array().parse(res);
 				if (isMounted) setCategories(availableCategories);
-				console.log(availableCategories);
 				// setLoading(false);
 			} catch (error) {
 				errorToast(
@@ -158,14 +138,12 @@ export const ManageCompetitorsProvider = ({
 				setCompetitorDraft,
 				mode,
 				setMode,
-				newCompetitor,
-				setNewCompetitor,
 				userCompetitors,
 				setUserCompetitors,
-				resetNewCompetitor,
 				categories,
-				setCompetitorCategoriesDraft,
-				competitorCategoriesDraft,
+				setSelectedCategories,
+				selectedCategories,
+				newCompetitorSchema,
 			}}
 		>
 			{children}

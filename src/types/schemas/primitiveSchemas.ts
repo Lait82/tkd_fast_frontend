@@ -1,5 +1,6 @@
 import { z } from "zod/v4";
 import { Discipline, Gender, Rank, Role } from "../enums";
+import dayjs, { Dayjs } from "dayjs";
 
 export const userSchema = z.object({
 	//TODO: reemplazar el tipo de los esquemas opr los nativos que hice yo

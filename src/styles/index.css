@@ -252,11 +252,11 @@ input.form-input-secondary[type="date"] {
   border-color: var(--color-orange);
 }
 
-.form-error {
+/* .form-error {
   color: var(--color-red);
   font-size: 0.875rem;
   margin-top: 0.25rem;
-}
+} */
 
 .card {
   background-color: var(--color-elevated);

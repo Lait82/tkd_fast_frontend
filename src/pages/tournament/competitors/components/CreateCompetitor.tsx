@@ -1,4 +1,3 @@
-import Button from "@/components/Button";
 import Datepicker from "@/components/Datepicker";
 import FormInput from "@/components/forms/FormInput";
 import IconSelect from "@/components/IconSelect";
@@ -7,34 +6,81 @@ import { createCompetitor } from "@/services/tournamentService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import { useManageCompetitors } from "./ManageCompetitorContext";
 import { competitorSchema } from "@/types/schemas/primitiveSchemas";
+import { useState } from "react";
+import dayjs, { Dayjs } from "dayjs";
+import { Rank } from "@/types/enums";
 
+interface NewCompetitorForm {
+	email: string;
+	id_number: string;
+	firstname: string;
+	lastname: string;
+	dob: Dayjs;
+	rank: Rank;
+}
+
+const emptyForm: NewCompetitorForm = {
+	email: "",
+	id_number: "",
+	firstname: "",
+	lastname: "",
+	dob: dayjs(),
+	rank: Rank.WHITE,
+};
 const CreateCompetitor = () => {
+	type Errors = Partial<Record<keyof NewCompetitorForm, string>>;
 	const {
-		newCompetitor,
-		setNewCompetitor,
 		setUserCompetitors,
-		resetNewCompetitor,
+		newCompetitorSchema,
+		setSelectedCategories,
+		selectedCategories,
 	} = useManageCompetitors();
 	const { tournament } = useTournamentStore();
+	const [form, setForm] = useState<NewCompetitorForm>(emptyForm);
+	const [formErrors, setFormErrors] = useState<Errors>();
 
 	const handleChange = (
 		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
 	) => {
 		const { name, value } = e.target;
-
-		setNewCompetitor({ ...newCompetitor, [name]: value });
+		setForm({ ...form, [name]: value });
 	};
 
 	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 
 		try {
-			const res = await createCompetitor(tournament.code, newCompetitor); // Este endpoint deberia devolver el competitor creado con la info del usuario para poder instanciarlo con el zodschema y poder agregarlo al array de competitors.
+			// Parseo el form
+			const result = newCompetitorSchema.safeParse({
+				...form,
+			});
+
+			if (!result.success) {
+				const fieldErrors: Errors = {};
+				result.error.issues.forEach((issue) => {
+					const key = issue.path[0] as keyof NewCompetitorForm;
+					fieldErrors[key] = issue.message;
+				});
+				setFormErrors(fieldErrors);
+				errorToast("Revisá los campos");
+				return;
+			}
+
+			const createCompPayload = {
+				...form,
+				categories: selectedCategories,
+			};
+			const res = await createCompetitor(
+				tournament.code,
+				createCompPayload
+			);
 			const createdCompetitor = competitorSchema.parse(res);
 			successToast("Competidor creado con exito.");
 
+			// Reset states
+			setSelectedCategories([]);
 			setUserCompetitors((prev) => [...prev, createdCompetitor]);
-			resetNewCompetitor();
+			setForm(emptyForm);
 		} catch (err: any) {
 			errorToast(err.message);
 			// setError(err.message || "Error al editar el torneo")
@@ -43,7 +89,9 @@ const CreateCompetitor = () => {
 		}
 	};
 	return (
-		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
+		<div
+			className={`bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg`}
+		>
 			<div className="flex flex-col gap-3">
 				<h1 className="font-extrabold text-2xl">Agregar Competidor</h1>
 				<div className="flex gap-2">
@@ -54,25 +102,27 @@ const CreateCompetitor = () => {
 							width: "130px",
 						}}
 					>
-						{`${newCompetitor.firstname
+						{`${form.firstname
 							.charAt(0)
-							.toUpperCase()}${newCompetitor.lastname
+							.toUpperCase()}${form.lastname
 							.charAt(0)
 							.toUpperCase()}`}
 					</div>
 					<form
 						onSubmit={handleSubmit}
 						className="grid grid-cols-2 gap-y-4 gap-x-2 flex-1 items-center"
+						id="create-competitor-form"
 					>
-						<div className="flex items-center gap-1">
-							<span className="text-muted">Nombre</span>
-							<FormInput
-								variant="secondary"
-								name="firstname"
-								value={newCompetitor.firstname}
-								onChange={handleChange}
-							/>
-						</div>
+						{/* <div className="flex items-center gap-1"> */}
+						<FormInput
+							variant="secondary"
+							name="firstname"
+							value={form.firstname}
+							onChange={handleChange}
+							error={formErrors?.firstname}
+							title={<span className="text-muted">Nombre</span>}
+						/>
+						{/* </div> */}
 						<div className="flex items-center gap-1">
 							<span className="text-muted">Graduación</span>
 							{/* <BeltIcon rank={competitorDraft.rank} />
@@ -83,59 +133,46 @@ const CreateCompetitor = () => {
 							/> */}
 							<IconSelect
 								name="rank"
-								value={newCompetitor.rank}
+								value={form.rank}
 								onChange={handleChange}
 							/>
 							{/* =????? */}
 						</div>
-						<div className="flex items-center gap-1">
-							<span className="text-muted">Apellido</span>
-							<FormInput
-								variant="secondary"
-								name="lastname"
-								value={newCompetitor.lastname}
-								onChange={handleChange}
-							/>
-						</div>
-						<div className="flex items-center gap-1">
-							<span className="text-muted">
-								Fecha de Nacimiento
-							</span>
-							{/* <FormInput
-								variant="secondary"
-								name="dob"
-								type="date"
-								icon={<FaCalendarAlt />}
-								value={competitorDraft.user.dob}
-								onChange={handleChange}
-							/> */}
-							<Datepicker
-								name="dob"
-								value={newCompetitor.dob}
-								onChange={handleChange}
-							/>
-						</div>
-						<div className="flex items-center gap-1">
-							<span className="text-muted">Email</span>
-							<FormInput
-								variant="secondary"
-								name="email"
-								value={newCompetitor.email}
-								onChange={handleChange}
-							/>
-						</div>
-						<div className="flex items-center gap-1">
-							<span className="text-muted">DNI</span>
-							<FormInput
-								variant="secondary"
-								name="id_number"
-								value={newCompetitor.id_number}
-								onChange={handleChange}
-							/>
-						</div>
-						<div className="flex justify-end col-start-2 ">
+						<FormInput
+							variant="secondary"
+							name="lastname"
+							value={form.lastname}
+							error={formErrors?.lastname}
+							onChange={handleChange}
+							title="Apellido"
+						/>
+						<Datepicker
+							name="dob"
+							value={form.dob}
+							onChange={handleChange}
+							error={formErrors?.dob}
+							title="Fecha de nacimiento"
+						/>
+						<FormInput
+							variant="secondary"
+							name="email"
+							value={form.email}
+							error={formErrors?.email}
+							onChange={handleChange}
+							title="Email"
+						/>
+						<FormInput
+							variant="secondary"
+							name="id_number"
+							type="number"
+							value={form.id_number}
+							error={formErrors?.id_number}
+							onChange={handleChange}
+							title="DNI"
+						/>
+						{/* <div className="flex justify-end col-start-2 ">
 							<Button type="submit">Crear competidor</Button>
-						</div>
+						</div> */}
 					</form>
 				</div>
 			</div>
