@@ -189,31 +189,6 @@ const BeltIcon: React.FC<BeltIconProps> = ({
 }) => {
 	const { belt, tip, svg } = rankColors[rank];
 	return (
-		//   <svg
-		//     xmlns="http://www.w3.org/2000/svg"
-		//     viewBox={`0 0 ${size} ${size}`}
-		//     width={size}
-		//     height={size}
-		//     className={className}
-		//     fill="currentColor"
-		//   >
-		//       {/* Main body */}
-		//       <path d="M5 9h14l-3 6H8z" fill={belt}/>
-
-		//       {/* Left arm */}
-		//       <path d="M2 18l3-9h2v3l-3 6z" fill={belt}/>
-
-		//       {/* Right arm */}
-		//       <path d="M22 18l-3-9h-2v3l3 6z" fill={belt}/>
-
-		//       {/* Center connector (red part) */}
-		//       <path
-		//         d="M12 6l-2 4h4l-2-4z"
-		//         fill={tip}
-		//         style={{ isolation: 'auto' }} // Ensures color layer works
-		//       />
-		//     </svg>
-
 		<svg
 			width={size + 20}
 			height={size + 20}

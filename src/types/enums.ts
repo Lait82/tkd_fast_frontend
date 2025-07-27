@@ -1,33 +1,33 @@
 export enum Rank {
-	WHITE = "WHITE",
-	WHITE_YELLOW = "WHITE_YELLOW",
-	YELLOW = "YELLOW",
-	YELLOW_GREEN = "YELLOW_GREEN",
-	GREEN = "GREEN",
-	GREEN_BLUE = "GREEN_BLUE",
-	BLUE = "BLUE",
-	BLUE_RED = "BLUE_RED",
-	RED = "RED",
-	RED_BLACK = "RED_BLACK",
-	DAN_1 = "DAN_1",
-	DAN_2 = "DAN_2",
-	DAN_3 = "DAN_3",
-	DAN_4 = "DAN_4",
-	DAN_5 = "DAN_5",
-	DAN_6 = "DAN_6",
-	DAN_7 = "DAN_7",
-	DAN_8 = "DAN_8",
-	DAN_9 = "DAN_9",
+    WHITE = "WHITE",
+    WHITE_YELLOW = "WHITE_YELLOW",
+    YELLOW = "YELLOW",
+    YELLOW_GREEN = "YELLOW_GREEN",
+    GREEN = "GREEN",
+    GREEN_BLUE = "GREEN_BLUE",
+    BLUE = "BLUE",
+    BLUE_RED = "BLUE_RED",
+    RED = "RED",
+    RED_BLACK = "RED_BLACK",
+    DAN_1 = "DAN_1",
+    DAN_2 = "DAN_2",
+    DAN_3 = "DAN_3",
+    DAN_4 = "DAN_4",
+    DAN_5 = "DAN_5",
+    DAN_6 = "DAN_6",
+    DAN_7 = "DAN_7",
+    DAN_8 = "DAN_8",
+    DAN_9 = "DAN_9",
 }
 
 export enum Discipline {
-	PATTERNS = "PATTERNS",
-	COMBAT = "COMBAT",
+    PATTERNS = "PATTERNS",
+    COMBAT = "COMBAT",
 }
 
 export enum Gender {
-	MALE = "MALE",
-	FEMALE = "FEMALE",
+    MALE = "MALE",
+    FEMALE = "FEMALE",
 }
 
 // export type Role =
@@ -37,37 +37,42 @@ export enum Gender {
 //     | 'COMPETITOR'
 //     | 'NONE'
 export enum Role {
-	ORGANIZER = "ORGANIZER",
-	MASTER = "MASTER",
-	INSTRUCTOR = "INSTRUCTOR",
-	COMPETITOR = "COMPETITOR",
-	NONE = "NONE",
+    ORGANIZER = "ORGANIZER",
+    MASTER = "MASTER",
+    INSTRUCTOR = "INSTRUCTOR",
+    COMPETITOR = "COMPETITOR",
+    NONE = "NONE",
 }
 
 export const RoleHierarchy: Record<Role, number> = {
-	[Role.ORGANIZER]: 1,
-	[Role.MASTER]: 2,
-	[Role.INSTRUCTOR]: 3,
-	[Role.COMPETITOR]: 4,
-	[Role.NONE]: 5,
+    [Role.ORGANIZER]: 1,
+    [Role.MASTER]: 2,
+    [Role.INSTRUCTOR]: 3,
+    [Role.COMPETITOR]: 4,
+    [Role.NONE]: 5,
 };
 
 export enum TournamentActions {
-	MANAGE_CATEGORIES = "MANAGE_CATEGORIES",
-	MANAGE_COMPETITORS = "MANAGE_COMPETITORS",
-	MANAGE_TOURNAMENT = "MANAGE_TOURNAMENT",
-	INVITE_INSTRUCTOR = "INVITE_INSTRUCTOR",
-	INVITE_MASTER = "INVITE_MASTER",
-	// ENROLL = "ENROLL",
-	// VIEW = "VIEW",
+    MANAGE_CATEGORIES = "MANAGE_CATEGORIES",
+    MANAGE_COMPETITORS = "MANAGE_COMPETITORS",
+    MANAGE_TOURNAMENT = "MANAGE_TOURNAMENT",
+    INVITE_INSTRUCTOR = "INVITE_INSTRUCTOR",
+    INVITE_MASTER = "INVITE_MASTER",
+    // ENROLL = "ENROLL",
+    // VIEW = "VIEW",
 }
 
 export enum ManageCompetitorModes {
-	CREATE = "CREATE",
-	EDIT = "EDIT",
+    CREATE = "CREATE",
+    EDIT = "EDIT",
+}
+export enum ManageCompetitorTypes {
+    COMPETITOR = "COMPETITOR",
+    TEAM = "TEAM",
 }
 
 export enum CategoryStatus {
-	AVAILABLE = "AVAILABLE",
-	UNAVAILABLE = "UNAVAILABLE",
+    ENROLLED = "ENROLLED",
+    ENROLLABLE = "ENROLLABLE",
+    UNAVAILABLE = "UNAVAILABLE",
 }

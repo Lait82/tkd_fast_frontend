@@ -12,7 +12,8 @@
                 "dbaeumer.vscode-eslint",
                 "esbenp.prettier-vscode",
                 "ms-vscode.vscode-typescript-next",
-                "bradlc.vscode-tailwindcss"
+                "bradlc.vscode-tailwindcss",
+                "genieai.chatgpt-vscode"
             ]
         }
     },

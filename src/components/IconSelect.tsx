@@ -1,5 +1,5 @@
 // IconSelect.tsx
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Select, { SingleValue, components } from "react-select";
 import { OptionProps } from "react-select";
 import { Rank } from "@/types/enums";
