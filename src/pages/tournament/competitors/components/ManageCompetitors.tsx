@@ -6,12 +6,13 @@ import { ManageCompetitorModes, ManageCompetitorTypes } from "@/types/enums";
 import AvailableCategories from "./AvailableCategories";
 import { useLayoutEffect, useRef, useState } from "react";
 import CreateTeam from "./CreateTeam";
-import EditTeam from "./EditTeam";
+import EditTeam from "./EditTeam/EditTeam";
 
 const ManageCompetitors = () => {
     const leftRef = useRef<HTMLDivElement>(null);
     const [leftHeight, setLeftHeight] = useState<number>(0);
-    const { categories, mode, manageType } = useManageCompetitors();
+    const { categories, mode, manageType, competitorDraft, teamDraft } =
+        useManageCompetitors();
 
     useLayoutEffect(() => {
         if (!leftRef.current) return;
@@ -62,12 +63,27 @@ const ManageCompetitors = () => {
     //     }
     // };
 
+    let showAvailableCategories = true;
+    if (manageType === ManageCompetitorTypes.COMPETITOR) {
+        if (mode === ManageCompetitorModes.EDIT) {
+            if (!competitorDraft.uuid) {
+                showAvailableCategories = false;
+            }
+        }
+    }
+    if (manageType === ManageCompetitorTypes.TEAM) {
+        if (mode === ManageCompetitorModes.EDIT) {
+            if (!teamDraft.uuid) {
+                showAvailableCategories = false;
+            }
+        }
+    }
     return (
         <>
             <div className="grid grid-cols-5 gap-2">
                 <div className="flex flex-col col-span-3 gap-2" ref={leftRef}>
                     <MainComponent />
-                    <AvailableCategories />
+                    {showAvailableCategories && <AvailableCategories />}
                 </div>
                 <div className="col-span-2">
                     <CompetitorsList maxHeight={leftHeight} />

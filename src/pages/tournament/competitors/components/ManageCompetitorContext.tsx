@@ -16,6 +16,7 @@ import {
     teamSchema,
     TeamSchema,
 } from "@/types/schemas/primitiveSchemas";
+import { getHighestRole, getRankOrderNumber } from "@/utils/utils";
 import dayjs, { Dayjs } from "dayjs";
 import React, {
     createContext,
@@ -63,7 +64,7 @@ interface ManageCompetitorsContextType {
     selectedMembers: string[];
     setSelectedMembers: Dispatch<SetStateAction<string[]>>;
     newCompetitorSchema: z.ZodObject;
-    teamDraft: z.ZodObject;
+    teamDraft: TeamSchema;
     setTeamDraft: (t: TeamSchema) => void;
     teams: TeamSchema[];
     setTeams: (t: TeamSchema[]) => void;
@@ -83,7 +84,7 @@ export const ManageCompetitorsProvider = ({
     );
 
     const [manageType, setManageType] = useState<ManageCompetitorTypes>(
-        ManageCompetitorTypes.TEAM
+        ManageCompetitorTypes.COMPETITOR
     );
 
     const [userCompetitors, setUserCompetitors] = useState<CompetitorSchema[]>(
@@ -109,6 +110,11 @@ export const ManageCompetitorsProvider = ({
             try {
                 const res = await getUserCompetitors(tournament.code);
                 const competitors = competitorSchema.array().parse(res);
+                competitors.sort(
+                    (a, b) =>
+                        getRankOrderNumber(b.user.rank) -
+                        getRankOrderNumber(a.user.rank)
+                );
                 if (isMounted) setUserCompetitors(competitors);
             } catch (error) {
                 console.error("Error al obtener torneos:", error);

@@ -127,8 +127,8 @@ export const competitorSchema = z.object({
 export type CompetitorSchema = z.infer<typeof competitorSchema>;
 
 export const teamSchema = z.object({
-    name: z.string().nullable().default(null),
-    uuid: z.uuid().nullable().default(null),
+    name: z.string().default(""),
+    uuid: z.uuid().default(""),
     competitors: z.array(z.uuid()).default([]),
     inscriptions: z.array(z.uuid()).default([]),
 });

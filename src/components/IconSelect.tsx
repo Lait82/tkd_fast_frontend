@@ -71,7 +71,7 @@ const IconSelect = ({
 
 	const [selected, setSelected] = useState<IconOption | null>(optionValue);
 
-	const _handleChange = (selectedOption: SingleValue<IconOption>) => {
+	const handleChange = (selectedOption: SingleValue<IconOption>) => {
 		if (!selectedOption) return;
 		setSelected(selectedOption);
 		const event = {
@@ -88,7 +88,7 @@ const IconSelect = ({
 		<Select
 			options={options}
 			value={selected}
-			onChange={_handleChange}
+			onChange={handleChange}
 			isSearchable={false}
 			className="w-full"
 			placeholder="Graduación"

@@ -20,11 +20,14 @@ const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
         setMode,
         setSelectedCategories,
         manageType,
+        setManageType,
     } = useManageCompetitors();
 
     const [loading, setLoading] = useState<boolean>(true);
 
     const handleClick = (competitor: CompetitorSchema) => {
+        if (manageType === ManageCompetitorTypes.TEAM)
+            setManageType(ManageCompetitorTypes.COMPETITOR);
         if (mode === ManageCompetitorModes.CREATE)
             setMode(ManageCompetitorModes.EDIT);
         setCompetitorDraft(competitor);
