@@ -45,6 +45,10 @@ const newCompetitorSchema = z.object({
     rank: z.enum(Rank).default(Rank.WHITE),
 });
 
+type MemberSlot = {
+    id: string;
+    uuid: string;
+};
 interface ManageCompetitorsContextType {
     competitorDraft: CompetitorSchema;
     setCompetitorDraft: (c: CompetitorSchema) => void;
@@ -61,8 +65,8 @@ interface ManageCompetitorsContextType {
     categories: CategorySchema[];
     setSelectedCategories: Dispatch<SetStateAction<string[]>>;
     selectedCategories: string[];
-    selectedMembers: string[];
-    setSelectedMembers: Dispatch<SetStateAction<string[]>>;
+    selectedMembers: MemberSlot[];
+    setSelectedMembers: Dispatch<SetStateAction<MemberSlot[]>>;
     newCompetitorSchema: z.ZodObject;
     teamDraft: TeamSchema;
     setTeamDraft: (t: TeamSchema) => void;
@@ -92,7 +96,7 @@ export const ManageCompetitorsProvider = ({
     );
     const [categories, setCategories] = useState<CategorySchema[]>([]);
     const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-    const [selectedMembers, setSelectedMembers] = useState<string[]>([]);
+    const [selectedMembers, setSelectedMembers] = useState<MemberSlot[]>([]);
     const [competitorDraft, setCompetitorDraft] = useState<CompetitorSchema>(
         competitorSchema.parse({})
     );

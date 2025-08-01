@@ -11,20 +11,14 @@ const EditTeam = ({}) => {
     const { teamDraft, selectedMembers, setSelectedMembers, userCompetitors } =
         useManageCompetitors();
 
-    const getPendingCompetitorSlots = () =>
-        teamDraft.uuid
-            ? selectedMembers
-                  .map((val, idx) => ({ val, idx }))
-                  .filter(({ val }) => !val)
-            : [];
-
-    const removePendingCompetitorSlot = (indexToRemove: number) => {
-        //DEBUGEAR ESTO PORQUE NO BORRA LAS SELECCIONES Y AL CREAR UN SELECT NUEVO NO TE DA OPCIONES SI SE AGOTARON.
-        const updated = selectedMembers.filter(
-            (_, idx) => idx !== indexToRemove
+    const getTeamCompetitors = () =>
+        userCompetitors.filter((comp) =>
+            teamDraft.competitors.some((member) => member === comp.uuid)
         );
-        setSelectedMembers(updated);
-    };
+
+    const canAddCompetitor =
+        getTeamCompetitors().length + selectedMembers.length <
+        userCompetitors.length;
     return (
         <div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
             <div className="flex flex-col gap-3">
@@ -52,37 +46,33 @@ const EditTeam = ({}) => {
                 </div>
                 <h1 className="font-extrabold text-2xl">Miembros</h1>
                 <div className="flex flex-col gap-1 overflow-y-auto flex-1 pr-1">
-                    {userCompetitors
-                        .filter((comp) =>
-                            teamDraft.competitors.some(
-                                (member) => member === comp.uuid
-                            )
-                        )
-                        .map((competitor) => {
-                            return <MemberCompetitor competitor={competitor} />;
-                        })}
-                    {getPendingCompetitorSlots().map(({ idx }, i) => (
-                        <div
-                            key={`pending-${idx}`}
-                            className="flex px-1 gap-2 items-center"
-                        >
-                            <SelectTeamCompetitors />
-                            <X
-                                size={30}
-                                className="text-red cursor-pointer"
-                                onClick={() => removePendingCompetitorSlot(idx)}
-                            />
-                        </div>
+                    {getTeamCompetitors().map((competitor) => {
+                        return <MemberCompetitor competitor={competitor} />;
+                    })}
+                    {selectedMembers.map((member, i) => (
+                        <SelectTeamCompetitors
+                            key={member.id}
+                            id={member.id}
+                            value={member.uuid}
+                        />
                     ))}
-                    <div
-                        className={`flex gap-1 px-1 py-0.5 cursor-pointer rounded-lg italic text-muted border border-transparent hover:border-orange transition-all ease-fluid justify-items-center items-center font-bold`}
-                        onClick={() => {
-                            setSelectedMembers([...selectedMembers, ""]);
-                        }}
-                    >
-                        <UserPlus size={30} />
-                        Agregar nuevo competidor
-                    </div>
+                    {canAddCompetitor && (
+                        <div
+                            className={`flex gap-1 px-1 py-0.5 cursor-pointer rounded-lg italic text-muted border border-transparent hover:border-orange transition-all ease-fluid justify-items-center items-center font-bold`}
+                            onClick={() => {
+                                setSelectedMembers([
+                                    ...selectedMembers,
+                                    {
+                                        id: crypto.randomUUID(),
+                                        uuid: "",
+                                    },
+                                ]);
+                            }}
+                        >
+                            <UserPlus size={30} />
+                            Agregar nuevo competidor
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

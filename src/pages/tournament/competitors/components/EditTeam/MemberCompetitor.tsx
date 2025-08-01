@@ -23,19 +23,7 @@ interface MemberCompetitorProps {
 }
 
 const MemberCompetitor = ({ competitor }: MemberCompetitorProps) => {
-    const { userCompetitors, selectedMembers, setSelectedMembers } =
-        useManageCompetitors();
-
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const handleToggle = (competitorUuid: string) => {
-        // const currentSelectedMembers: string[] = Array.from(userCompetitors);
-
-        const updated = selectedMembers.includes(competitorUuid)
-            ? selectedMembers.filter((uuid) => uuid !== competitorUuid)
-            : [...selectedMembers, competitorUuid]; // sino la agrego.
-
-        setSelectedMembers(updated);
-    };
 
     function closeModal() {
         setIsOpen(false);
@@ -125,7 +113,6 @@ const MemberCompetitor = ({ competitor }: MemberCompetitorProps) => {
             </Transition>
             <Label
                 className={`grid grid-cols-3 px-1 py-0.5 rounded-lg transition-all ease-fluid justify-items-center items-center font-bold`}
-                onClick={() => handleToggle(competitor.uuid)}
             >
                 {/* Fullname */}
                 <div className="flex items-center justify-start w-full gap-1">

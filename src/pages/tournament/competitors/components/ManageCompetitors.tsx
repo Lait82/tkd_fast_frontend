@@ -11,12 +11,19 @@ import EditTeam from "./EditTeam/EditTeam";
 const ManageCompetitors = () => {
     const leftRef = useRef<HTMLDivElement>(null);
     const [leftHeight, setLeftHeight] = useState<number>(0);
-    const { categories, mode, manageType, competitorDraft, teamDraft } =
-        useManageCompetitors();
+    const {
+        categories,
+        mode,
+        manageType,
+        competitorDraft,
+        teamDraft,
+        selectedMembers,
+    } = useManageCompetitors();
 
     useLayoutEffect(() => {
+        console.log("entra");
         if (!leftRef.current) return;
-
+        console.log("pasa el if");
         const observer = new ResizeObserver((entries) => {
             for (let entry of entries) {
                 setLeftHeight(entry.contentBoxSize[0].blockSize);
@@ -26,7 +33,7 @@ const ManageCompetitors = () => {
         observer.observe(leftRef.current);
 
         return () => observer.disconnect();
-    }, [categories]);
+    }, [categories, selectedMembers]);
 
     const mainComponentMap = {
         [ManageCompetitorTypes.COMPETITOR]: {
