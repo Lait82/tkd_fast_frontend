@@ -1,11 +1,7 @@
-import BeltIcon from "@/components/BeltIcon";
-import { getRankName } from "@/utils/utils";
-import dayjs from "dayjs";
 import { useManageCompetitors } from "../ManageCompetitorContext";
 import SelectTeamCompetitors from "./SelectTeamCompetitors/SelectTeamCompetitors";
-import { useEffect } from "react";
 import MemberCompetitor from "./MemberCompetitor";
-import { Cross, UserPlus, X } from "lucide-react";
+import { UserPlus } from "lucide-react";
 
 const EditTeam = ({}) => {
     const { teamDraft, selectedMembers, setSelectedMembers, userCompetitors } =
@@ -49,7 +45,7 @@ const EditTeam = ({}) => {
                     {getTeamCompetitors().map((competitor) => {
                         return <MemberCompetitor competitor={competitor} />;
                     })}
-                    {selectedMembers.map((member, i) => (
+                    {selectedMembers.map((member) => (
                         <SelectTeamCompetitors
                             key={member.id}
                             id={member.id}

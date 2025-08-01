@@ -7,12 +7,10 @@ import {
     Transition,
     TransitionChild,
 } from "@headlessui/react";
-import { useManageCompetitors } from "../ManageCompetitorContext";
 import { CompetitorSchema } from "@/types/schemas/primitiveSchemas";
 import BeltIcon from "@/components/BeltIcon";
 import { getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
-import Checkbox from "@/components/forms/Checkbox";
 import { UserMinus } from "lucide-react";
 import { Fragment, useState } from "react";
 import Button from "@/components/Button";

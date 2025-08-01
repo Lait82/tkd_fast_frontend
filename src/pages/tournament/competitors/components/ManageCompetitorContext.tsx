@@ -16,7 +16,7 @@ import {
     teamSchema,
     TeamSchema,
 } from "@/types/schemas/primitiveSchemas";
-import { getHighestRole, getRankOrderNumber } from "@/utils/utils";
+import { getRankOrderNumber } from "@/utils/utils";
 import dayjs, { Dayjs } from "dayjs";
 import React, {
     createContext,
