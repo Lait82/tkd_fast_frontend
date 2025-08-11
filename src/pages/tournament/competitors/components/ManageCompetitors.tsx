@@ -9,95 +9,93 @@ import CreateTeam from "./CreateTeam";
 import EditTeam from "./EditTeam/EditTeam";
 
 const ManageCompetitors = () => {
-    const leftRef = useRef<HTMLDivElement>(null);
-    const [leftHeight, setLeftHeight] = useState<number>(0);
-    const {
-        categories,
-        mode,
-        manageType,
-        competitorDraft,
-        teamDraft,
-        selectedMembers,
-    } = useManageCompetitors();
+	const leftRef = useRef<HTMLDivElement>(null);
+	const [leftHeight, setLeftHeight] = useState<number>(0);
+	const {
+		categories,
+		mode,
+		manageType,
+		competitorDraft,
+		teamDraft,
+		selectedMembers,
+	} = useManageCompetitors();
 
-    useLayoutEffect(() => {
-        console.log("entra");
-        if (!leftRef.current) return;
-        console.log("pasa el if");
-        const observer = new ResizeObserver((entries) => {
-            for (let entry of entries) {
-                setLeftHeight(entry.contentBoxSize[0].blockSize);
-            }
-        });
+	useLayoutEffect(() => {
+		if (!leftRef.current) return;
+		const observer = new ResizeObserver((entries) => {
+			for (let entry of entries) {
+				setLeftHeight(entry.contentBoxSize[0].blockSize);
+			}
+		});
 
-        observer.observe(leftRef.current);
+		observer.observe(leftRef.current);
 
-        return () => observer.disconnect();
-    }, [categories, selectedMembers]);
+		return () => observer.disconnect();
+	}, [categories, selectedMembers]);
 
-    const mainComponentMap = {
-        [ManageCompetitorTypes.COMPETITOR]: {
-            [ManageCompetitorModes.CREATE]: CreateCompetitor,
-            [ManageCompetitorModes.EDIT]: EditCompetitor,
-        },
-        [ManageCompetitorTypes.TEAM]: {
-            [ManageCompetitorModes.CREATE]: CreateTeam,
-            [ManageCompetitorModes.EDIT]: EditTeam,
-        },
-    };
+	const mainComponentMap = {
+		[ManageCompetitorTypes.COMPETITOR]: {
+			[ManageCompetitorModes.CREATE]: CreateCompetitor,
+			[ManageCompetitorModes.EDIT]: EditCompetitor,
+		},
+		[ManageCompetitorTypes.TEAM]: {
+			[ManageCompetitorModes.CREATE]: CreateTeam,
+			[ManageCompetitorModes.EDIT]: EditTeam,
+		},
+	};
 
-    const MainComponent = mainComponentMap[manageType]?.[mode] ?? (
-        <span>Ha ocurrido un error, por favor recarga la pagina.</span>
-    );
+	const MainComponent = mainComponentMap[manageType]?.[mode] ?? (
+		<span>Ha ocurrido un error, por favor recarga la pagina.</span>
+	);
 
-    // (
-    //     mode: ManageCompetitorModes,
-    //     manageType: ManageCompetitorTypes
-    // ) => {
-    //     if (manageType === ManageCompetitorTypes.COMPETITOR) {
-    //         return mode === ManageCompetitorModes.CREATE ? (
-    //             <CreateCompetitor />
-    //         ) : (
-    //             <EditCompetitor />
-    //         );
-    //     }
-    //     if (manageType === ManageCompetitorTypes.TEAM) {
-    //         return mode === ManageCompetitorModes.CREATE ? (
-    //             <CreateTeam />
-    //         ) : (
-    //             <EditTeam />
-    //         );
-    //     }
-    // };
+	// (
+	//     mode: ManageCompetitorModes,
+	//     manageType: ManageCompetitorTypes
+	// ) => {
+	//     if (manageType === ManageCompetitorTypes.COMPETITOR) {
+	//         return mode === ManageCompetitorModes.CREATE ? (
+	//             <CreateCompetitor />
+	//         ) : (
+	//             <EditCompetitor />
+	//         );
+	//     }
+	//     if (manageType === ManageCompetitorTypes.TEAM) {
+	//         return mode === ManageCompetitorModes.CREATE ? (
+	//             <CreateTeam />
+	//         ) : (
+	//             <EditTeam />
+	//         );
+	//     }
+	// };
 
-    let showAvailableCategories = true;
-    if (manageType === ManageCompetitorTypes.COMPETITOR) {
-        if (mode === ManageCompetitorModes.EDIT) {
-            if (!competitorDraft.uuid) {
-                showAvailableCategories = false;
-            }
-        }
-    }
-    if (manageType === ManageCompetitorTypes.TEAM) {
-        if (mode === ManageCompetitorModes.EDIT) {
-            if (!teamDraft.uuid) {
-                showAvailableCategories = false;
-            }
-        }
-    }
-    return (
-        <>
-            <div className="grid grid-cols-5 gap-2">
-                <div className="flex flex-col col-span-3 gap-2" ref={leftRef}>
-                    <MainComponent />
-                    {showAvailableCategories && <AvailableCategories />}
-                </div>
-                <div className="col-span-2">
-                    <CompetitorsList maxHeight={leftHeight} />
-                </div>
-            </div>
-        </>
-    );
+	let showAvailableCategories = true;
+	if (manageType === ManageCompetitorTypes.COMPETITOR) {
+		if (mode === ManageCompetitorModes.EDIT) {
+			if (!competitorDraft.uuid) {
+				showAvailableCategories = false;
+			}
+		}
+	}
+	if (manageType === ManageCompetitorTypes.TEAM) {
+		if (mode === ManageCompetitorModes.EDIT) {
+			if (!teamDraft.uuid) {
+				showAvailableCategories = false;
+			}
+		}
+	}
+	return (
+		<>
+			<div className="grid grid-cols-5 gap-2">
+				<div className="flex flex-col col-span-3 gap-2" ref={leftRef}>
+					<MainComponent />
+					{showAvailableCategories && <AvailableCategories />}
+				</div>
+				<div className="col-span-2">
+					<CompetitorsList maxHeight={leftHeight} />
+				</div>
+			</div>
+		</>
+	);
 };
 
 export default ManageCompetitors;
