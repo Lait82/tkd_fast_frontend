@@ -92,11 +92,11 @@ const TeamDropdown = ({ team }: TeamDropdownProps) => {
                                         as="h3"
                                         className="text-2xl gap-1 font-extrabold text-neutrallight flex w-full justify-center"
                                     >
-                                        Eliminar Inscripción
+                                        Expulsar Miembro
                                     </DialogTitle>
                                     <div className="mt-1">
                                         <p className="text-md text-muted text-center">
-                                            {`¿Estas seguro que quieres eliminar
+                                            {`¿Estas seguro que quieres expulsar
 											a `}
                                             <span className="text-neutrallight capitalize italic">{`${competitorDraft.user.firstname} ${competitorDraft.user.lastname} `}</span>
                                             del siguiente equipo?
@@ -105,8 +105,8 @@ const TeamDropdown = ({ team }: TeamDropdownProps) => {
                                             <span className="text-orange font-black">
                                                 {"> "}
                                             </span>
-                                            <span className="text-neutrallight">
-                                                Equipo nombre
+                                            <span className="text-neutrallight capitalize">
+                                                {team.name}
                                             </span>
                                         </p>
                                     </div>
@@ -139,40 +139,29 @@ const TeamDropdown = ({ team }: TeamDropdownProps) => {
                 </Dialog>
             </Transition>
             <div className="w-full rounded-lg">
-                <Disclosure>
+                <Disclosure as="div" className="w-full rounded-lg">
                     {({ open }) => (
                         <div>
-                            <DisclosureButton className={`flex w-full`}>
-                                <div
-                                    className={`flex transition-all ease-fluid justify-between items-center hover:cursor-pointer w-full px-2 py-1 font-medium 
-                                            focus:outline-none 
-                                            focus-visible:outline-none
-                                            border 
-                                            border-transparent
-                                                    rounded-lg
-                                            hover:border-orange
-                                             `}
-                                >
-                                    <span className="flex items-center capitalize gap-1 text-xl">
-                                        {team.name}
-                                        {/* <BoxingGloves size={10} />{" "} */}
-                                        <FaUsers size={26} />
-                                    </span>
-                                    <ChevronDown
-                                        className={`w-2 h-2 transition-transform text-orange duration-200 ${
-                                            open ? "rotate-180" : ""
-                                        }`}
-                                    />
-                                </div>
-                                {/* <span
-                                                className={`flex min-w-fit rounded-lg bg-super-elevated p-1  items-center justify-center`}
-                                            >
-                                                <Edit />
-                                                Ver Equipo
-                                            </span> */}
+                            {" "}
+                            {/* root DOM real, no Fragment */}
+                            <DisclosureButton
+                                type="button" // <- importante, evita “doble click”
+                                className="group flex w-full items-center justify-between px-2 py-1 font-medium
+                                    cursor-pointer
+                                    rounded-lg border border-transparent hover:border-orange focus:outline-none"
+                            >
+                                <span className="flex items-center capitalize gap-1 text-xl">
+                                    {team.name}
+                                    <FaUsers size={26} />
+                                </span>
+                                <ChevronDown
+                                    className={`w-3 h-3 text-orange transition-transform duration-200 ${
+                                        open ? "rotate-180" : ""
+                                    }`}
+                                />
                             </DisclosureButton>
                             <Transition
-                                show={open}
+                                as={Fragment}
                                 enter="transition duration-300 ease-out"
                                 enterFrom="transform scale-y-0 opacity-0 origin-top"
                                 enterTo="transform scale-y-100 opacity-100 origin-top"
@@ -180,41 +169,33 @@ const TeamDropdown = ({ team }: TeamDropdownProps) => {
                                 leaveFrom="transform scale-y-100 opacity-100 origin-top"
                                 leaveTo="transform scale-y-0 opacity-0 origin-top"
                             >
-                                <DisclosurePanel
-                                    className={`${open && "mt-2"}`}
-                                >
-                                    <ul
-                                        className={`space-y-1 transition-all ease-fluid
-                                                        grid grid-cols-[1fr_1fr_1fr_auto] px-3 py-0.5 justify-items-center items-center font-bold
-                                                        `}
-                                    >
+                                {/* Dejá que Transition maneje el montaje, no uses show={open} */}
+                                <DisclosurePanel className="mt-2">
+                                    <ul className="grid grid-cols-[1fr_1fr_1fr_auto] px-3 py-0.5 justify-items-center items-center font-bold gap-y-1">
                                         {userCompetitors
-                                            .filter((competitor) =>
-                                                competitor.teams.some(
-                                                    (compTeam) =>
-                                                        compTeam.uuid ===
-                                                        team.uuid
+                                            .filter((c) =>
+                                                c.teams.some(
+                                                    (t) => t.uuid === team.uuid
                                                 )
                                             )
                                             .map((comp) => (
-                                                <Fragment
-                                                // key={comp.uuid}
-                                                // className={``}
-                                                >
+                                                <Fragment key={comp.uuid}>
                                                     {/* Fullname */}
                                                     <div className="flex items-center justify-start w-full gap-1">
-                                                        <div className="rounded-full font-black items-center bg-background flex h-3 w-3 justify-center text-orange uppercase">
+                                                        <div className="rounded-full font-black bg-background flex h-3 w-3 items-center justify-center text-orange uppercase">
                                                             {`${comp.user.firstname.charAt(
                                                                 0
                                                             )}${comp.user.lastname.charAt(
                                                                 0
                                                             )}`}
                                                         </div>
-                                                        <div className="font-semibold capitalize">{`${comp.user.firstname} ${comp.user.lastname}`}</div>
+                                                        <div className="font-semibold capitalize">
+                                                            {`${comp.user.firstname} ${comp.user.lastname}`}
+                                                        </div>
                                                     </div>
 
                                                     {/* Rank */}
-                                                    <div className="flex items-center justify-center w-full gap-1">
+                                                    <div className="flex items-center justify-center w-full">
                                                         <BeltIcon
                                                             rank={
                                                                 comp.user.rank
@@ -224,14 +205,14 @@ const TeamDropdown = ({ team }: TeamDropdownProps) => {
 
                                                     {/* Age */}
                                                     <div className="flex w-full justify-center items-center">
-                                                        {dayjs()
-                                                            .diff(
-                                                                comp.user.dob,
-                                                                "years"
-                                                            )
-                                                            .toString()}{" "}
+                                                        {dayjs().diff(
+                                                            comp.user.dob,
+                                                            "years"
+                                                        )}{" "}
                                                         Años
                                                     </div>
+
+                                                    {/* Acción */}
                                                     {comp.uuid ===
                                                     competitorDraft.uuid ? (
                                                         <div className="flex w-full justify-end items-center">
@@ -244,7 +225,7 @@ const TeamDropdown = ({ team }: TeamDropdownProps) => {
                                                             />
                                                         </div>
                                                     ) : (
-                                                        <span></span>
+                                                        <span />
                                                     )}
                                                 </Fragment>
                                             ))}

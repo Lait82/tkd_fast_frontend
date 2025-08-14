@@ -4,7 +4,7 @@ import CreateCompetitor from "./CreateCompetitor";
 import { useManageCompetitors } from "./ManageCompetitorContext";
 import { ManageCompetitorModes, ManageCompetitorTypes } from "@/types/enums";
 import AvailableCategories from "./AvailableCategories";
-import { useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CreateTeam from "./CreateTeam";
 import EditTeam from "./EditTeam/EditTeam";
 
@@ -69,20 +69,22 @@ const ManageCompetitors = () => {
     // };
 
     let showAvailableCategories = true;
-    if (manageType === ManageCompetitorTypes.COMPETITOR) {
-        if (mode === ManageCompetitorModes.EDIT) {
-            if (!competitorDraft.uuid) {
-                showAvailableCategories = false;
+    useEffect(() => {
+        if (manageType === ManageCompetitorTypes.COMPETITOR) {
+            if (mode === ManageCompetitorModes.EDIT) {
+                if (!competitorDraft.uuid) {
+                    showAvailableCategories = false;
+                }
             }
         }
-    }
-    if (manageType === ManageCompetitorTypes.TEAM) {
-        if (mode === ManageCompetitorModes.EDIT) {
-            if (!teamDraft.uuid) {
-                showAvailableCategories = false;
+        if (manageType === ManageCompetitorTypes.TEAM) {
+            if (mode === ManageCompetitorModes.EDIT) {
+                if (!teamDraft.uuid) {
+                    showAvailableCategories = false;
+                }
             }
         }
-    }
+    }, []);
     return (
         <>
             <div className="grid grid-cols-5 gap-2">

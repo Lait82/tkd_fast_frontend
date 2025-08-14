@@ -43,7 +43,12 @@ const EditTeam = ({}) => {
                 <h1 className="font-extrabold text-2xl">Miembros</h1>
                 <div className="flex flex-col gap-1 overflow-y-auto flex-1 pr-1">
                     {getTeamCompetitors().map((competitor) => {
-                        return <MemberCompetitor competitor={competitor} />;
+                        return (
+                            <MemberCompetitor
+                                key={competitor.uuid}
+                                competitor={competitor}
+                            />
+                        );
                     })}
                     {selectedMembers.map((member) => (
                         <SelectTeamCompetitors
