@@ -95,6 +95,13 @@ export type CompetitorsByCategoryResponseSchema = z.infer<
     typeof competitorsByCategoryResponseSchema
 >;
 
+export const competitorTeamSchema = z.object({
+    uuid: z.uuid(),
+    name: z.string(),
+    created_by_uuid: z.uuid(),
+});
+export type CompetitorTeamSchema = z.infer<typeof competitorTeamSchema>;
+
 export const competitorSchema = z.object({
     id: z.number().default(0),
     uuid: z.string().default(""),
@@ -114,15 +121,7 @@ export const competitorSchema = z.object({
             })
         )
         .default([]),
-    teams: z
-        .array(
-            z.object({
-                uuid: z.uuid(),
-                name: z.string(),
-                created_by_uuid: z.uuid(),
-            })
-        )
-        .default([]),
+    teams: z.array(competitorTeamSchema).default([]),
 });
 export type CompetitorSchema = z.infer<typeof competitorSchema>;
 
