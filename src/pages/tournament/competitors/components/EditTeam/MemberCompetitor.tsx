@@ -83,43 +83,6 @@ const MemberCompetitor = ({ competitor }: MemberCompetitorProps) => {
 								leaveFrom="opacity-100 scale-100"
 								leaveTo="opacity-0 scale-95"
 							>
-								{/* <DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-super-elevated p-4 text-left align-middle shadow-xl transition-all">
-									<DialogTitle
-										as="h3"
-										className="text-2xl gap-1 font-extrabold text-neutrallight flex w-full justify-center"
-									>
-										Eliminar Inscripción
-									</DialogTitle>
-									<div className="mt-1">
-										<p className="text-md text-muted text-center">
-											<span className="text-orange font-black">
-												{"> "}
-											</span>
-										</p>
-									</div>
-
-									<div className="flex mt-1.5 gap-2 justify-between">
-										<Button
-											variant="secondary"
-											onClick={(e) => {
-												e.preventDefault();
-												closeModal();
-											}}
-										>
-											Cerrar
-										</Button>
-										<Button
-											variant="primary"
-											onClick={(e) => {
-												e.preventDefault();
-												handleButtonClick();
-												closeModal();
-											}}
-										>
-											Estoy seguro
-										</Button>
-									</div>
-								</DialogPanel> */}
 								<DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-super-elevated p-4 text-left align-middle shadow-xl transition-all">
 									<DialogTitle
 										as="h3"
