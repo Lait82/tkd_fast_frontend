@@ -10,6 +10,8 @@ import { ManageCompetitorModes, ManageCompetitorTypes } from "@/types/enums";
 import { RiBoxingFill } from "react-icons/ri";
 import BoxingGlovesAdd from "@/components/icons/BoxingGlovesAdd";
 import TeamsList from "./TeamsList";
+import { Tab, TabGroup, TabList, TabPanel, TabPanels } from "@headlessui/react";
+import BoxingGloves from "@/components/icons/BoxingGloves";
 
 const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
 	const {
@@ -38,17 +40,25 @@ const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
 	}, []);
 
 	return (
-		<div
+		<TabGroup
+			as="div"
 			style={{ maxHeight }}
-			className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg"
+			className="bg-elevated flex flex-col min-h-0 gap-2 shadow-lg justify-center p-3 rounded-lg"
 		>
-			<h1 className="font-extrabold flex gap-1 items-center text-2xl">
-				<RiBoxingFill /> Competidores
-			</h1>
-			{/* <div className="flex flex-col gap-1"> */}
-
-			<div className="overflow-y-auto flex-1 pr-1 h-[70%]">
-				<div className="flex flex-col gap-1">
+			<TabList className="flex justify-around">
+				<Tab className="rounded-lg px-1 py-0.5 border border-transparent data-hover:border-orange data-selected:border-orange">
+					<h1 className="font-extrabold cursor-pointer flex gap-1 items-center text-2xl">
+						<RiBoxingFill /> Competidores
+					</h1>
+				</Tab>
+				<Tab className="rounded-lg px-1 py-0.5 border border-transparent data-hover:border-orange data-selected:border-orange">
+					<h1 className="font-extrabold cursor-pointer flex gap-1 items-center text-2xl">
+						<BoxingGloves size={20} /> Equipos
+					</h1>
+				</Tab>
+			</TabList>
+			<TabPanels className="overflow-y-auto flex-1 pr-1">
+				<TabPanel className="flex flex-col gap-1">
 					{loading ? (
 						<div> Cargando competidores</div>
 					) : (
@@ -114,11 +124,12 @@ const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
 							</div>
 						</div>
 					</div>
-				</div>
-			</div>
-
-			<TeamsList />
-		</div>
+				</TabPanel>
+				<TabPanel>
+					<TeamsList />
+				</TabPanel>
+			</TabPanels>
+		</TabGroup>
 	);
 };
 
