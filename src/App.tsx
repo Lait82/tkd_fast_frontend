@@ -88,37 +88,52 @@ function App() {
 					</ProtectedRoute>
 				}
 			/>
-			<Route path="/create-tournament" element={<CreateTournament />} />
+			<Route
+				path="/create-tournament"
+				element={
+					<ProtectedRoute>
+						<CreateTournament />
+					</ProtectedRoute>
+				}
+			/>
 			<Route
 				path="/:tournamentCode/edit-tournament"
 				element={
-					<TournamentLoader>
-						<EditTournament />
-					</TournamentLoader>
+					<ProtectedRoute>
+						<TournamentLoader>
+							<EditTournament />
+						</TournamentLoader>
+					</ProtectedRoute>
 				}
 			/>
 			<Route
 				path="/:tournamentCode/dashboard"
 				element={
-					<TournamentLoader>
-						<TournamentDashboard />
-					</TournamentLoader>
+					<ProtectedRoute>
+						<TournamentLoader>
+							<TournamentDashboard />
+						</TournamentLoader>
+					</ProtectedRoute>
 				}
 			/>
 			<Route
 				path="/:tournamentCode/info"
 				element={
-					<TournamentLoader>
-						<Info />
-					</TournamentLoader>
+					<ProtectedRoute>
+						<TournamentLoader>
+							<Info />
+						</TournamentLoader>
+					</ProtectedRoute>
 				}
 			/>
 			<Route
 				path="/:tournamentCode/competitors"
 				element={
-					<TournamentLoader>
-						<Competitors />
-					</TournamentLoader>
+					<ProtectedRoute>
+						<TournamentLoader>
+							<Competitors />
+						</TournamentLoader>
+					</ProtectedRoute>
 				}
 			/>
 		</Routes>

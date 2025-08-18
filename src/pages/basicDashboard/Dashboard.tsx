@@ -93,13 +93,17 @@ const Dashboard = () => {
 											}}
 										/>
 									</div>
-								) : (
+								) : tournaments.length ? (
 									tournaments.map((tournament) => (
 										<TournamentCard
 											key={tournament.id}
 											tournament={tournament}
 										/>
 									))
+								) : (
+									<i>
+										No participas de ningun torneo todavia.
+									</i>
 								)}
 							</div>
 						</div>

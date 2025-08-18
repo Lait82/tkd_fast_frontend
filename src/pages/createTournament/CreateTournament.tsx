@@ -33,7 +33,9 @@ const CreateTournament = () => {
 			navigate(`/${codeValue}/edit-tournament`);
 			// setSuccess(true)
 		} catch (err: any) {
-			console.log(err);
+			console.log(err.message);
+			successToast(err.message);
+			errorToast(err.message);
 			errorToast(err?.message);
 		} finally {
 			setLoading(false);

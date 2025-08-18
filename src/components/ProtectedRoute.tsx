@@ -1,9 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { Navigate } from "react-router-dom";
-// import { useAuth } from "../context/AuthContext"
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "@/states/useAuthStore";
+import CustomToaster from "./CustomToaster";
 
 interface ProtectedRouteProps {
 	children: ReactNode;
@@ -11,12 +11,18 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 	const { isAuthenticated } = useAuthStore();
+	const navigate = useNavigate();
 
 	if (!isAuthenticated) {
-		return <Navigate to="/login" replace />;
+		navigate("/login");
 	}
 
-	return <>{children}</>;
+	return (
+		<>
+			<CustomToaster />
+			{children}
+		</>
+	);
 };
 
 export default ProtectedRoute;

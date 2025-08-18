@@ -72,6 +72,10 @@ interface ManageCompetitorsContextType {
 	setTeamDraft: (t: TeamSchema) => void;
 	teams: TeamSchema[];
 	setTeams: (t: TeamSchema[]) => void;
+	updateTeamsList: (updatedTeams: TeamSchema[] | TeamSchema) => void;
+	updateCompetitorsList: (
+		updatedCompetitors: CompetitorSchema[] | CompetitorSchema
+	) => void;
 }
 
 const ManageCompetitorsContext = createContext<
@@ -106,6 +110,54 @@ export const ManageCompetitorsProvider = ({
 	const [teams, setTeams] = useState<TeamSchema[]>([]);
 
 	const { tournament } = useTournamentStore();
+
+	const updateTeamsList = (updatedTeams: TeamSchema[] | TeamSchema) => {
+		setTeams((prev) => {
+			const updatedTeamsArr: TeamSchema[] = Array.isArray(updatedTeams)
+				? updatedTeams
+				: [updatedTeams];
+
+			const teamsMap = new Map(prev.map((t) => [t.uuid, t]));
+			for (const updatedTeam of updatedTeamsArr) {
+				teamsMap.set(updatedTeam.uuid, updatedTeam);
+			}
+
+			const updatedTeamsPayload = teamSchema
+				.array()
+				.parse(Array.from(teamsMap.values()));
+
+			return updatedTeamsPayload;
+		});
+	};
+
+	const updateCompetitorsList = (
+		updatedCompetitors: CompetitorSchema[] | CompetitorSchema
+	) => {
+		setUserCompetitors((prev) => {
+			const updatedCompetitorsArr: CompetitorSchema[] = Array.isArray(
+				updatedCompetitors
+			)
+				? updatedCompetitors
+				: [updatedCompetitors];
+
+			const userCompetitorsMap = new Map(prev.map((uc) => [uc.uuid, uc]));
+			for (const u of updatedCompetitorsArr) {
+				userCompetitorsMap.set(u.uuid, u);
+			}
+
+			const updatedCompetitorsPayload = competitorSchema
+				.array()
+				.parse(
+					Array.from(userCompetitorsMap.values()).sort(
+						(a, b) =>
+							getRankOrderNumber(b.user.rank) -
+							getRankOrderNumber(a.user.rank)
+					)
+				);
+
+			return updatedCompetitorsPayload;
+		});
+	};
 
 	// Load user's competitors.
 	useEffect(() => {
@@ -187,6 +239,38 @@ export const ManageCompetitorsProvider = ({
 		};
 	}, [competitorDraft]);
 
+	// Sync drafts with updatedStates
+	useEffect(() => {
+		if (competitorDraft.id) {
+			// default id == 0, any other ID means that the draft is set.
+			const updatedDraft = userCompetitors.filter(
+				(uc) => uc.uuid === competitorDraft.uuid
+			)[0];
+
+			setCompetitorDraft(competitorSchema.parse(updatedDraft));
+		}
+	}, [userCompetitors]);
+
+	useEffect(() => {
+		if (teamDraft.uuid) {
+			const updatedDraft = teams.filter(
+				(t) => t.uuid === teamDraft.uuid
+			)[0];
+			console.log("update teamDraft");
+
+			console.log("team draft =>");
+			console.log(teamDraft);
+
+			console.log("teams =>");
+			console.log(teams);
+
+			console.log("updated draft => ");
+			console.log(teamSchema.parse(updatedDraft));
+
+			setTeamDraft(teamSchema.parse(updatedDraft));
+		}
+	}, [teams]);
+
 	return (
 		<ManageCompetitorsContext.Provider
 			value={{
@@ -208,6 +292,8 @@ export const ManageCompetitorsProvider = ({
 				setSelectedMembers,
 				setTeams,
 				teams,
+				updateTeamsList,
+				updateCompetitorsList,
 			}}
 		>
 			{children}

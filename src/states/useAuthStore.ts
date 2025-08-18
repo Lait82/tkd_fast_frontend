@@ -2,16 +2,17 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { loginUser, signupUser } from "@/services/authService";
-import { User } from "@/types/user";
+// import { User } from "@/types/user";
 import {
 	loginUserResponseSchema,
 	signupUserResponseSchema,
+	UserSchema,
 	userSchema,
 } from "@/types/schemas/primitiveSchemas";
 // import type { User } from "@/types/user";
 
 type AuthState = {
-	user: User | null;
+	user: UserSchema | null;
 	token: string | null;
 	isAuthenticated: boolean;
 	loading: boolean;
@@ -76,7 +77,7 @@ export const useAuthStore = create<AuthState>()(
 
 			logout: () => {
 				set({ user: null, token: null, isAuthenticated: false });
-				window.location.href = "/login";
+				// window.location.href = "/login";
 			},
 		}),
 		{
