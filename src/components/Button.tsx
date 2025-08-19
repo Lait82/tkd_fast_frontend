@@ -1,4 +1,7 @@
 import React from "react";
+import Lottie from "lottie-react";
+import loadingAnimation from "../../public/videos/loading.json";
+import LoadingTypist from "./LoadingTypist";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: "primary" | "secondary";
@@ -6,6 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	iconRight?: React.ReactNode;
 	style?: object;
 	disabled?: boolean;
+	loading?: boolean;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -15,44 +19,60 @@ const Button: React.FC<ButtonProps> = ({
 	iconLeft,
 	iconRight,
 	className = "",
-	disabled,
+	disabled = false,
+	loading = false,
 	...props
 }) => {
-	//     .btn-base {
-	//   padding: 0.5rem 1.4rem;
-	//   border-radius: 9999px;
-	//   font-weight: 800;
-	//   font-size: 1rem;
-	//   cursor: pointer;
-	//   transition: all 0.2s ease;
-	//   border: 2px solid var(--color-neutrallight);
-	//   display: inline-flex;
-	//   align-items: center;
-	//   text-decoration: none;
-	//   text-align: center;
-	// }
+	const primaryClasses =
+		"bg-neutrallight cursor-pointer text-background hover:bg-transparent hover:text-neutrallight";
+	const secondaryClasses =
+		"bg-transparent cursor-pointer text-neutrallight hover:bg-neutrallight hover:text-background";
+
+	const primaryDisabledClasses =
+		"bg-white-800 border-white-800 text-neutrallight-600 cursor-not-allowed";
+	const secondaryDisabledClasses =
+		"bg-transparent border-white-800 cursor-not-allowed";
+
+	const getClasses = () => {
+		return variant === "primary"
+			? disabled
+				? primaryDisabledClasses
+				: primaryClasses
+			: disabled
+			? secondaryDisabledClasses
+			: secondaryClasses;
+	};
 	return (
 		<button
 			type="submit"
 			{...props}
 			style={style}
-			className={`px-1 py-0.5 rounded-full font-extrabold cursor-pointer transition-all ease-fluid border-2 border-neutrallight inline-flex items-center decoration-0 justify-center ${
-				variant === "primary"
-					? "bg-neutrallight text-background hover:bg-transparent hover:text-neutrallight"
-					: "bg-transparent text-neutrallight hover:bg-neutrallight hover:text-background"
-			} ${className}`}
+			className={`px-1 py-0.5 rounded-full font-extrabold transition-all ease-fluid border-2 border-neutrallight inline-flex items-center decoration-0 justify-center 
+				${getClasses()}
+				${className}`}
 			disabled={disabled}
 		>
-			{iconLeft && (
-				<span className="inline-flex items-center mr-1">
-					{iconLeft}
-				</span>
-			)}
-			{children}
-			{iconRight && (
-				<span className="inline-flex items-center ml-1">
-					{iconRight}
-				</span>
+			{loading ? (
+				<Lottie
+					className="h-2 w-2"
+					animationData={loadingAnimation}
+					loop
+					autoplay
+				/>
+			) : (
+				<>
+					{iconLeft && (
+						<span className="inline-flex items-center mr-1">
+							{iconLeft}
+						</span>
+					)}
+					{children}
+					{iconRight && (
+						<span className="inline-flex items-center ml-1">
+							{iconRight}
+						</span>
+					)}
+				</>
 			)}
 		</button>
 	);

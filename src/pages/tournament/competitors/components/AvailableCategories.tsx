@@ -96,6 +96,7 @@ const AvailableCategories = () => {
 
     const enroll = async () => {
         try {
+            setLoading(true);
             // TODO: Agregar accion de agregar miembros al equipo
             const payload = {
                 competitor_uuid: competitorDraft.uuid,
@@ -115,6 +116,8 @@ const AvailableCategories = () => {
             errorToast(
                 "Ha ocurrido un error al inscribir el competidor a las categorías seleccionadas. Por favor intenta nuevamente."
             );
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -127,7 +130,7 @@ const AvailableCategories = () => {
                 </h1>
             </div>
             <div className="flex flex-col gap-0.5">
-                {loading ? (
+                {loading && !categories.length ? (
                     <span>Cargando categorias</span>
                 ) : (
                     // Already Enrolled
@@ -165,6 +168,7 @@ const AvailableCategories = () => {
                     <div className="w-full flex justify-end mt-2">
                         <Button
                             disabled={!competitorDraft.id}
+                            loading={loading}
                             onClick={() => {
                                 enroll();
                             }}
