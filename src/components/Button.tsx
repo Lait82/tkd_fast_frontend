@@ -1,7 +1,6 @@
 import React from "react";
 import Lottie from "lottie-react";
-import loadingAnimation from "../../public/videos/loading.json";
-import LoadingTypist from "./LoadingTypist";
+import loadingAnimation from "@/videos/loading.json";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 	variant?: "primary" | "secondary";
