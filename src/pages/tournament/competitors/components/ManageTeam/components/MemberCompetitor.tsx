@@ -16,8 +16,8 @@ import { Fragment, useState } from "react";
 import Button from "@/components/Button";
 import { errorToast, successToast } from "@/services/toasts";
 import { kickCompetitor } from "@/services/teamService";
-import { useManageCompetitors } from "../ManageCompetitorContext";
 import { kickCompetitorResponseSchema } from "@/types/schemas/teamServiceSchemas";
+import { useManageCompetitors } from "../../ManageCompetitorContext";
 
 interface MemberCompetitorProps {
 	competitor: CompetitorSchema;

@@ -13,7 +13,7 @@ import {
 import dayjs from "dayjs";
 import { ChevronDown } from "lucide-react";
 import { FaUsers } from "react-icons/fa";
-import { useManageCompetitors } from "../../ManageCompetitorContext";
+import { useManageCompetitors } from "../../../ManageCompetitorContext";
 import { Fragment, useState } from "react";
 import { CompetitorTeamSchema } from "@/types/schemas/primitiveSchemas";
 import Button from "@/components/Button";
@@ -172,7 +172,6 @@ const TeamDropdown = ({ team }: TeamDropdownProps) => {
 								leaveFrom="transform scale-y-100 opacity-100 origin-top"
 								leaveTo="transform scale-y-0 opacity-0 origin-top"
 							>
-								{/* Dejá que Transition maneje el montaje, no uses show={open} */}
 								<DisclosurePanel className="mt-2">
 									<ul className="grid grid-cols-[1fr_1fr_1fr_auto] px-3 py-0.5 justify-items-center items-center font-bold gap-y-1">
 										{userCompetitors

@@ -4,7 +4,7 @@ import { useTournamentStore } from "@/states/useTournamentStore";
 import { useManageCompetitors } from "./ManageCompetitorContext";
 import { teamSchema } from "@/types/schemas/primitiveSchemas";
 import { useState } from "react";
-import SelectTeamCompetitors from "./EditTeam/SelectTeamCompetitors/SelectTeamCompetitors";
+import SelectTeamCompetitors from "./ManageTeam/components/SelectTeamCompetitors/SelectTeamCompetitors";
 import { z } from "zod/v4";
 import { createTeam } from "@/services/teamService";
 
