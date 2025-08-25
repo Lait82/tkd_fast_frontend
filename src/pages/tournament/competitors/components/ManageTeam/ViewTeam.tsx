@@ -1,15 +1,7 @@
-import { useManageCompetitors } from "../../ManageCompetitorContext";
-import SelectTeamCompetitors from "../components/SelectTeamCompetitors/SelectTeamCompetitors";
-import MemberCompetitor from "../components/MemberCompetitor";
-import { Edit, Trash2, UserPlus } from "lucide-react";
+import { useManageCompetitors } from "../ManageCompetitorContext";
+import { Edit, Trash2 } from "lucide-react";
 import Button from "@/components/Button";
-import { errorToast, successToast } from "@/services/toasts";
-import {
-	addCompetitorsToTeamResponse,
-	addCompetitorsToTeamPayload,
-} from "@/types/schemas/teamServiceSchemas";
-import { addCompetitorToTeam } from "@/services/teamService";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import {
 	Dialog,
 	DialogPanel,
@@ -18,7 +10,7 @@ import {
 	TransitionChild,
 } from "@headlessui/react";
 import Tooltip from "@/components/Tooltip";
-import Members from "../components/Members";
+import Members from "./components/Members";
 
 const ViewTeam = ({}) => {
 	const {
@@ -127,7 +119,7 @@ const ViewTeam = ({}) => {
 				<div className="flex flex-col gap-3">
 					<div className="flex w-full justify-between items-center">
 						<h1 className="font-extrabold text-2xl">
-							Editar equipo
+							Información del equipo
 						</h1>
 						<div className="flex items-center gap-1.5">
 							<Tooltip text="Editar">

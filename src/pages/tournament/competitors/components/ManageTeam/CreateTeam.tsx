@@ -1,12 +1,13 @@
 import FormInput from "@/components/forms/FormInput";
 import { errorToast, successToast } from "@/services/toasts";
 import { useTournamentStore } from "@/states/useTournamentStore";
-import { useManageCompetitors } from "./ManageCompetitorContext";
+import { useManageCompetitors } from "../ManageCompetitorContext";
 import { teamSchema } from "@/types/schemas/primitiveSchemas";
 import { useState } from "react";
-import SelectTeamCompetitors from "./ManageTeam/components/SelectTeamCompetitors/SelectTeamCompetitors";
 import { z } from "zod/v4";
 import { createTeam } from "@/services/teamService";
+import SelectTeamCompetitors from "./components/SelectTeamCompetitors/SelectTeamCompetitors";
+import Members from "./components/Members";
 
 interface NewTeamForm {
 	name: string;
@@ -26,6 +27,8 @@ const CreateTeam = () => {
 		selectedMembers,
 		setTeams,
 		teams,
+		updateCompetitorsList,
+		updateTeamsList,
 	} = useManageCompetitors();
 	const { tournament } = useTournamentStore();
 	const [form, setForm] = useState<NewTeamForm>(emptyForm);
@@ -65,7 +68,7 @@ const CreateTeam = () => {
 			const createTeamPayload = {
 				...form,
 				categories: selectedCategories,
-				competitors: selectedMembers,
+				competitors: selectedMembers.map((sm) => sm.uuid),
 			};
 			const res = await createTeam(tournament.code, createTeamPayload);
 			const createdTeam = teamSchema.parse(res);
@@ -119,7 +122,14 @@ const CreateTeam = () => {
 						/>
 					</form>
 				</div>
-				<SelectTeamCompetitors />
+				<Members />
+				{/* {selectedMembers.map((member) => (
+					<SelectTeamCompetitors
+						key={member.id}
+						id={member.id}
+						value={member.uuid}
+					/>
+				))} */}
 			</div>
 		</div>
 	);

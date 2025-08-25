@@ -5,8 +5,8 @@ import { useManageCompetitors } from "./ManageCompetitorContext";
 import { ManageCompetitorModes, ManageCompetitorTypes } from "@/types/enums";
 import AvailableCategories from "./AvailableCategories";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
-import CreateTeam from "./CreateTeam";
-import ViewTeam from "./ManageTeam/ViewTeam/ViewTeam";
+import CreateTeam from "./ManageTeam/CreateTeam";
+import ViewTeam from "./ManageTeam/ViewTeam";
 import EditCompetitor from "./ManageCompetitor/EditCompetitor/EditCompetitor";
 import EditTeam from "./ManageTeam/EditTeam";
 

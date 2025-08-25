@@ -10,6 +10,7 @@ import {
 } from "@/types/schemas/teamServiceSchemas";
 import { addCompetitorToTeam } from "@/services/teamService";
 import { errorToast, successToast } from "@/services/toasts";
+import { ManageCompetitorModes } from "@/types/enums";
 
 const Members = () => {
 	const {
@@ -19,6 +20,7 @@ const Members = () => {
 		setSelectedMembers,
 		updateCompetitorsList,
 		updateTeamsList,
+		mode,
 	} = useManageCompetitors();
 	const [teamCompetitors, setTeamCompetitors] = useState(
 		userCompetitors.filter((comp) =>
@@ -107,8 +109,9 @@ const Members = () => {
 					</div>
 				)}
 			</div>
-			{selectedMembers.length &&
-			selectedMembers.every((sm) => sm.uuid.length > 10) ? (
+			{selectedMembers.length && //Si hay miembros
+			selectedMembers.every((sm) => sm.uuid.length > 10) && // Todos estan seleccionados
+			mode !== ManageCompetitorModes.CREATE ? (
 				<div className="flex w-full justify-end">
 					<Button
 						onClick={handleAddCompetitors}
