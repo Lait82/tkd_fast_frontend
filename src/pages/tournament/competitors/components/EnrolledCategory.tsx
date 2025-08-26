@@ -4,146 +4,133 @@ import { useManageCompetitors } from "./ManageCompetitorContext";
 import { removeEnrollmentToCategory } from "@/services/competitorService";
 import { errorToast, successToast } from "@/services/toasts";
 import {
-	Dialog,
-	DialogPanel,
-	DialogTitle,
-	Transition,
-	TransitionChild,
+    Dialog,
+    DialogPanel,
+    DialogTitle,
+    Transition,
+    TransitionChild,
 } from "@headlessui/react";
 import Button from "@/components/Button";
 import IconsCategoryName from "@/components/IconsCategoryName";
 import { Trash2 } from "lucide-react";
 import { buildCategoryName } from "@/utils/utils";
+import Modal from "@/components/Modal";
+import { ManageCompetitorTypes } from "@/types/enums";
 
 const EnrolledCategory = ({ category }: { category: CategorySchema }) => {
-	let [isOpen, setIsOpen] = useState(false);
-	const { competitorDraft, setCompetitorDraft } = useManageCompetitors();
-	const inscription = competitorDraft.inscriptions.find(
-		(inscription) => inscription.category_uuid === category.uuid
-	);
+    let [isOpen, setIsOpen] = useState(false);
+    const {
+        competitorDraft,
+        updateCompetitors,
+        updateTeams,
+        teamDraft,
+        manageType,
+    } = useManageCompetitors();
+    // const inscription = competitorDraft.inscriptions.find(
+    //     (inscription) => inscription.category_uuid === category.uuid
+    // );
 
-	function closeModal() {
-		setIsOpen(false);
-	}
+    const [inscription, setInscription] = useState(); // NOTA DE ACCION: implementar uuid de inscripcion en todos lados donde aparezca teamSchema y en el back.
 
-	function openModal() {
-		setIsOpen(true);
-	}
+    function closeModal() {
+        setIsOpen(false);
+    }
 
-	const handleButtonClick = async () => {
-		try {
-			const inscriptionUuid = inscription?.uuid;
-			if (!inscriptionUuid) return;
+    function openModal() {
+        setIsOpen(true);
+    }
 
-			await removeEnrollmentToCategory(inscriptionUuid);
+    const handleButtonClick = async () => {
+        try {
+            // const inscriptionUuid = inscription?.uuid;
+            // if (!inscriptionUuid) return;
 
-			// Remove de la inscripcion eliminada.
-			setCompetitorDraft({
-				...competitorDraft,
-				inscriptions: competitorDraft.inscriptions.filter(
-					(inscription) => inscription.uuid !== inscriptionUuid
-				),
-			});
-			successToast("Inscripción eliminada correctamente.");
-		} catch (error) {
-			errorToast(
-				"Ha ocurrido un error al eliminar la inscripción del competidor, por favor intenta de nuevo."
-			);
-		}
+            await removeEnrollmentToCategory(inscriptionUuid);
 
-		closeModal();
-	};
-	return (
-		<>
-			<Transition appear show={isOpen} as={Fragment}>
-				<Dialog as="div" className="relative z-10" onClose={closeModal}>
-					<TransitionChild
-						as={Fragment}
-						enter="ease-out duration-300"
-						enterFrom="opacity-0"
-						enterTo="opacity-100"
-						leave="ease-in duration-200"
-						leaveFrom="opacity-100"
-						leaveTo="opacity-0"
-					>
-						<div className="fixed inset-0 bg-black/25" />
-					</TransitionChild>
+            // Remove de la inscripcion eliminada.
+            if (manageType === ManageCompetitorTypes.COMPETITOR) {
+                updateCompetitors({
+                    ...competitorDraft,
+                    inscriptions: competitorDraft.inscriptions.filter(
+                        (inscription) => inscription.uuid !== inscriptionUuid
+                    ),
+                });
+            } else if (manageType === ManageCompetitorTypes.TEAM) {
+                updateTeams;
+            }
+            successToast("Inscripción eliminada correctamente.");
+        } catch (error) {
+            errorToast(
+                "Ha ocurrido un error al eliminar la inscripción a la categoría, por favor intenta de nuevo."
+            );
+        }
 
-					<div className="fixed inset-0 overflow-y-auto">
-						<div className="flex min-h-full items-center justify-center p-4 text-center">
-							<TransitionChild
-								as={Fragment}
-								enter="ease-out duration-300"
-								enterFrom="opacity-0 scale-95"
-								enterTo="opacity-100 scale-100"
-								leave="ease-in duration-200"
-								leaveFrom="opacity-100 scale-100"
-								leaveTo="opacity-0 scale-95"
-							>
-								<DialogPanel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-super-elevated p-4 text-left align-middle shadow-xl transition-all">
-									<DialogTitle
-										as="h3"
-										className="text-2xl gap-1 font-extrabold text-neutrallight flex w-full justify-center"
-									>
-										Eliminar Inscripción
-									</DialogTitle>
-									<div className="mt-1">
-										<p className="text-md text-muted text-center">
-											{`¿Estas seguro que quieres eliminar
-											la inscripción de `}
-											<span className="text-neutrallight capitalize italic">{`${competitorDraft.user.firstname} ${competitorDraft.user.lastname} `}</span>
-											a la siguiente categoria?
-											<br />
-											<br />
-											<span className="text-orange font-black">
-												{"> "}
-											</span>
-											<span className="text-neutrallight">
-												{buildCategoryName(category)}
-											</span>
-										</p>
-									</div>
+        closeModal();
+    };
 
-									<div className="flex mt-1.5 gap-2 justify-between">
-										<Button
-											variant="secondary"
-											onClick={(e) => {
-												e.preventDefault();
-												closeModal();
-											}}
-										>
-											Cerrar
-										</Button>
-										<Button
-											variant="primary"
-											onClick={(e) => {
-												e.preventDefault();
-												handleButtonClick();
-												closeModal();
-											}}
-										>
-											Estoy seguro
-										</Button>
-									</div>
-								</DialogPanel>
-							</TransitionChild>
-						</div>
-					</div>
-				</Dialog>
-			</Transition>
-			<div
-				className={`flex items-center w-full px-1 py-1.5 font-bold justify-between  transition-all ease-fluid border 
+    const getDraftName = (currentManageType: ManageCompetitorTypes) => {
+        const ret = {
+            [ManageCompetitorTypes.COMPETITOR]:
+                competitorDraft.user.firstname +
+                " " +
+                competitorDraft.user.lastname,
+            [ManageCompetitorTypes.TEAM]: teamDraft.name,
+        };
+    };
+    return (
+        <div
+            className={`flex items-center w-full px-1 py-1.5 font-bold justify-between  transition-all ease-fluid border 
                                     border-transparent rounded-lg`}
-			>
-				<IconsCategoryName category={category} />
-				<Trash2
-					onClick={openModal}
-					size={30}
-					className="transition-all ease-fluid fill-transparent stroke-red hover:transition-all hover:ease-fluid hover:fill-red cursor-pointer"
-				/>
-			</div>
-		</>
-	);
+        >
+            <IconsCategoryName category={category} />
+
+            <Modal
+                title="Eliminar Inscripción"
+                isOpen={isOpen}
+                closeModal={closeModal}
+            >
+                <p className="text-md text-muted text-center">
+                    {`¿Estas seguro que quieres eliminar
+											la inscripción de `}
+                    <span className="text-neutrallight capitalize italic">{`${competitorDraft.user.firstname} ${competitorDraft.user.lastname} `}</span>
+                    a la siguiente categoria?
+                    <br />
+                    <br />
+                    <span className="text-orange font-black">{"> "}</span>
+                    <span className="text-neutrallight">
+                        {buildCategoryName(category)}
+                    </span>
+                </p>
+
+                <div className="flex mt-1.5 gap-2 justify-between">
+                    <Button
+                        variant="secondary"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            closeModal();
+                        }}
+                    >
+                        Cerrar
+                    </Button>
+                    <Button
+                        variant="primary"
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleButtonClick();
+                            closeModal();
+                        }}
+                    >
+                        Estoy seguro
+                    </Button>
+                </div>
+            </Modal>
+            <Trash2
+                onClick={openModal}
+                size={30}
+                className="transition-all ease-fluid fill-transparent stroke-red hover:transition-all hover:ease-fluid hover:fill-red cursor-pointer"
+            />
+        </div>
+    );
 };
 
 export default EnrolledCategory;

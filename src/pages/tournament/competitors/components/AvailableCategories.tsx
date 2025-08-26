@@ -1,6 +1,7 @@
 import {
     CategorySchema,
     competitorSchema,
+    teamSchema,
 } from "@/types/schemas/primitiveSchemas";
 import { useEffect, useState } from "react";
 import { useManageCompetitors } from "./ManageCompetitorContext";
@@ -17,6 +18,7 @@ import { errorToast, successToast } from "@/services/toasts";
 import { enrollCompetitor } from "@/services/tournamentService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import UnavailableCategory from "./UnavailableCategory";
+import { enrollTeam } from "@/services/teamService";
 
 interface CategoryWithStatus {
     status: CategoryStatus;
@@ -28,12 +30,15 @@ const AvailableCategories = () => {
     const [loading, setLoading] = useState<boolean>(true);
     const {
         competitorDraft,
+        teamDraft,
         categories,
         selectedCategories,
         setCompetitorDraft,
         setSelectedCategories,
         mode,
         manageType,
+        updateCompetitors,
+        updateTeams,
     } = useManageCompetitors();
     const [enrolledCategories, setEnrolledCategories] = useState<
         CategoryWithStatus[]
@@ -45,15 +50,15 @@ const AvailableCategories = () => {
         CategoryWithStatus[]
     >([]);
     useEffect(() => {
-        let isMounted = true;
+        // let isMounted = true;
 
         const enrolledCategoriesPayload: CategoryWithStatus[] = [];
         const enrollableCategoriesPayload: CategoryWithStatus[] = [];
         const unavailableCategoriesPayload: CategoryWithStatus[] = [];
 
         categories.forEach((category: CategorySchema) => {
+            // Unavailable Category filter
             if (
-                // el type es comp y la category es de equipo => unavailable |||| lo mismo para el caso opuesto
                 (manageType === ManageCompetitorTypes.COMPETITOR &&
                     category.is_team) ||
                 (manageType === ManageCompetitorTypes.TEAM && !category.is_team)
@@ -64,57 +69,86 @@ const AvailableCategories = () => {
                 });
                 return;
             }
-            const isEnrolled = competitorDraft.inscriptions.some(
-                (compInscription) =>
-                    compInscription.category_uuid === category.uuid
-            );
 
-            const arr = isEnrolled
+            // Check del rollment status del draft.
+            let isDraftEnrolled = false;
+            if (manageType === ManageCompetitorTypes.COMPETITOR) {
+                isDraftEnrolled = competitorDraft.inscriptions.some(
+                    (compInscription) =>
+                        compInscription.category_uuid === category.uuid
+                );
+            } else if (manageType === ManageCompetitorTypes.TEAM) {
+                isDraftEnrolled = teamDraft.inscriptions.includes(
+                    category.uuid
+                );
+            }
+
+            const arr = isDraftEnrolled
                 ? enrolledCategoriesPayload
                 : enrollableCategoriesPayload;
 
             arr.push({
-                status: isEnrolled
+                status: isDraftEnrolled
                     ? CategoryStatus.ENROLLED
                     : CategoryStatus.ENROLLABLE,
                 category: category,
             });
         });
 
-        if (isMounted) {
-            setEnrolledCategories(enrolledCategoriesPayload);
-            setEnrollableCategories(enrollableCategoriesPayload);
-            setUnavailableCategories(unavailableCategoriesPayload);
-        }
+        setEnrolledCategories(enrolledCategoriesPayload);
+        setEnrollableCategories(enrollableCategoriesPayload);
+        setUnavailableCategories(unavailableCategoriesPayload);
 
         setLoading(false);
+    }, [competitorDraft, teamDraft, categories, manageType]);
 
-        return () => {
-            isMounted = false; // cleanup para evitar memory leaks
+    const enrollTeamProcedure = async () => {
+        const payload = {
+            categories: selectedCategories,
         };
-    }, [competitorDraft, categories, manageType]);
+        const res = await enrollTeam(teamDraft.uuid, payload);
+
+        const updatedTeam = teamSchema.parse(res);
+
+        // Clear de las categorias seleccionadas
+        updateTeams(updatedTeam);
+
+        setSelectedCategories([]);
+        successToast(`Equipo inscripto exitosamente.`);
+    };
+
+    const enrollCompetitorProcedure = async () => {
+        const payload = {
+            competitor_uuid: competitorDraft.uuid,
+            categories: selectedCategories,
+        };
+        const res = await enrollCompetitor(tournament.code, payload);
+
+        const updatedCompetitor = competitorSchema.parse(res);
+
+        updateCompetitors(updatedCompetitor);
+        setSelectedCategories([]);
+
+        successToast(`Competidor inscripto exitosamente.`);
+    };
 
     const enroll = async () => {
         try {
             setLoading(true);
-            // TODO: Agregar accion de agregar miembros al equipo
-            const payload = {
-                competitor_uuid: competitorDraft.uuid,
-                categories: selectedCategories,
-            };
-            const res = await enrollCompetitor(tournament.code, payload);
 
-            const competitorDraftResponse = competitorSchema.parse(res);
-
-            setCompetitorDraft(competitorDraftResponse);
-
-            // Clear de las categorias seleccionadas
-            setSelectedCategories([]);
-            successToast(`Competidor inscripto exitosamente.`);
+            if (manageType === ManageCompetitorTypes.COMPETITOR) {
+                await enrollCompetitorProcedure();
+            }
+            if (manageType === ManageCompetitorTypes.TEAM) {
+                await enrollTeamProcedure();
+            }
         } catch (error) {
-            console.error(error);
+            const enrollable =
+                manageType === ManageCompetitorTypes.TEAM
+                    ? "equipo"
+                    : "competidor";
             errorToast(
-                "Ha ocurrido un error al inscribir el competidor a las categorías seleccionadas. Por favor intenta nuevamente."
+                `Ha ocurrido un error al inscribir el ${enrollable} a las categorías seleccionadas. Por favor intenta nuevamente.`
             );
         } finally {
             setLoading(false);
@@ -167,7 +201,12 @@ const AvailableCategories = () => {
                 {mode === ManageCompetitorModes.EDIT && (
                     <div className="w-full flex justify-end mt-2">
                         <Button
-                            disabled={!competitorDraft.id}
+                            disabled={
+                                !!selectedCategories.length &&
+                                manageType === ManageCompetitorTypes.COMPETITOR
+                                    ? !competitorDraft.id
+                                    : !teamDraft.uuid
+                            }
                             loading={loading}
                             onClick={() => {
                                 enroll();

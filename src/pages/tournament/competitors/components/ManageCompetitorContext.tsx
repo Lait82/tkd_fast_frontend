@@ -72,8 +72,8 @@ interface ManageCompetitorsContextType {
     setTeamDraft: (t: TeamSchema) => void;
     teams: TeamSchema[];
     setTeams: (t: TeamSchema[]) => void;
-    updateTeamsList: (updatedTeams: TeamSchema[] | TeamSchema) => void;
-    updateCompetitorsList: (
+    updateTeams: (updatedTeams: TeamSchema[] | TeamSchema) => void;
+    updateCompetitors: (
         updatedCompetitors: CompetitorSchema[] | CompetitorSchema
     ) => void;
 }
@@ -111,12 +111,13 @@ export const ManageCompetitorsProvider = ({
 
     const { tournament } = useTournamentStore();
 
-    const updateTeamsList = (updatedTeams: TeamSchema[] | TeamSchema) => {
-        setTeams((prev) => {
-            const updatedTeamsArr: TeamSchema[] = Array.isArray(updatedTeams)
-                ? updatedTeams
-                : [updatedTeams];
+    const updateTeams = (updatedTeams: TeamSchema[] | TeamSchema) => {
+        const updatedTeamsArr: TeamSchema[] = Array.isArray(updatedTeams)
+            ? updatedTeams
+            : [updatedTeams];
 
+        // Update de state.
+        setTeams((prev) => {
             const teamsMap = new Map(prev.map((t) => [t.uuid, t]));
             for (const updatedTeam of updatedTeamsArr) {
                 teamsMap.set(updatedTeam.uuid, updatedTeam);
@@ -128,18 +129,24 @@ export const ManageCompetitorsProvider = ({
 
             return updatedTeamsPayload;
         });
+
+        // Update de teamDraft si es que fue updateado.
+        const updatedMap = new Map(updatedTeamsArr.map((t) => [t.uuid, t]));
+        const updatedDraft = updatedMap.get(teamDraft.uuid);
+        if (updatedDraft) setTeamDraft(updatedDraft);
     };
 
-    const updateCompetitorsList = (
+    const updateCompetitors = (
         updatedCompetitors: CompetitorSchema[] | CompetitorSchema
     ) => {
-        setUserCompetitors((prev) => {
-            const updatedCompetitorsArr: CompetitorSchema[] = Array.isArray(
-                updatedCompetitors
-            )
-                ? updatedCompetitors
-                : [updatedCompetitors];
+        const updatedCompetitorsArr: CompetitorSchema[] = Array.isArray(
+            updatedCompetitors
+        )
+            ? updatedCompetitors
+            : [updatedCompetitors];
 
+        // Update del state
+        setUserCompetitors((prev) => {
             const userCompetitorsMap = new Map(prev.map((uc) => [uc.uuid, uc]));
             for (const u of updatedCompetitorsArr) {
                 userCompetitorsMap.set(u.uuid, u);
@@ -157,6 +164,13 @@ export const ManageCompetitorsProvider = ({
 
             return updatedCompetitorsPayload;
         });
+
+        // Update del draft si fue actualizado
+        const updatedMap = new Map(
+            updatedCompetitorsArr.map((t) => [t.uuid, t])
+        );
+        const updatedDraft = updatedMap.get(competitorDraft.uuid);
+        if (updatedDraft) setCompetitorDraft(updatedDraft);
     };
 
     // Load user's competitors.
@@ -292,8 +306,8 @@ export const ManageCompetitorsProvider = ({
                 setSelectedMembers,
                 setTeams,
                 teams,
-                updateTeamsList,
-                updateCompetitorsList,
+                updateTeams,
+                updateCompetitors,
             }}
         >
             {children}
