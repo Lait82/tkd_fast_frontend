@@ -6,8 +6,8 @@ import { teamSchema } from "@/types/schemas/primitiveSchemas";
 import { useState } from "react";
 import { z } from "zod/v4";
 import { createTeam } from "@/services/teamService";
-import SelectTeamCompetitors from "./components/SelectTeamCompetitors/SelectTeamCompetitors";
 import Members from "./components/Members";
+import TeamCreate from "@/components/icons/TeamCreate";
 
 interface NewTeamForm {
     name: string;
@@ -25,9 +25,6 @@ const CreateTeam = () => {
         selectedCategories,
         setSelectedMembers,
         selectedMembers,
-        setTeams,
-        teams,
-        updateCompetitors,
         updateTeams,
     } = useManageCompetitors();
     const { tournament } = useTournamentStore();
@@ -92,7 +89,10 @@ const CreateTeam = () => {
             className={`bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg`}
         >
             <div className="flex flex-col gap-3">
-                <h1 className="font-extrabold text-2xl">Crear Equipo</h1>
+                <h1 className="font-extrabold text-2xl flex items-center gap-1">
+                    <TeamCreate size={50} />
+                    Crear equipo
+                </h1>
                 <div className="flex gap-2">
                     <div
                         className="flex-shrink-0 flex rounded-full overflow-ellipsis justify-center items-center bg-background text-orange text-5xl"

@@ -38,6 +38,7 @@ const TeamsList = () => {
                         setMode(ManageCompetitorModes.CREATE);
                     if (manageType === ManageCompetitorTypes.COMPETITOR)
                         setManageType(ManageCompetitorTypes.TEAM);
+                    // Aca hay que gatillar un rerender de las categorias/inscripciones
 
                     // setTeamDraft(competitorSchema.parse({}));
                     setSelectedCategories([]);

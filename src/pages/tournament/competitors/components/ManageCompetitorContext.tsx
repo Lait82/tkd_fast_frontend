@@ -88,7 +88,7 @@ export const ManageCompetitorsProvider = ({
     children: React.ReactNode;
 }) => {
     const [mode, setMode] = useState<ManageCompetitorModes>(
-        ManageCompetitorModes.EDIT
+        ManageCompetitorModes.CREATE
     );
 
     const [manageType, setManageType] = useState<ManageCompetitorTypes>(

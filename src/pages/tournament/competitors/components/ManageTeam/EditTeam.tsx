@@ -5,6 +5,7 @@ import { useState } from "react";
 import Tooltip from "@/components/Tooltip";
 import Members from "./components/Members";
 import Modal from "@/components/Modal";
+import TeamEdit from "@/components/icons/TeamEdit";
 
 const EditTeam = ({}) => {
     const { teamDraft } = useManageCompetitors();
@@ -22,7 +23,8 @@ const EditTeam = ({}) => {
             <div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
                 <div className="flex flex-col gap-3">
                     <div className="flex w-full justify-between items-center">
-                        <h1 className="font-extrabold text-2xl">
+                        <h1 className="font-extrabold text-2xl flex items-center gap-1">
+                            <TeamEdit size={50} />
                             Editar equipo
                         </h1>
                         <div className="flex items-center gap-1.5">
