@@ -24,8 +24,8 @@ const TournamentNavbar = () => {
 	};
 	const categories = {
 		text: "Categorías",
-		route: `/${tournament.code}/cagtegories`,
-		view: "cagtegories",
+		route: `/${tournament.code}/categories`,
+		view: "categories",
 	};
 	const invites = {
 		text: "Invitaciones",

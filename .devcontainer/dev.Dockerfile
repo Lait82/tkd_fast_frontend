@@ -1,4 +1,4 @@
-FROM node:22-alpine
+FROM node:25-alpine
 
 # Instalar bash (opcional pero útil para VSCode)
 RUN apk add --no-cache bash git openssh

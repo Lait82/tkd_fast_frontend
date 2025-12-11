@@ -12,7 +12,7 @@ const Banner = ({ tournament }: BannerProps) => {
 	return (
 		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center create-tournament-card p-3 rounded-lg">
 			<div className="flex gap-1 items-center">
-				<h1 className="text-3xl font-extrabold">{tournament.name}</h1>
+				<h1 className="text-3xl font-extrabold">{tournament.name ?? <span className="italic text-lg text-muted font-light">(Sin nombre)</span>}</h1>
 				{getHighestRole(tournament.role) === Role.ORGANIZER && (
 					<span className="w-fit h-full transition-all ease-fluid flex items-center">
 						<a href={`/${tournament.code}/edit-tournament`}>
