@@ -1,9 +1,9 @@
 import BeltIcon from "@/components/BeltIcon";
 import BoxingGloves from "@/components/icons/BoxingGloves";
 import { CategorySchema } from "@/types/schemas/primitiveSchemas";
-import { buildCategoryName, getDisciplineLabel, getGenderLabel, getIsTeamLabel, getRankName } from "@/utils/utils";
+import { getDisciplineLabel, getGenderLabel, getIsTeamLabel, getRankName } from "@/utils/utils";
 import { FaMedal } from "react-icons/fa";
-import "../../../../styles/Categories.css";
+import "../../../../styles/Categories.css"
 
 interface SingleCategoryProps {
     category: CategorySchema;
@@ -15,7 +15,7 @@ const SingleCategory = ({category} : SingleCategoryProps) => {
         <div className="bg-super-elevated rounded-lg shadow-md overflow-hidden">
             <div className="grid grid-cols-[40fr_17fr_17fr_26fr]">
                 {/* Description */}
-                <div className={`flex flex-col col-span-1 pl-2.5 py-2 gap-1 ${category.discipline.toString().toLowerCase()}`}>
+                <div className={`flex flex-col col-span-1 pl-2.5 py-2 gap-1 ${(category.discipline).toString().toLowerCase()}`}>
                     {/* <h1 className="font-extrabold text-2xl bg-orange/20 p-1 w-fit rounded-4xl backdrop-blur-xs"> */}
                     <div className="relative inline-block">
                         <span className="text-2xl md:text-3xl font-bold">
@@ -31,7 +31,7 @@ const SingleCategory = ({category} : SingleCategoryProps) => {
                         <div className="grid grid-cols-[auto_1fr] ml-1 text-neutrallight p-1 rounded-3xl justify-around gap-y-1.5 gap-x-1">
                             {/* <span className="backdrop-blur-xs rounded-4xl bg-background-500/20">
                             </span> */}
-                            <BoxingGloves size={10}/> 27 Competidores
+                            <BoxingGloves/> 27 Competidores
                             {/* <span className="backdrop-blur-xs rounded-4xl bg-background-500/20">
                             </span> */}
                             <FaMedal className="ml-[0.4rem]"/> 3er Puesto definido por lucha

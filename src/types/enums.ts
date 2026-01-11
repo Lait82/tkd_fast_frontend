@@ -23,6 +23,7 @@ export enum Rank {
 export enum Discipline {
 	PATTERNS = "PATTERNS",
 	COMBAT = "COMBAT",
+	TBD = "TBD"
 }
 
 export enum Gender {

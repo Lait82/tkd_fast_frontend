@@ -67,7 +67,7 @@ export type CompetitorWithUserSchema = z.infer<typeof competitorWithUserSchema>;
 export const categorySchema = z.object({
 	uuid: z.uuid().default(""),
 	tournament_uuid: z.uuid().default(""),
-	discipline: z.enum(Discipline).nullable().default(null),
+	discipline: z.enum(Discipline).default(Discipline.TBD),
 	is_team: z.boolean().default(false),
 	min_weight: z.number().default(0),
 	max_weight: z.number().default(0),
