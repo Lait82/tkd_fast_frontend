@@ -35,7 +35,7 @@ const EnrollableCategory = ({ category }: { category: CategorySchema }) => {
 				<IconsCategoryName category={category} />
 				<Checkbox
 					checked={selectedCategories.includes(category.uuid)}
-					name={`category-${category.id}`}
+					name={`category-${category.uuid}`}
 					onChange={() => handleToggle(category.uuid)}
 					className="group block size-2 rounded border bg-transparent border-neutrallight data-checked:border-orange
                                 focus:outline-none focus:ring-0"

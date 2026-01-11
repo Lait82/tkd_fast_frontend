@@ -1,6 +1,17 @@
 import { Discipline, Gender, Rank, Role, RoleHierarchy } from "@/types/enums";
 import { CategorySchema } from "@/types/schemas/primitiveSchemas";
 
+
+const _discipline = {
+    [Discipline.COMBAT]: "Lucha",
+    [Discipline.PATTERNS]: "Formas",
+};
+const _gender = {
+    [Gender.FEMALE]: "Femenino",
+    [Gender.MALE]: "Masculino",
+};
+
+
 export function getHighestRole(roles: Role[]): Role {
     return roles.reduce(
         (carry, role) =>
@@ -40,18 +51,22 @@ export function getRankName(rank: Rank) {
 }
 
 export function buildCategoryName(category: CategorySchema) {
-    const discipline = {
-        [Discipline.COMBAT]: "Lucha",
-        [Discipline.PATTERNS]: "Formas",
-    };
-    const gender = {
-        [Gender.FEMALE]: "Femenino",
-        [Gender.MALE]: "Masculino",
-    };
     const teamOrIndividual = category.is_team ? "Equipos" : "Individual";
-    return `${discipline[category.discipline]} ${teamOrIndividual} | ${
-        gender[category.gender]
+    return `${_discipline[category.discipline]} ${teamOrIndividual} | ${
+        _gender[category.gender]
     } | ${getRankName(category.min_rank)} - ${getRankName(
         category.max_rank
     )} | ${category.min_weight} Kg - ${category.max_weight} Kg`;
+}
+
+export function getGenderLabel(gender: Gender){
+    return _gender[gender];
+}
+
+export function getDisciplineLabel(discipline: Discipline){
+    return _discipline[discipline];
+}
+
+export function getIsTeamLabel(is_team: boolean){
+    return is_team ? "Equipos" : "Individual";
 }

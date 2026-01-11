@@ -1,0 +1,9 @@
+.patterns {
+    background-image:linear-gradient(to right, rgba(0,0,0,0.7), var(--color-super-elevated)), url('../category_patterns.png');
+    background-size: cover;
+}
+
+.combat {
+    background-image:linear-gradient(to right, rgba(0,0,0,0.7), var(--color-super-elevated)), url('../category_combat.png');
+    background-size:cover;
+}

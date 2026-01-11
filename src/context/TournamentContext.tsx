@@ -76,15 +76,15 @@ export const TournamentProvider = ({ children }: { children: React.ReactNode }) 
     if (!tournament) return false;
 
     const policy: Record<string, Role[]> = {
-        editCategories: ['ORGANIZER'],
-        editCompetitors: ['ORGANIZER'],
-        editTournament: ['ORGANIZER'],
+        editCategories: [Role.ORGANIZER],
+        editCompetitors: [Role.ORGANIZER],
+        editTournament: [Role.ORGANIZER],
         
-        inviteInstructor: ['ORGANIZER', 'MASTER'],
-        inviteMaster: ['ORGANIZER'],
+        inviteInstructor: [Role.ORGANIZER, Role.MASTER],
+        inviteMaster: [Role.ORGANIZER],
         
-        enroll: ['ORGANIZER', 'INSTRUCTOR', 'MASTER'],
-        view: ['ORGANIZER', 'INSTRUCTOR', 'NONE', 'COMPETITOR', 'MASTER'],
+        enroll: [Role.ORGANIZER, Role.INSTRUCTOR, Role.MASTER],
+        view: [Role.ORGANIZER, Role.INSTRUCTOR, Role.NONE, Role.COMPETITOR, Role.MASTER],
     };
 
     return policy[action]?.some((r) => hasRole(r)) ?? false;

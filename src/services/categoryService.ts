@@ -14,3 +14,17 @@ export const getAvailableCategories = async (code: string) => {
 		);
 	}
 };
+
+export const getAllCategories = async (code: string) =>  {
+	try {
+		const response = await tkdfastProtectedApi.get(
+			`/tournament/${code}/categories`
+		);
+		return response.data;
+	} catch (error: any) {
+		throw new Error(
+			error.response?.data?.message ||
+				"Fallo al obtener categorías."
+		);
+	}
+}

@@ -65,18 +65,18 @@ export const competitorWithUserSchema = z.object({
 export type CompetitorWithUserSchema = z.infer<typeof competitorWithUserSchema>;
 
 export const categorySchema = z.object({
-	id: z.number(),
-	uuid: z.uuid(),
-	tournament_uuid: z.uuid(),
-	discipline: z.enum(Discipline),
-	is_team: z.boolean(),
-	min_weight: z.number(),
-	max_weight: z.number(),
-	gender: z.enum(Gender),
-	min_rank: z.enum(Rank),
-	max_rank: z.enum(Rank),
-	min_age: z.number(),
-	max_age: z.number(),
+	uuid: z.uuid().default(""),
+	tournament_uuid: z.uuid().default(""),
+	discipline: z.enum(Discipline).nullable().default(null),
+	is_team: z.boolean().default(false),
+	min_weight: z.number().default(0),
+	max_weight: z.number().default(0),
+	gender: z.enum(Gender).default(Gender.MALE),
+	min_rank: z.enum(Rank).default(Rank.WHITE),
+	max_rank: z.enum(Rank).default(Rank.DAN_9),
+	min_age: z.number().default(0),
+	max_age: z.number().default(0),
+	age_alias: z.string().nullable().default(null),
 });
 export type CategorySchema = z.infer<typeof categorySchema>;
 
