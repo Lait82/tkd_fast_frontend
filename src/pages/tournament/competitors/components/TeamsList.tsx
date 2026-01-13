@@ -31,7 +31,7 @@ const TeamsList = () => {
                 );
             })}
             <div
-                className={`px-1.5 py-1 rounded-lg transition-all ease-fluid cursor-pointer justify-center items-center font-bold border-1 border-transparent
+                className={`px-1.5 py-1 rounded-lg transition-all ease-fluid cursor-pointer justify-center items-center font-bold border border-transparent
 					 hover:border-orange`}
                 onClick={() => {
                     if (mode === ManageCompetitorModes.EDIT)

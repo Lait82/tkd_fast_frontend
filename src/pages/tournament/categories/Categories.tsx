@@ -6,7 +6,8 @@ import { useTournamentStore } from "@/states/useTournamentStore";
 import TournamentNavbar from "@/components/TournamentNavbar";
 import { TournamentActions } from "@/types/enums";
 import AvailableCategories from "./components/AvailableCategories";
-import ManageCategories from "./components/ManageCategories";
+import ManageCategories from "./components/manageCategories/ManageCategories";
+import { ManageCategoriesProvider } from "./components/manageCategories/ManageCategoryContext";
 // Mock data for tournaments
 const Categories = () => {
     const { can } = useTournamentStore();
@@ -21,19 +22,14 @@ const Categories = () => {
                         <TournamentNavbar />
                     </div>
                 </div>
-                {can(TournamentActions.MANAGE_CATEGORIES) ? (
-                    // <ManageCompetitorsProvider>
-                    //     <ManageCompetitors />
-                    // </ManageCompetitorsProvider>
+                {can(TournamentActions.MANAGE_CATEGORIES) && (
                     <div className="flex flex-col">
                         <h2 className="text-2xl font-semibold mb-4">Manage Competitors</h2>
-                        {/* Placeholder for ManageCategories component */}
-                        {/* <div className="border p-4 rounded-lg">
-                            <p>ManageCategories Component Goes Here</p>
-                        </div> */}
-                        <ManageCategories />
+                        <ManageCategoriesProvider>
+                            <ManageCategories />
+                        </ManageCategoriesProvider>
                     </div>
-                ) : null}
+                )}
                 <div className="flex flex-col">
                     <AvailableCategories />
                 </div>
