@@ -5,7 +5,7 @@ const Checkbox = ({ ...props }: CheckboxProps) => {
 	return (
 		<CheckboxHeadlessUI
 			{...props}
-			className="group block flex-shrink-0 size-2 rounded border bg-transparent border-neutrallight data-checked:border-orange
+			className="group block shrink-0 size-2 rounded border bg-transparent border-neutrallight data-checked:border-orange
                                         focus:outline-none focus:ring-0"
 		>
 			<svg
