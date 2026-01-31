@@ -135,15 +135,14 @@ const IconSelect = ({
 					width: "100%", // o el ancho que quieras para el input
 					border: state.isFocused
 						? "1px solid var(--color-orange)"
-						: "1px solid transparent",
+						: "1px solid var(--color-transparent)",
 					borderRadius: state.isFocused ? "8px" : "0",
 					"&:hover": {
-						border: state.isFocused
-							? "1px solid var(--color-orange)"
-							: "1px solid transparent",
-						borderBottom: "1px solid var(--color-orange)",
+						border: "1px solid var(--color-orange)",
+						borderRadius: "8px",
+						borderBottom: "1px solid var(--color-orange) !important",
 					},
-					borderBottom: "1px solid var(--color-orange)",
+					borderBottom: state.isFocused ? "1px solid var(--color-orange)" : "1px solid var(--color-muted)",
 				}),
 
 				// Estilo del menú desplegable

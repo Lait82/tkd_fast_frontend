@@ -14,16 +14,17 @@ import { useTournamentStore } from "@/states/useTournamentStore";
 import Checkbox from "@/components/forms/Checkbox";
 import FormInput from "@/components/forms/FormInput";
 import Button from "@/components/Button";
+import { error } from "console";
 
 interface NewCategoryForm {
     discipline: Discipline,
     is_team: boolean,
     min_rank: Rank,
     max_rank: Rank,
-    min_weight: number | null,
-    max_weight: number | null,
-    min_age: number | null,
-    max_age: number | null,
+    min_weight: string,
+    max_weight: string,
+    min_age: string,
+    max_age: string,
     gender: Gender
 }
 
@@ -32,10 +33,10 @@ const emptyForm: NewCategoryForm = {
     is_team: false,
     min_rank: Rank.WHITE,
     max_rank: Rank.DAN_9,
-    min_weight: null,
-    max_weight: null,
-    min_age: null,
-    max_age: null,
+    min_weight: "",
+    max_weight: "",
+    min_age: "",
+    max_age: "",
     gender: Gender.FEMALE,
 };
 type Errors = Partial<Record<keyof NewCategoryForm, string>>;
@@ -48,6 +49,11 @@ const CategoryInfo = ({}) => {
 	const [formErrors, setFormErrors] = useState<Errors>();
     
     const handleChange = (field_name: string, value: any) => {
+        if (formErrors  && formErrors[field_name as keyof NewCategoryForm]) {
+            const newFormErrors = {...formErrors};
+            delete newFormErrors[field_name as keyof NewCategoryForm];
+            setFormErrors(newFormErrors);
+        }
         setForm((prev) => ({
             ...prev,
             [field_name]: value,
@@ -72,12 +78,15 @@ const CategoryInfo = ({}) => {
                 setFormErrors(fieldErrors);
                 errorToast("Revisá los campos");
                 console.log(fieldErrors);
+                console.log(form)
                 return;
             }
 
+            console.log("Form enviado:", form);
+            console.log("Form parseado:", result);
             const res = await createCategory(
                 tournament.code,
-                form
+                result.data
             );
             // const createdCategory = categorySchema.parse(res);
             successToast("Categoría creada con exito");
@@ -101,8 +110,7 @@ const CategoryInfo = ({}) => {
 				<h1 className="font-extrabold text-2xl">Administrar categoria</h1>
                 
                 <form onSubmit={handleSubmit}>
-                    <span className="col-start-2 text-xs text-red-500">* Error</span>
-                    
+                    {/* <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span> */}
                     <h3 className="font-bold text-lg">Género</h3>
                     <RadioGroup className={`flex w-full gap-2 p-2 justify-between font-semibold`} name="gender" value={form.gender} onChange={(gender)=> {
                         console.log(gender)
@@ -124,6 +132,7 @@ const CategoryInfo = ({}) => {
                         </Radio>
                     </RadioGroup>
                     <div className="flex flex-col">
+                        {/* <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span> */}
                         <h3 className="font-bold text-lg">Disciplina</h3>
                         <div className="flex gap-1 p-2 items-baseline">
                             <FormIconSelect 
@@ -137,7 +146,6 @@ const CategoryInfo = ({}) => {
                                     border-transparent rounded-lg hover:border-orange">
                                     <Checkbox
                                         checked={form.is_team}
-                                        // groupHover
                                         name={"is_team"}
                                         onChange={(checked) => {
                                             handleChange("is_team", checked);
@@ -149,6 +157,7 @@ const CategoryInfo = ({}) => {
                         </div>
                     </div>
                     <div className="flex flex-col">
+                        {/* { getAgeErrors(formErrors) && <span className="col-start-2 text-xs text-red">*{getAgeErrors(formErrors)}</span>} */}
                         <h3 className="font-bold text-lg">Edad</h3>
                         <div className="flex flex-col gap-2 p-2">
                             <Field>
@@ -157,7 +166,8 @@ const CategoryInfo = ({}) => {
                                         type="number"
                                         id="min_age"
                                         variant="primary"
-                                        value={form.min_age?.toString() || ""}
+                                        value={form.min_age}
+                                        error={formErrors?.min_age}
                                         placeholder="0"
                                         alignment="center"
                                         title="Desde"
@@ -173,7 +183,8 @@ const CategoryInfo = ({}) => {
                                         id="max_age"
                                         type="number"
                                         variant="primary"
-                                        value={form.max_age?.toString() || ""}
+                                        value={form.max_age}
+                                        error={formErrors?.max_age}
                                         alignment="center"
                                         placeholder="99"
                                         title="Hasta"
@@ -186,15 +197,17 @@ const CategoryInfo = ({}) => {
                         </div>
                     </div>
                     <div className="flex flex-col">
+                        <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span>
                         <h3 className="font-bold text-lg">Peso</h3>
-                        <div className="flex flex-col gap-2 p-2">
+                        <div className="flex flex-col gap-1 p-2">
                             <Field>
                                 <Label htmlFor="min_weight" className="flex items-center text-muted gap-1">
                                     <FormInput
                                         id="min_weight"
                                         type="number"
                                         variant="primary"
-                                        value={form.min_weight?.toString() || ""}
+                                        value={form.min_weight}
+                                        error={formErrors?.min_weight}
                                         placeholder="5"
                                         alignment="center"
                                         title="Peso minimo"
@@ -210,7 +223,8 @@ const CategoryInfo = ({}) => {
                                         id="max_weight"
                                         type="number"
                                         variant="primary"
-                                        value={form.max_weight?.toString() || ""}
+                                        value={form.max_weight}
+                                        error={formErrors?.max_weight}
                                         placeholder="100"
                                         alignment="center"
                                         title="Peso maximo"
@@ -224,8 +238,9 @@ const CategoryInfo = ({}) => {
                     </div>
                     <div className="flex flex-col">
                         <h3 className="font-bold text-lg">Graduacion</h3>
+                        <span className="col-start-2 text-xs text-red">{formErrors?.max_rank ? `* ${formErrors?.max_rank}` : "\u00A0"}</span>
                         <div className="flex gap-2 justify-between p-2">
-                            <span className="text-muted w-full">
+                            <span className="flex flex-col text-muted w-full gap-1">
                                 Desde
                             <FormIconSelect 
                                 name="min_rank"
@@ -234,7 +249,7 @@ const CategoryInfo = ({}) => {
                                 onChange={(e)=> handleChange("min_rank", e.target.value)} 
                             />
                             </span>
-                            <span className="text-muted w-full">
+                            <span className="flex flex-col text-muted w-full gap-1">
                                 Hasta
                                 <FormIconSelect 
                                     name="max_rank"
@@ -245,7 +260,7 @@ const CategoryInfo = ({}) => {
                             </span>
                         </div>
                     </div>
-                    <Button className="w-full mt-3" type="submit">
+                    <Button className="w-full mt-3" type="submit" disabled={[form.min_weight, form.max_weight, form.min_age, form.max_age].some((val) => val === "")}>
                         Crear categoría
                     </Button>
                 </form>

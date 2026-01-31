@@ -137,23 +137,23 @@ export type TeamSchema = z.infer<typeof teamSchema>;
 
 
 export const newCategorySchema = z.object({
-	discipline: z.enum(Discipline).default(Discipline.COMBAT),
-	is_team: z.boolean().default(false),
-	min_rank: z.enum(Rank).default(Rank.WHITE),
-	max_rank: z.enum(Rank).default(Rank.DAN_9),
-	min_weight: z.number().default(0),
-	max_weight: z.number().default(0.1),
-	min_age: z.int().default(0),
-	max_age: z.int().default(1),
-	gender: z.enum(Gender).default(Gender.FEMALE),
+	discipline: z.enum(Discipline),
+	is_team: z.boolean(),
+	min_rank: z.enum(Rank),
+	max_rank: z.enum(Rank),
+	min_weight: z.coerce.number("El peso mínimo debe ser un número válido."),
+	max_weight: z.coerce.number("El peso máximo debe ser un número válido."),
+	min_age: z.coerce.number("La edad minima debe ser un número válido.").int(),
+	max_age: z.coerce.number("La edad maxima debe ser un número válido.").int(),
+	gender: z.enum(Gender),
 })
 // Cross-field validations for ranks
 .refine(data => getRankOrderNumber(data.min_rank) <= getRankOrderNumber(data.max_rank)
-, { message: "El rango máximo debe ser mayor al mínimo."})
+, { message: "El rango máximo debe ser mayor al mínimo.", path: ["max_rank"]})
 // Weights
 .refine(data => data.min_weight <= data.max_weight
-, { message: "El peso máximo debe ser mayor al peso mínimo."})
+, { message: "El peso máximo debe ser mayor al peso mínimo.", path: ["max_weight"]})
 // Ages
 .refine(data => data.min_age <= data.max_age 
-, { message: "La edad máxima debe ser mayor a la edad mínima."});
+, { message: "La edad máxima debe ser mayor a la edad mínima.", path: ["max_age"]});
 export type NewCategorySchema = z.infer<typeof newCategorySchema>;

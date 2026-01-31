@@ -147,7 +147,7 @@ const FormInput = ({
 						className={`
 						w-full bg-transparent text-neutrallight border-0 border-b focus:text-neutrallight
                         [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
-						${error ? "border-red focus:border-red" : "border-orange-800 focus:border-orange"}
+						${error ? "border-red focus:border-red" : "border-muted focus:border-orange"}
                         py-0.5
 						${iconLeft ? "pl-3" : ""}
 						${iconRight ? "pr-3" : ""}
@@ -165,9 +165,10 @@ const FormInput = ({
 				</div>
 
 				{/* Mensaje de error absolutamente posicionado para no afectar el layout */}
-				{error && (
-					<div className="col-start-2 text-xs text-red-500">
-						{error}
+				{/* {error && ( */}
+				{(
+					<div className="col-start-2 text-xs text-red">
+						{error ? `* `+ error : "\u00A0"}
 					</div>
 				)}
 			</div>
