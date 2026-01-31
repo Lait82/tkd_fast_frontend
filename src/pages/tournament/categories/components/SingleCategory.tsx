@@ -1,4 +1,4 @@
-import BeltIcon from "@/components/BeltIcon";
+import BeltIcon from "@/components/icons/BeltIcon";
 import BoxingGloves from "@/components/icons/BoxingGloves";
 import { CategorySchema } from "@/types/schemas/primitiveSchemas";
 import { getDisciplineLabel, getGenderLabel, getIsTeamLabel, getRankName } from "@/utils/utils";

@@ -3,13 +3,10 @@ import { getAllCategories } from "@/services/categoryService";
 import { errorToast } from "@/services/toasts";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import {
-    Rank,
-} from "@/types/enums";
-import {
     CategorySchema,
     categorySchema,
+    NewCategorySchema,
 } from "@/types/schemas/primitiveSchemas";
-import dayjs, { Dayjs } from "dayjs";
 import React, {
     createContext,
     ReactNode,
@@ -17,39 +14,12 @@ import React, {
     useEffect,
     useState,
 } from "react";
-import { z } from "zod/v4";
 
-const newCompetitorSchema = z.object({
-    email: z.email("Por favor, ingresa un email válido."),
-    id_number: z.string(),
-    firstname: z.string().min(2, "El nombre es demasiado corto."),
-    lastname: z.string().min(2, "El apellido es demasiado corto."),
-    dob: z.preprocess(
-        (val: string) => dayjs(val, "DD-MM-YYYY"),
-        z
-            .custom<Dayjs>((val) => dayjs.isDayjs(val))
-            .refine((val) => val.isBefore(dayjs().subtract(3, "years")), {
-                message: "El competidor no puede ser menor a 3 años.",
-            })
-    ),
 
-    rank: z.enum(Rank).default(Rank.WHITE),
-});
-
-// type MemberSlot = {
-//     id: string;
-//     uuid: string;
-// };
 interface ManageCategoriesContextType {
-    // Cosas que puedo usar en el contexto y sus tipos como por ej:
-    // competitorDraft: CompetitorSchema;
-    // setCompetitorDraft: (c: CompetitorSchema) => void;
-
-    // userCompetitors: CompetitorSchema[];
-    // setUserCompetitors: React.Dispatch<
-    //     React.SetStateAction<CompetitorSchema[]>
-    // >;
     draftCategory: CategorySchema;
+    setNewCategory: React.Dispatch<React.SetStateAction<NewCategorySchema|null>>;
+    newCategory: NewCategorySchema|null;
     categories: CategorySchema[];
     loadingCategories: boolean;
     selectedCategory: CategorySchema | null;
@@ -71,7 +41,7 @@ export const ManageCategoriesProvider = ({
     const [categories, setCategories] = useState<CategorySchema[]>([]);
     const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
     const [selectedCategory, setSelectedCategory] = useState<CategorySchema | null>(null);
-
+    const [newCategory, setNewCategory] = useState<NewCategorySchema|null>(null);
     // Get categories on mount
     useEffect(()=>{
         let isMounted = true;
@@ -80,6 +50,7 @@ export const ManageCategoriesProvider = ({
                 const res = await getAllCategories(tournament.code);
                 const allCategories = categorySchema.array().parse(res);
                 if (isMounted) setCategories(allCategories);
+                setSelectedCategory(allCategories[0])
             } catch (error) {
                 console.error("Error al obtener torneos:", error);
                 errorToast(
@@ -100,6 +71,8 @@ export const ManageCategoriesProvider = ({
         <ManageCategoriesContext.Provider
             value={{
                 draftCategory: categorySchema.parse({}),
+                setNewCategory: setNewCategory,
+                newCategory: newCategory,
                 categories: categories,
                 loadingCategories: loadingCategories,
                 selectedCategory: selectedCategory,

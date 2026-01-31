@@ -4,7 +4,7 @@ import Select, { SingleValue, components } from "react-select";
 import { OptionProps } from "react-select";
 import { Rank } from "@/types/enums";
 import { getRankName } from "@/utils/utils";
-import BeltIcon from "./BeltIcon";
+import BeltIcon from "./icons/BeltIcon";
 
 type IconOption = {
 	value: string;
@@ -26,7 +26,7 @@ const customSingleValue = (props: any) => {
 		<components.SingleValue {...props}>
 			<div className="flex items-center w-full gap-0.5 overflow-hidden">
 				{/* Icono ocupa 1/3 */}
-				<div className="flex-shrink-0 basis-1/3 flex items-center justify-start">
+				<div className="shrink-0 basis-1/3 flex items-center justify-start">
 					{data.icon}
 				</div>
 

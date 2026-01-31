@@ -1,4 +1,4 @@
-import BeltIcon from "@/components/BeltIcon";
+import BeltIcon from "@/components/icons/BeltIcon";
 import UserX from "@/components/icons/UserX";
 import {
     Dialog,

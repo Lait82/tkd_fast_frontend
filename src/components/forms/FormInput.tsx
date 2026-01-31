@@ -110,6 +110,7 @@ interface InputProps {
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	placeholder?: string;
 	title: ReactNode | string;
+	alignment?: "left" | "center" | "right";
 }
 
 const FormInput = ({
@@ -123,6 +124,7 @@ const FormInput = ({
 	onChange,
 	placeholder,
 	title,
+	alignment
 }: InputProps) => {
 	return (
 		<div className="w-full">
@@ -143,12 +145,13 @@ const FormInput = ({
 						onChange={onChange}
 						placeholder={placeholder}
 						className={`
-						w-full bg-transparent text-neutrallight border-0 border-b-1 focus:text-neutrallight
+						w-full bg-transparent text-neutrallight border-0 border-b focus:text-neutrallight
                         [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none
-						${error ? "border-red focus:border-red" : "border-orange focus:border-orange"}
+						${error ? "border-red focus:border-red" : "border-orange-800 focus:border-orange"}
                         py-0.5
 						${iconLeft ? "pl-3" : ""}
 						${iconRight ? "pr-3" : ""}
+						${alignment && `text-${alignment}`}
 						focus:outline-none focus:ring-0 focus:border-inherit
 						transition-colors duration-200
 					`}

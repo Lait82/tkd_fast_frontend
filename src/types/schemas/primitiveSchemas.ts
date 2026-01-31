@@ -1,5 +1,7 @@
 import { optional, z } from "zod/v4";
 import { Discipline, Gender, Rank, Role } from "../enums";
+import dayjs, { Dayjs } from "dayjs";
+import { getRankOrderNumber } from "@/utils/utils";
 
 export const userSchema = z.object({
 	//TODO: reemplazar el tipo de los esquemas opr los nativos que hice yo
@@ -67,7 +69,7 @@ export type CompetitorWithUserSchema = z.infer<typeof competitorWithUserSchema>;
 export const categorySchema = z.object({
 	uuid: z.uuid().default(""),
 	tournament_uuid: z.uuid().default(""),
-	discipline: z.enum(Discipline).default(Discipline.TBD),
+	discipline: z.enum(Discipline).default(Discipline.COMBAT),
 	is_team: z.boolean().default(false),
 	min_weight: z.number().default(0),
 	max_weight: z.number().default(0),
@@ -132,3 +134,26 @@ export const teamSchema = z.object({
 	inscriptions: z.array(z.uuid()).default([]),
 });
 export type TeamSchema = z.infer<typeof teamSchema>;
+
+
+export const newCategorySchema = z.object({
+	discipline: z.enum(Discipline).default(Discipline.COMBAT),
+	is_team: z.boolean().default(false),
+	min_rank: z.enum(Rank).default(Rank.WHITE),
+	max_rank: z.enum(Rank).default(Rank.DAN_9),
+	min_weight: z.number().default(0),
+	max_weight: z.number().default(0.1),
+	min_age: z.int().default(0),
+	max_age: z.int().default(1),
+	gender: z.enum(Gender).default(Gender.FEMALE),
+})
+// Cross-field validations for ranks
+.refine(data => getRankOrderNumber(data.min_rank) <= getRankOrderNumber(data.max_rank)
+, { message: "El rango máximo debe ser mayor al mínimo."})
+// Weights
+.refine(data => data.min_weight <= data.max_weight
+, { message: "El peso máximo debe ser mayor al peso mínimo."})
+// Ages
+.refine(data => data.min_age <= data.max_age 
+, { message: "La edad máxima debe ser mayor a la edad mínima."});
+export type NewCategorySchema = z.infer<typeof newCategorySchema>;

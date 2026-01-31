@@ -1,4 +1,4 @@
-import BeltIcon from "@/components/BeltIcon";
+import BeltIcon from "@/components/icons/BeltIcon";
 import { CompetitorSchema } from "@/types/schemas/primitiveSchemas";
 import { getRankName } from "@/utils/utils";
 import dayjs from "dayjs";

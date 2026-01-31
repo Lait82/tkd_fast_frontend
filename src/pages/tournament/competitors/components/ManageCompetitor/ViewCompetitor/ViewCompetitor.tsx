@@ -1,4 +1,4 @@
-import BeltIcon from "@/components/BeltIcon";
+import BeltIcon from "@/components/icons/BeltIcon";
 import { getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
 import { useManageCompetitors } from "../../ManageCompetitorContext";
@@ -15,7 +15,7 @@ const ViewCompetitor = ({}) => {
 				</h1>
 				<div className="flex gap-2">
 					<div
-						className="flex-shrink-0 flex rounded-full justify-center items-center bg-background text-orange text-5xl"
+						className="shrink-0 flex rounded-full justify-center items-center bg-background text-orange text-5xl"
 						style={{
 							height: "130px",
 							width: "130px",

@@ -1,5 +1,5 @@
 // IconSelect.tsx
-import React, { useState } from "react";
+import React from "react";
 import Select, { SingleValue, components } from "react-select";
 import { OptionProps } from "react-select";
 
@@ -21,7 +21,7 @@ const customSingleValue = (props: any) => {
 				</div>
 
 				{/* Texto ocupa 2/3, se trunca */}
-				<div className="truncate basis-2/3 overflow-hidden whitespace-nowrap">
+				<div className="truncate basis-2/3 justify-center overflow-hidden whitespace-nowrap">
 					{data.label}
 				</div>
 			</div>
@@ -52,6 +52,7 @@ const IconSelect = ({
 	onChange,
     options,
     placeholder = "Seleccionar...",
+	fitSize = false,
 }: {
 	name: string;
 	value: string;
@@ -60,6 +61,7 @@ const IconSelect = ({
 	) => void;
     options: IconOption[];
     placeholder?: string;
+	fitSize?: boolean;
 }) => {
 	const selected = options.find((option) => option.value === value) ?? null;
 
@@ -82,7 +84,7 @@ const IconSelect = ({
 			value={selected}
 			onChange={handleChange}
 			isSearchable={false}
-			className="w-full"
+			className={fitSize ? "min-w-fit" : "w-full"}
 			// menuIsOpen={true}
 			components={{
 				SingleValue: customSingleValue,

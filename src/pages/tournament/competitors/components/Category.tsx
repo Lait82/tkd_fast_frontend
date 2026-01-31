@@ -81,7 +81,7 @@ import {
 	DisclosurePanel,
 	Transition,
 } from "@headlessui/react";
-import BeltIcon from "@/components/BeltIcon";
+import BeltIcon from "@/components/icons/BeltIcon";
 import {
 	CategorySchema,
 	CompetitorWithUserSchema,

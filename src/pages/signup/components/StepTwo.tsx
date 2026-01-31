@@ -7,7 +7,7 @@ import { TbUsersGroup } from "react-icons/tb";
 import { useSignupForm } from "@/context/SignupFormContext";
 import FormInput from "@/components/forms/FormInput";
 import Button from "@/components/Button";
-import BeltIcon from "@/components/BeltIcon";
+import BeltIcon from "@/components/icons/BeltIcon";
 import type { Rank } from "@/types/enums";
 
 const rankOptions = [

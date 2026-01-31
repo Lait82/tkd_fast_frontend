@@ -5,7 +5,6 @@ import { CategorySchema } from "@/types/schemas/primitiveSchemas";
 const _discipline = {
     [Discipline.COMBAT]: "Lucha",
     [Discipline.PATTERNS]: "Formas",
-    [Discipline.TBD]: "Por Definir",
 };
 const _gender = {
     [Gender.FEMALE]: "Femenino",

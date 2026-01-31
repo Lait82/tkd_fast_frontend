@@ -1,4 +1,4 @@
-import BeltIcon from "@/components/BeltIcon";
+import BeltIcon from "@/components/icons/BeltIcon";
 import { Discipline, Gender } from "@/types/enums";
 import { CategorySchema } from "@/types/schemas/primitiveSchemas";
 import { getRankName } from "@/utils/utils";
@@ -17,7 +17,6 @@ const IconsCategoryName = ({
 	const discipline = {
 		[Discipline.COMBAT]: "Lucha",
 		[Discipline.PATTERNS]: "Formas",
-		[Discipline.TBD]: "Por Definir",
 	};
 	const gender = {
 		[Gender.FEMALE]: "Femenino",

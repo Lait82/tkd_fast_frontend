@@ -8,7 +8,7 @@ import {
     TransitionChild,
 } from "@headlessui/react";
 import { CompetitorSchema } from "@/types/schemas/primitiveSchemas";
-import BeltIcon from "@/components/BeltIcon";
+import BeltIcon from "@/components/icons/BeltIcon";
 import { getRankName } from "@/utils/utils";
 import dayjs from "dayjs";
 import { UserMinus } from "lucide-react";
