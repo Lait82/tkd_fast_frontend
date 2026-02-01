@@ -1,5 +1,5 @@
 import CategoriesList from "./CategoriesList";
-import CategoryInfo from "./CategoryInfo";
+import CategoryForm from "./CategoryForm";
 import { useManageCategories } from "./ManageCategoryContext";
 
 interface ManageCategoryProps {
@@ -11,7 +11,7 @@ const ManageCategories = ({} : ManageCategoryProps) => {
     return (
         <div className={`grid grid-cols-5 gap-2 items-start`}>
             <CategoriesList />
-            { selectedCategory && <CategoryInfo /> }
+            { selectedCategory && <CategoryForm /> }
         </div>
     );
 }

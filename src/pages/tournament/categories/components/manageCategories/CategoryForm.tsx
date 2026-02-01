@@ -41,7 +41,7 @@ const emptyForm: NewCategoryForm = {
 };
 type Errors = Partial<Record<keyof NewCategoryForm, string>>;
 
-const CategoryInfo = ({}) => {
+const CategoryForm = ({}) => {
     const { tournament } = useTournamentStore();
     const { selectedCategory, setNewCategory } = useManageCategories();
     const [form, setForm] = useState<NewCategoryForm>(emptyForm);
@@ -134,7 +134,7 @@ const CategoryInfo = ({}) => {
                     <div className="flex flex-col">
                         {/* <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span> */}
                         <h3 className="font-bold text-lg">Disciplina</h3>
-                        <div className="flex gap-1 p-2 items-baseline">
+                        <div className="flex flex-col gap-1 p-2 items-baseline">
                             <FormIconSelect 
                                 name="disciplines"
                                 value={form.discipline}
@@ -142,11 +142,12 @@ const CategoryInfo = ({}) => {
                                 onChange={(e)=> handleChange("discipline", e.target.value)} 
                             />
                             <Field className={""}>
-                                <Label className="flex group items-center p-2 gap-2 w-full font-semibold cursor-pointer transition-all ease-fluid border 
-                                    border-transparent rounded-lg hover:border-orange">
+                                <Label className="flex group items-center p-2 pl-1 gap-2 w-full font-semibold cursor-pointer transition-all ease-fluid border 
+                                    border-transparent rounded-lg">
                                     <Checkbox
                                         checked={form.is_team}
                                         name={"is_team"}
+                                        groupHover
                                         onChange={(checked) => {
                                             handleChange("is_team", checked);
                                         }}
@@ -269,4 +270,4 @@ const CategoryInfo = ({}) => {
     );
 }
 
-export default CategoryInfo;
+export default CategoryForm;
