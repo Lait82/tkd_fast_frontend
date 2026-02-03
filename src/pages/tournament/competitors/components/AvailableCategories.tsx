@@ -9,7 +9,7 @@
 // import Button from "@/components/Button";
 // import {
 //     CategoryStatus,
-//     ManageCompetitorModes,
+//     ManageModes,
 //     ManageCompetitorTypes,
 // } from "@/types/enums";
 // import EnrollableCategory from "./EnrollableCategory";
@@ -198,7 +198,7 @@
 //                         }
 //                     })
 //                 )}
-//                 {mode === ManageCompetitorModes.EDIT && (
+//                 {mode === ManageModes.EDIT && (
 //                     <div className="w-full flex justify-end mt-2">
 //                         <Button
 //                             disabled={
@@ -216,7 +216,7 @@
 //                         </Button>
 //                     </div>
 //                 )}
-//                 {mode === ManageCompetitorModes.CREATE &&
+//                 {mode === ManageModes.CREATE &&
 //                     manageType === ManageCompetitorTypes.COMPETITOR && (
 //                         <div className="w-full flex justify-end mt-2">
 //                             <Button form="create-competitor-form" type="submit">
@@ -224,7 +224,7 @@
 //                             </Button>
 //                         </div>
 //                     )}
-//                 {mode === ManageCompetitorModes.CREATE &&
+//                 {mode === ManageModes.CREATE &&
 //                     manageType === ManageCompetitorTypes.TEAM && (
 //                         <div className="w-full flex justify-end mt-2">
 //                             <Button form="create-team-form" type="submit">
@@ -252,7 +252,7 @@ import { BiCategoryAlt } from "react-icons/bi";
 import Button from "@/components/Button";
 import {
     CategoryStatus,
-    ManageCompetitorModes,
+    ManageModes,
     ManageCompetitorTypes,
 } from "@/types/enums";
 import EnrollableCategory from "./EnrollableCategory";
@@ -434,7 +434,7 @@ const AvailableCategories = () => {
                     })
                 )}
 
-                {mode === ManageCompetitorModes.EDIT && (
+                {mode === ManageModes.EDIT && (
                     <div className="w-full flex justify-end mt-2">
                         <Button
                             disabled={actionDisabled}
@@ -446,7 +446,7 @@ const AvailableCategories = () => {
                     </div>
                 )}
 
-                {mode === ManageCompetitorModes.CREATE &&
+                {mode === ManageModes.CREATE &&
                     manageType === ManageCompetitorTypes.COMPETITOR && (
                         <div className="w-full flex justify-end mt-2">
                             <Button form="create-competitor-form" type="submit">
@@ -455,7 +455,7 @@ const AvailableCategories = () => {
                         </div>
                     )}
 
-                {mode === ManageCompetitorModes.CREATE &&
+                {mode === ManageModes.CREATE &&
                     manageType === ManageCompetitorTypes.TEAM && (
                         <div className="w-full flex justify-end mt-2">
                             <Button form="create-team-form" type="submit">

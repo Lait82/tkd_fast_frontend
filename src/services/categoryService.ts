@@ -1,5 +1,4 @@
 import tkdfastProtectedApi from "@/apis/tkdfastProtectedApi";
-import { ca } from "zod/v4/locales";
 
 
 export const getAvailableCategories = async (code: string) => {
@@ -42,6 +41,22 @@ export const createCategory = async (code: string, payload: any) => {
 		throw new Error(
 			error.response?.data?.message ||
 				"Fallo al crear la categoría."
+		);
+	}
+}
+
+export const updateCategory = async (code: string, categoryUuid: string, payload: any) => {
+	try {
+		const response = await tkdfastProtectedApi.put(
+			`/organizer/tournament/${code}/categories/${categoryUuid}`,
+			payload
+		);
+		return response.data;
+	}
+	catch (error: any) {
+		throw new Error(
+			error.response?.data?.message ||
+				"Fallo al actualizar la categoría."
 		);
 	}
 }

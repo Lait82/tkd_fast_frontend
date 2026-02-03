@@ -2,6 +2,7 @@
 import { getAllCategories } from "@/services/categoryService";
 import { errorToast } from "@/services/toasts";
 import { useTournamentStore } from "@/states/useTournamentStore";
+import { ManageModes } from "@/types/enums";
 import {
     CategorySchema,
     categorySchema,
@@ -26,6 +27,9 @@ interface ManageCategoriesContextType {
     setSelectedCategory: React.Dispatch<
         React.SetStateAction<CategorySchema | null>
     >;
+    manageMode: ManageModes;
+    setManageMode: React.Dispatch<React.SetStateAction<ManageModes>>;
+    launchCategoryUpdate: () => void;
 }
 
 const ManageCategoriesContext = createContext<
@@ -42,30 +46,39 @@ export const ManageCategoriesProvider = ({
     const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
     const [selectedCategory, setSelectedCategory] = useState<CategorySchema | null>(null);
     const [newCategory, setNewCategory] = useState<NewCategorySchema|null>(null);
+    const [manageMode, setManageMode] = useState<ManageModes>(ManageModes.EDIT);
+
+    const _fetchCategories = async () => {
+        try {
+            const res = await getAllCategories(tournament.code);
+            const allCategories = categorySchema.array().parse(res);
+            setCategories(allCategories);
+            setSelectedCategory(allCategories[0])
+        } catch (error) {
+            console.error("Error al obtener torneos:", error);
+            errorToast(
+                "Ha ocurrido un error al obtener las categorías, por favor recarga la página."
+            );
+        } finally {
+            setLoadingCategories(false);
+        }
+    };
+
+    
     // Get categories on mount
     useEffect(()=>{
         let isMounted = true;
-        const fetchCategories = async () => {
-            try {
-                const res = await getAllCategories(tournament.code);
-                const allCategories = categorySchema.array().parse(res);
-                if (isMounted) setCategories(allCategories);
-                setSelectedCategory(allCategories[0])
-            } catch (error) {
-                console.error("Error al obtener torneos:", error);
-                errorToast(
-                    "Ha ocurrido un error al obtener las categorías, por favor recarga la página."
-                );
-            } finally {
-                if (isMounted) setLoadingCategories(false);
-            }
-        };
-
-        fetchCategories();
+        if(isMounted){
+            _fetchCategories();
+        }
         return () => {
             isMounted = false;
         };
     }, [tournament.code]);
+
+    const launchCategoryUpdate = () => {
+        _fetchCategories()
+    }
 
     return (
         <ManageCategoriesContext.Provider
@@ -76,7 +89,11 @@ export const ManageCategoriesProvider = ({
                 categories: categories,
                 loadingCategories: loadingCategories,
                 selectedCategory: selectedCategory,
-                setSelectedCategory:setSelectedCategory
+                setSelectedCategory:setSelectedCategory,
+                manageMode: manageMode,
+                setManageMode: setManageMode,
+                launchCategoryUpdate: launchCategoryUpdate
+
             }}
         >
             {children}

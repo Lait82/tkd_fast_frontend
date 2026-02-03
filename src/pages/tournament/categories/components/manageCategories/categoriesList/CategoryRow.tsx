@@ -3,10 +3,10 @@ import ParoJunbi from "@/components/icons/ParoJunbi";
 import ParoJunbiGroup from "@/components/icons/ParoJunbiGroup";
 import IconsCategoryName from "@/components/IconsCategoryName";
 import Tooltip from "@/components/Tooltip";
-import { Discipline, Gender } from "@/types/enums";
+import { Discipline, Gender, ManageModes } from "@/types/enums";
 import { CategorySchema } from "@/types/schemas/primitiveSchemas";
-import { buildCategoryName} from "@/utils/utils";
-import { Pause, Trash2, X } from "lucide-react";
+// import { buildCategoryName} from "@/utils/utils";
+import { Edit, Pause, Trash2, X } from "lucide-react";
 import { RiBoxingFill } from "react-icons/ri";
 import { useManageCategories } from "../ManageCategoryContext";
 import { useEffect, useState } from "react";
@@ -16,7 +16,7 @@ interface CategoryRowProps {
 }
 
 const CategoryRow = ({category} : CategoryRowProps) => {
-    const { selectedCategory, setSelectedCategory } = useManageCategories();
+    const { selectedCategory, setSelectedCategory, setManageMode } = useManageCategories();
 
     const genderColor = {
         [Gender.FEMALE]: "text-[#AD1F50]",
@@ -44,7 +44,9 @@ const CategoryRow = ({category} : CategoryRowProps) => {
         // <div className={` border-b-muted last:border-b-0 overflow-hidden ${tsf[category.gender]}`}>
         <div className={` border-b-muted last:border-b-0 overflow-hidden`}
         onClick={()=> {
-            if(!isSelected){setSelectedCategory(category);}}}>
+            if(!isSelected){setSelectedCategory(category);}
+            setManageMode(ManageModes.VIEW)
+            }}>
             {/* Description */}
             <div className={`flex rounded-md \
                 border ${isSelected ? "border-orange" : "border-transparent"} \
@@ -54,6 +56,17 @@ const CategoryRow = ({category} : CategoryRowProps) => {
                     <h2 className="font-bold text-xl ml-1"><IconsCategoryName category={category} arrowClass={genderColor[category.gender]} /></h2>
                 </div>
                 <div className="flex">
+                    <Tooltip text="Editar">
+                        <div className="group flex transition-all p-1 rounded-full hover:bg-orange-700/10"
+                            onClick={(e)=>{
+                                e.stopPropagation()
+                                setSelectedCategory(category)
+                                setManageMode(ManageModes.EDIT)
+                            }}
+                        >
+                            <Edit className="transition-all ease-fluid stroke-muted fill-transparent hover:ease-fluid cursor-pointer" />
+                        </div>
+                    </Tooltip>
                     <Tooltip text="Pausar inscripciones">
                         <div className="group flex transition-all p-1 rounded-full hover:bg-muted/10">
                         <Pause className="transition-all ease-fluid fill-transparent stroke-muted hover:ease-fluid group-hover:fill-muted cursor-pointer" />

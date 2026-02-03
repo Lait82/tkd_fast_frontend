@@ -5,7 +5,7 @@ import { getTeams } from "@/services/tournamentService";
 import { getUserCompetitors } from "@/services/userService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import {
-    ManageCompetitorModes,
+    ManageModes,
     ManageCompetitorTypes,
     Rank,
 } from "@/types/enums";
@@ -59,8 +59,8 @@ interface ManageCompetitorsContextType {
         React.SetStateAction<CompetitorSchema[]>
     >;
 
-    mode: ManageCompetitorModes;
-    setMode: (m: ManageCompetitorModes) => void;
+    mode: ManageModes;
+    setMode: (m: ManageModes) => void;
     manageType: ManageCompetitorTypes;
     setManageType: (m: ManageCompetitorTypes) => void;
     categories: CategorySchema[];
@@ -88,8 +88,8 @@ export const ManageCompetitorsProvider = ({
 }: {
     children: React.ReactNode;
 }) => {
-    const [mode, setMode] = useState<ManageCompetitorModes>(
-        ManageCompetitorModes.CREATE
+    const [mode, setMode] = useState<ManageModes>(
+        ManageModes.CREATE
     );
 
     const [manageType, setManageType] = useState<ManageCompetitorTypes>(

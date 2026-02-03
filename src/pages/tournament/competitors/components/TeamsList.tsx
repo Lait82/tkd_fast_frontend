@@ -1,5 +1,5 @@
 import { useManageCompetitors } from "./ManageCompetitorContext";
-import { ManageCompetitorModes, ManageCompetitorTypes } from "@/types/enums";
+import { ManageModes, ManageCompetitorTypes } from "@/types/enums";
 import BoxingGlovesAdd from "@/components/icons/BoxingGlovesAdd";
 
 const TeamsList = () => {
@@ -21,7 +21,7 @@ const TeamsList = () => {
                         key={team.uuid}
                         onClick={() => {
                             setTeamDraft(team);
-                            setMode(ManageCompetitorModes.EDIT);
+                            setMode(ManageModes.EDIT);
                             setManageType(ManageCompetitorTypes.TEAM);
                         }}
                     >
@@ -34,8 +34,8 @@ const TeamsList = () => {
                 className={`px-1.5 py-1 rounded-lg transition-all ease-fluid cursor-pointer justify-center items-center font-bold border border-transparent
 					 hover:border-orange`}
                 onClick={() => {
-                    if (mode === ManageCompetitorModes.EDIT)
-                        setMode(ManageCompetitorModes.CREATE);
+                    if (mode === ManageModes.EDIT)
+                        setMode(ManageModes.CREATE);
                     if (manageType === ManageCompetitorTypes.COMPETITOR)
                         setManageType(ManageCompetitorTypes.TEAM);
                     // Aca hay que gatillar un rerender de las categorias/inscripciones

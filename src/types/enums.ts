@@ -56,7 +56,7 @@ export enum TournamentActions {
 	// VIEW = "VIEW",
 }
 
-export enum ManageCompetitorModes {
+export enum ManageModes {
 	CREATE = "CREATE",
 	EDIT = "EDIT",
 	VIEW = "VIEW",

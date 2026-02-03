@@ -6,7 +6,7 @@ import {
 import dayjs from "dayjs";
 import { useManageCompetitors } from "./ManageCompetitorContext";
 import { useEffect, useState } from "react";
-import { ManageCompetitorModes, ManageCompetitorTypes } from "@/types/enums";
+import { ManageModes, ManageCompetitorTypes } from "@/types/enums";
 import { RiBoxingFill } from "react-icons/ri";
 import BoxingGlovesAdd from "@/components/icons/BoxingGlovesAdd";
 import TeamsList from "./TeamsList";
@@ -30,8 +30,8 @@ const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
 	const handleClick = (competitor: CompetitorSchema) => {
 		if (manageType !== ManageCompetitorTypes.COMPETITOR)
 			setManageType(ManageCompetitorTypes.COMPETITOR);
-		if (mode !== ManageCompetitorModes.VIEW)
-			setMode(ManageCompetitorModes.VIEW);
+		if (mode !== ManageModes.VIEW)
+			setMode(ManageModes.VIEW);
 		setCompetitorDraft(competitor);
 		setSelectedCategories([]);
 	};
@@ -109,8 +109,8 @@ const CompetitorsList = ({ maxHeight }: { maxHeight: number }) => {
 						className={`px-1 py-0.5 rounded-lg transition-all ease-fluid cursor-pointer justify-items-center items-center font-bold border-1 border-transparent
 					 hover:border-orange`}
 						onClick={() => {
-							if (mode !== ManageCompetitorModes.CREATE)
-								setMode(ManageCompetitorModes.CREATE);
+							if (mode !== ManageModes.CREATE)
+								setMode(ManageModes.CREATE);
 							if (manageType !== ManageCompetitorTypes.COMPETITOR)
 								setManageType(ManageCompetitorTypes.COMPETITOR);
 

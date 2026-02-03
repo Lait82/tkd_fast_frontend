@@ -1,22 +1,24 @@
 import { getGenderLabel } from "@/utils/utils";
 import { useManageCategories } from "./ManageCategoryContext";
-import { Discipline, Gender, Rank } from "@/types/enums";
+import { Discipline, Gender, ManageModes, Rank } from "@/types/enums";
 import { Field, Label, Radio, RadioGroup } from "@headlessui/react";
-import { useEffect, useState } from "react";
-import { TbGenderFemale, TbGenderMale } from "react-icons/tb";
+import { useEffect, useMemo, useState } from "react";
+import { TbCategoryPlus, TbGenderFemale, TbGenderMale } from "react-icons/tb";
 // import IconSelect from "@/components/IconSelect";
 import {IconSelect as FormIconSelect} from "@/components/forms/IconSelect";
 import { ALL_RANKS_OPTIONS, DISCIPLINE_OPTIONS, DISCIPLINE_TEAM_OPTIONS } from "@/constants/selectOptions";
-import { categorySchema, newCategorySchema } from "@/types/schemas/primitiveSchemas";
+import { CategorySchema, categorySchema, NewCategorySchema, newCategorySchema } from "@/types/schemas/primitiveSchemas";
 import { errorToast, successToast } from "@/services/toasts";
-import { createCategory } from "@/services/categoryService";
+import { createCategory, updateCategory } from "@/services/categoryService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import Checkbox from "@/components/forms/Checkbox";
 import FormInput from "@/components/forms/FormInput";
 import Button from "@/components/Button";
-import { error } from "console";
+import { ZodSafeParseResult } from "zod/v4";
+import Slider from "@/components/Slider";
+import { Edit } from "lucide-react";
 
-interface NewCategoryForm {
+interface CategoryForm {
     discipline: Discipline,
     is_team: boolean,
     min_rank: Rank,
@@ -28,30 +30,51 @@ interface NewCategoryForm {
     gender: Gender
 }
 
-const emptyForm: NewCategoryForm = {
-    discipline: Discipline.COMBAT,
-    is_team: false,
-    min_rank: Rank.WHITE,
-    max_rank: Rank.DAN_9,
-    min_weight: "",
-    max_weight: "",
-    min_age: "",
-    max_age: "",
-    gender: Gender.FEMALE,
-};
-type Errors = Partial<Record<keyof NewCategoryForm, string>>;
+type Errors = Partial<Record<keyof CategoryForm, string>>;
 
 const CategoryForm = ({}) => {
-    const { tournament } = useTournamentStore();
-    const { selectedCategory, setNewCategory } = useManageCategories();
-    const [form, setForm] = useState<NewCategoryForm>(emptyForm);
-
-	const [formErrors, setFormErrors] = useState<Errors>();
+    const { selectedCategory, manageMode, setManageMode, setSelectedCategory, launchCategoryUpdate } = useManageCategories();
+    const formObject: CategoryForm = {
+        discipline: selectedCategory?.discipline || Discipline.COMBAT,
+        is_team: selectedCategory?.is_team || false,
+        min_rank: selectedCategory?.min_rank || Rank.WHITE,
+        max_rank: selectedCategory?.max_rank || Rank.DAN_9,
+        min_weight: selectedCategory?.min_weight.toString() || "",
+        max_weight: selectedCategory?.max_weight.toString() || "",
+        min_age: selectedCategory?.min_age.toString() || "3",
+        max_age: selectedCategory?.max_age.toString() || "70",
+        gender: selectedCategory?.gender || Gender.FEMALE,
+    };
     
+    const { tournament } = useTournamentStore();
+    const [form, setForm] = useState<CategoryForm>(formObject);
+    const [hasInteracted, setHasInteracted] = useState<boolean>(false)
+    
+	const [formErrors, setFormErrors] = useState<Errors>({});
+    
+    // Submit buttons behaviors
+    const isWeightAndAgeComplete =
+    [form.min_weight, form.max_weight, form.min_age, form.max_age]
+        .every((val) => val !== "");
+    const zodResult = useMemo(
+        () => newCategorySchema.safeParse(form),
+        [form]
+    );
+    const isFormValid = zodResult.success
+    const enableButton = hasInteracted ? (isWeightAndAgeComplete && isFormValid) : false;
+
+    // Succesful submission behavior
+    useEffect(() => {
+    if (manageMode === ManageModes.VIEW) {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+    }, [manageMode]);
+
     const handleChange = (field_name: string, value: any) => {
-        if (formErrors  && formErrors[field_name as keyof NewCategoryForm]) {
+        if(!hasInteracted)setHasInteracted(true)
+        if (formErrors  && formErrors[field_name as keyof CategoryForm]) {
             const newFormErrors = {...formErrors};
-            delete newFormErrors[field_name as keyof NewCategoryForm];
+            delete newFormErrors[field_name as keyof CategoryForm];
             setFormErrors(newFormErrors);
         }
         setForm((prev) => ({
@@ -60,41 +83,64 @@ const CategoryForm = ({}) => {
         }));
     }
     
+    const validateForm = () => {
+        const parsingResult = newCategorySchema.safeParse({
+                ...form,
+            });
+        if (!parsingResult.success) {
+            const fieldErrors: Errors = {};
+            parsingResult.error.issues.forEach((issue) => {
+                const key = issue.path[0] as keyof CategoryForm;
+                fieldErrors[key] = issue.message;
+            });
+            setFormErrors(fieldErrors);
+            return false
+        }
+        setFormErrors({})
+        return parsingResult
+    }
+
+    const handleEditSubmit = async (result: ZodSafeParseResult<NewCategorySchema>) => {
+        if(!selectedCategory) throw new Error("No se ha seleccionado una categoría para editar");
+
+        await updateCategory(
+            tournament.code,
+            selectedCategory.uuid,
+            result.data
+        );
+        successToast("Categoría actualizada con exito");
+
+        // Side Effects de la actualización
+    }
+
+    const handleCreateSubmit = async (validationFormResult: ZodSafeParseResult<NewCategorySchema>) => {
+        const res = await createCategory(
+            tournament.code,
+            validationFormResult.data
+        );
+        const newCategory = categorySchema.parse(res)
+        successToast("Categoría actualizada con exito");
+        // Side Effects de la creación
+        setSelectedCategory(newCategory)
+        setManageMode(ManageModes.VIEW)
+    }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
             // Parseo el form
-            const result = newCategorySchema.safeParse({
-                ...form,
-            });
-
-            if (!result.success) {
-                const fieldErrors: Errors = {};
-                result.error.issues.forEach((issue) => {
-                    const key = issue.path[0] as keyof NewCategoryForm;
-                    fieldErrors[key] = issue.message;
-                });
-                setFormErrors(fieldErrors);
+            const parsingResult = validateForm();
+            if (!parsingResult)
+                {
                 errorToast("Revisá los campos");
-                console.log(fieldErrors);
-                console.log(form)
-                return;
+                return
             }
-
-            console.log("Form enviado:", form);
-            console.log("Form parseado:", result);
-            const res = await createCategory(
-                tournament.code,
-                result.data
-            );
-            // const createdCategory = categorySchema.parse(res);
-            successToast("Categoría creada con exito");
-
-            // Reset states
-            // setSelectedCategories([]);
-            // setUserCompetitors((prev) => [...prev, createdCompetitor]);
-            setForm(emptyForm);
+            
+            if(manageMode === ManageModes.EDIT) handleEditSubmit(parsingResult);
+            if(manageMode === ManageModes.CREATE) handleCreateSubmit(parsingResult);
+            launchCategoryUpdate()
+            setManageMode(ManageModes.VIEW)
         } catch (err: any) {
             errorToast(err.message);
             // setError(err.message || "Error al editar el torneo")
@@ -102,101 +148,90 @@ const CategoryForm = ({}) => {
             // setLoading(false)
         }
     };
-
+    useEffect(() => {
+        console.log(manageMode)
+    }, [manageMode])
     return (
-        <div className={`flex flex-col ${selectedCategory ? "col-span-2" : "col-span-0"} gap-3 bg-elevated p-3 rounded-lg shadow-md`}>
-
-			<div className="flex flex-col gap-2">
-				<h1 className="font-extrabold text-2xl">Administrar categoria</h1>
-                
-                <form onSubmit={handleSubmit}>
-                    {/* <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span> */}
-                    <h3 className="font-bold text-lg">Género</h3>
-                    <RadioGroup className={`flex w-full gap-2 p-2 justify-between font-semibold`} name="gender" value={form.gender} onChange={(gender)=> {
-                        console.log(gender)
-                        handleChange("gender", gender)
-                    }}>  
-                        <Radio
-                            value={Gender.MALE}
-                            className="group w-full flex items-center justify-center cursor-pointer rounded-lg p-1.5 transition focus:not-data-focus:outline-none data-checked:bg-super-elevated data-focus:outline data-focus:outline-orange-900 border border-transparent hover:border-orange data-checked:hover:border-transparent"
-                            >
-                            <TbGenderMale className="size-3 transition group-data-checked:text-orange" />
-                            <span>{getGenderLabel(Gender.MALE)}</span>
-                        </Radio>
-                        <Radio
-                            value={Gender.FEMALE}
-                            className="group w-full flex items-center justify-center cursor-pointer rounded-lg p-1.5 transition focus:not-data-focus:outline-none data-checked:bg-super-elevated data-focus:outline data-focus:outline-orange-900 border border-transparent hover:border-orange data-checked:hover:border-transparent"
+        <div className="flex flex-col gap-2">
+            <h1 className="flex gap-1 font-extrabold text-2xl">{manageMode === ManageModes.CREATE && <><TbCategoryPlus />Crear categoria </>}{manageMode === ManageModes.EDIT && <><Edit/>Editar categoria</>}</h1> 
+            
+            <form onSubmit={handleSubmit}>
+                {/* <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span> */}
+                <h3 className="font-bold text-lg">Género</h3>
+                <RadioGroup className={`flex w-full gap-2 p-2 justify-between font-semibold`} name="gender" value={form.gender} onChange={(gender)=> {
+                    console.log(gender)
+                    handleChange("gender", gender)
+                }}>  
+                    <Radio
+                        value={Gender.MALE}
+                        className="group w-full flex items-center justify-center cursor-pointer rounded-lg p-1.5 transition focus:not-data-focus:outline-none data-checked:bg-super-elevated data-focus:outline data-focus:outline-orange-900 border border-transparent hover:border-orange data-checked:hover:border-transparent"
                         >
-                            <TbGenderFemale className="size-3 transition group-data-checked:text-orange" />
-                            <span>{getGenderLabel(Gender.FEMALE)}</span>
-                        </Radio>
-                    </RadioGroup>
-                    <div className="flex flex-col">
-                        {/* <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span> */}
-                        <h3 className="font-bold text-lg">Disciplina</h3>
-                        <div className="flex flex-col gap-1 p-2 items-baseline">
-                            <FormIconSelect 
-                                name="disciplines"
-                                value={form.discipline}
-                                options={form.is_team ? DISCIPLINE_TEAM_OPTIONS : DISCIPLINE_OPTIONS}
-                                onChange={(e)=> handleChange("discipline", e.target.value)} 
-                            />
-                            <Field className={""}>
-                                <Label className="flex group items-center p-2 pl-1 gap-2 w-full font-semibold cursor-pointer transition-all ease-fluid border 
-                                    border-transparent rounded-lg">
-                                    <Checkbox
-                                        checked={form.is_team}
-                                        name={"is_team"}
-                                        groupHover
-                                        onChange={(checked) => {
-                                            handleChange("is_team", checked);
-                                        }}
-                                    />
-                                    Equipos
-                                </Label>
-                            </Field>
-                        </div>
+                        <TbGenderMale className="size-3 transition group-data-checked:text-orange" />
+                        <span>{getGenderLabel(Gender.MALE)}</span>
+                    </Radio>
+                    <Radio
+                        value={Gender.FEMALE}
+                        className="group w-full flex items-center justify-center cursor-pointer rounded-lg p-1.5 transition focus:not-data-focus:outline-none data-checked:bg-super-elevated data-focus:outline data-focus:outline-orange-900 border border-transparent hover:border-orange data-checked:hover:border-transparent"
+                    >
+                        <TbGenderFemale className="size-3 transition group-data-checked:text-orange" />
+                        <span>{getGenderLabel(Gender.FEMALE)}</span>
+                    </Radio>
+                </RadioGroup>
+                <div className="flex flex-col">
+                    {/* <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span> */}
+                    <h3 className="font-bold text-lg">Disciplina</h3>
+                    <div className="flex flex-col gap-1 p-2 items-baseline">
+                        <FormIconSelect 
+                            name="disciplines"
+                            value={form.discipline}
+                            options={form.is_team ? DISCIPLINE_TEAM_OPTIONS : DISCIPLINE_OPTIONS}
+                            onChange={(e)=> handleChange("discipline", e.target.value)} 
+                        />
+                        <Field className={""}>
+                            <Label className="flex group items-center p-2 pl-1 gap-2 w-full font-semibold cursor-pointer transition-all ease-fluid border 
+                                border-transparent rounded-lg">
+                                <Checkbox
+                                    checked={form.is_team}
+                                    name={"is_team"}
+                                    groupHover
+                                    onChange={(checked) => {
+                                        handleChange("is_team", checked);
+                                    }}
+                                />
+                                Equipos
+                            </Label>
+                        </Field>
                     </div>
-                    <div className="flex flex-col">
-                        {/* { getAgeErrors(formErrors) && <span className="col-start-2 text-xs text-red">*{getAgeErrors(formErrors)}</span>} */}
-                        <h3 className="font-bold text-lg">Edad</h3>
-                        <div className="flex flex-col gap-2 p-2">
-                            <Field>
-                                <Label htmlFor="min_age" className="flex items-center text-muted gap-1">
-                                    <FormInput
-                                        type="number"
-                                        id="min_age"
-                                        variant="primary"
-                                        value={form.min_age}
-                                        error={formErrors?.min_age}
-                                        placeholder="0"
-                                        alignment="center"
-                                        title="Desde"
-                                        name="min_age"
-                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                    /> 
-                                    Años
-                                </Label>
-                            </Field>
-                            <Field>
-                                <Label htmlFor="max_age" className="flex items-center text-muted gap-1">
-                                    <FormInput
-                                        id="max_age"
-                                        type="number"
-                                        variant="primary"
-                                        value={form.max_age}
-                                        error={formErrors?.max_age}
-                                        alignment="center"
-                                        placeholder="99"
-                                        title="Hasta"
-                                        name="max_age"
-                                        onChange={(e) => handleChange(e.target.name, e.target.value)}
-                                    /> 
-                                    Años
-                                </Label>
-                            </Field>
-                        </div>
+                </div>
+                <div className="flex flex-col">
+                    {/* { getAgeErrors(formErrors) && <span className="col-start-2 text-xs text-red">*{getAgeErrors(formErrors)}</span>} */}
+                    <h3 className="font-bold text-lg">Edad</h3>
+                    <div className="flex flex-col gap-2 p-2">
+                        <Slider 
+                            min={3} 
+                            max={70}
+                            defaultValue={[3,70]}
+                            value={[parseInt(form.min_age), parseInt(form.max_age)]}
+                            minStepsBetweenThumbs={1}
+                            step={1}
+                            withValueLabels
+                            onValueChange={(values) => {
+                                handleChange("min_age", values[0].toString());
+                                handleChange("max_age", values[1].toString());
+                            }}
+                        />
+                        {/* <div className="flex gap-1 p-1">
+                            <div className="flex items-center text-muted gap-1">
+                                Desde <span className="text-neutrallight font-bold text-xl">{selectedCategory.min_weight.toFixed(1)}</span>
+                            </div>
+                            <div className="flex items-center text-muted gap-1">
+                                hasta <span className="text-neutrallight font-bold text-xl">{selectedCategory.max_weight.toFixed(1)}</span> Kgs
+                            </div>
+                        </div> */}
                     </div>
+                </div>
+                {/* LO PROXIMO QUE HAY QUE HACER ES ACOMODAR LOS TIPADOS PARA QUE COINCIDA CON EL PESO OPCIONAL EN LA CATEGORIA DE FORMAS */}
+                {form.discipline !== Discipline.PATTERNS &&
                     <div className="flex flex-col">
                         <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span>
                         <h3 className="font-bold text-lg">Peso</h3>
@@ -237,35 +272,45 @@ const CategoryForm = ({}) => {
                             </Field>
                         </div>
                     </div>
-                    <div className="flex flex-col">
-                        <h3 className="font-bold text-lg">Graduacion</h3>
-                        <span className="col-start-2 text-xs text-red">{formErrors?.max_rank ? `* ${formErrors?.max_rank}` : "\u00A0"}</span>
-                        <div className="flex gap-2 justify-between p-2">
-                            <span className="flex flex-col text-muted w-full gap-1">
-                                Desde
+                }
+                <div className="flex flex-col">
+                    <h3 className="font-bold text-lg">Graduacion</h3>
+                    <span className="col-start-2 text-xs text-red">{formErrors?.max_rank ? `* ${formErrors?.max_rank}` : "\u00A0"}</span>
+                    <div className="flex gap-2 justify-between p-2">
+                        <span className="flex flex-col text-muted w-full gap-1">
+                            Desde
+                        <FormIconSelect 
+                            name="min_rank"
+                            value={form.min_rank}
+                            options={ALL_RANKS_OPTIONS}
+                            onChange={(e)=> handleChange("min_rank", e.target.value)} 
+                        />
+                        </span>
+                        <span className="flex flex-col text-muted w-full gap-1">
+                            Hasta
                             <FormIconSelect 
-                                name="min_rank"
-                                value={form.min_rank}
+                                name="max_rank"
+                                value={form.max_rank}
                                 options={ALL_RANKS_OPTIONS}
-                                onChange={(e)=> handleChange("min_rank", e.target.value)} 
+                                onChange={(e)=> handleChange("max_rank", e.target.value)} 
                             />
-                            </span>
-                            <span className="flex flex-col text-muted w-full gap-1">
-                                Hasta
-                                <FormIconSelect 
-                                    name="max_rank"
-                                    value={form.max_rank}
-                                    options={ALL_RANKS_OPTIONS}
-                                    onChange={(e)=> handleChange("max_rank", e.target.value)} 
-                                />
-                            </span>
-                        </div>
+                        </span>
                     </div>
-                    <Button className="w-full mt-3" type="submit" disabled={[form.min_weight, form.max_weight, form.min_age, form.max_age].some((val) => val === "")}>
-                        Crear categoría
+                </div>
+                <div className="flex gap-2 justify-between">
+                    <Button variant="secondary" onClick={()=>{setManageMode(ManageModes.VIEW)}}>
+                        <div className="flex gap-1">
+                            <span className="text-orange">
+                                {"<<<"}
+                            </span>
+                            Atras
+                        </div>
                     </Button>
-                </form>
-            </div>
+                    <Button className="w-fit" type="submit" disabled={!enableButton}>
+                        {manageMode === ManageModes.CREATE ? "Crear categoría" : "Actualizar"}
+                    </Button>
+                </div>
+            </form>
         </div>
     );
 }

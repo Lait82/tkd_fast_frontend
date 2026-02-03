@@ -2,7 +2,7 @@ import ViewCompetitor from "./ManageCompetitor/ViewCompetitor/ViewCompetitor";
 import CompetitorsList from "./CompetitorsList";
 import CreateCompetitor from "./CreateCompetitor";
 import { useManageCompetitors } from "./ManageCompetitorContext";
-import { ManageCompetitorModes, ManageCompetitorTypes } from "@/types/enums";
+import { ManageModes, ManageCompetitorTypes } from "@/types/enums";
 import AvailableCategories from "./AvailableCategories";
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import CreateTeam from "./ManageTeam/CreateTeam";
@@ -37,14 +37,14 @@ const ManageCompetitors = () => {
 
 	const mainComponentMap = {
 		[ManageCompetitorTypes.COMPETITOR]: {
-			[ManageCompetitorModes.CREATE]: CreateCompetitor,
-			[ManageCompetitorModes.EDIT]: EditCompetitor,
-			[ManageCompetitorModes.VIEW]: ViewCompetitor,
+			[ManageModes.CREATE]: CreateCompetitor,
+			[ManageModes.EDIT]: EditCompetitor,
+			[ManageModes.VIEW]: ViewCompetitor,
 		},
 		[ManageCompetitorTypes.TEAM]: {
-			[ManageCompetitorModes.CREATE]: CreateTeam,
-			[ManageCompetitorModes.EDIT]: EditTeam,
-			[ManageCompetitorModes.VIEW]: ViewTeam,
+			[ManageModes.CREATE]: CreateTeam,
+			[ManageModes.EDIT]: EditTeam,
+			[ManageModes.VIEW]: ViewTeam,
 		},
 	};
 
@@ -55,14 +55,14 @@ const ManageCompetitors = () => {
 	let showAvailableCategories = true;
 	useEffect(() => {
 		if (manageType === ManageCompetitorTypes.COMPETITOR) {
-			if (mode === ManageCompetitorModes.EDIT) {
+			if (mode === ManageModes.EDIT) {
 				if (!competitorDraft.uuid) {
 					showAvailableCategories = false;
 				}
 			}
 		}
 		if (manageType === ManageCompetitorTypes.TEAM) {
-			if (mode === ManageCompetitorModes.EDIT) {
+			if (mode === ManageModes.EDIT) {
 				if (!teamDraft.uuid) {
 					showAvailableCategories = false;
 				}

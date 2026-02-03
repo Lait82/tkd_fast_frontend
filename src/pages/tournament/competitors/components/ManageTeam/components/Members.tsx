@@ -10,7 +10,7 @@ import {
 } from "@/types/schemas/teamServiceSchemas";
 import { addCompetitorToTeam } from "@/services/teamService";
 import { errorToast, successToast } from "@/services/toasts";
-import { ManageCompetitorModes } from "@/types/enums";
+import { ManageModes } from "@/types/enums";
 
 const Members = () => {
     const {
@@ -111,7 +111,7 @@ const Members = () => {
             </div>
             {selectedMembers.length && //Si hay miembros
             selectedMembers.every((sm) => sm.uuid.length > 10) && // Todos estan seleccionados
-            mode !== ManageCompetitorModes.CREATE ? (
+            mode !== ManageModes.CREATE ? (
                 <div className="flex w-full justify-end">
                     <Button
                         onClick={handleAddCompetitors}

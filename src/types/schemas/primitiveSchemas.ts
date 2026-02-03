@@ -1,6 +1,6 @@
-import { optional, z } from "zod/v4";
+import { z } from "zod/v4";
 import { Discipline, Gender, Rank, Role } from "../enums";
-import dayjs, { Dayjs } from "dayjs";
+// import dayjs, { Dayjs } from "dayjs";
 import { getRankOrderNumber } from "@/utils/utils";
 
 export const userSchema = z.object({

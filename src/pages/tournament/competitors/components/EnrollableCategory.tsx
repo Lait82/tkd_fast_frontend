@@ -2,21 +2,21 @@ import { CategorySchema } from "@/types/schemas/primitiveSchemas";
 import { useManageCompetitors } from "./ManageCompetitorContext";
 import { Checkbox, Field, Label } from "@headlessui/react";
 import IconsCategoryName from "@/components/IconsCategoryName";
-import { ManageCompetitorModes } from "@/types/enums";
+import { ManageModes } from "@/types/enums";
 
 const EnrollableCategory = ({ category }: { category: CategorySchema }) => {
 	const { mode, setSelectedCategories, selectedCategories } =
 		useManageCompetitors();
 
 	const handleToggle = (categoryUuid: string) => {
-		if (mode === ManageCompetitorModes.CREATE) {
+		if (mode === ManageModes.CREATE) {
 			const currentCategories: string[] = Array.from(selectedCategories);
 			const updated = currentCategories.includes(categoryUuid)
 				? currentCategories.filter((uuid) => uuid !== categoryUuid)
 				: [...currentCategories, categoryUuid];
 
 			setSelectedCategories(updated);
-		} else if (mode === ManageCompetitorModes.EDIT) {
+		} else if (mode === ManageModes.EDIT) {
 			const currentCategories: string[] = Array.from(selectedCategories);
 
 			const updated = currentCategories.includes(categoryUuid) // Si la category ya esta incluida
