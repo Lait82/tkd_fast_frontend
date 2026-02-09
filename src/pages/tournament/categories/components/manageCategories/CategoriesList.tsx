@@ -9,9 +9,13 @@ const CategoriesList = ({}) => {
         <>
             <h1 className="font-extrabold text-2xl">Lista de Categorias</h1>
             <div className="flex flex-col gap-2">
-                {categories.map((category, i) => (
-                    <CategoryRow category={category} key={`single-category-${i}`} />
-                ))}
+                {categories.length 
+                    ? categories.map((category, i) => (
+                        <CategoryRow category={category} key={`single-category-${i}`} />
+                    ))
+
+                    : <span className="p-1.5 flex items-center italic"> No existen categorias creadas para este torneo todavia...</span>
+                }
                 <div className="flex items-center cursor-pointer justify-start w-full gap-1 capitalize text-muted italic transition-all hover:border-orange border border-transparent rounded-lg p-1"
                     onClick={()=>{
                         console.log(manageMode)
@@ -27,4 +31,4 @@ const CategoriesList = ({}) => {
     );
 }
 
-export default CategoriesList;
+export default CategoriesList; DESPUES DE CREAR UNA CATEGORIA EL FORM NO CAMBIA, SE QUEDA EN EDIT Y SI CLICKEAS RAPIDO EN CREAR CATEGORIA SE QUEDA EL FORM DE EDIT PORQUE PATTERNS NO LLEVA PESO.

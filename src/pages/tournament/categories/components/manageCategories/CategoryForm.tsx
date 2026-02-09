@@ -17,6 +17,8 @@ import Button from "@/components/Button";
 import { ZodSafeParseResult } from "zod/v4";
 import Slider from "@/components/Slider";
 import { Edit } from "lucide-react";
+import EditModal from "./EditModal";
+import { CategoryModalTypes } from "../../types";
 
 interface CategoryForm {
     discipline: Discipline,
@@ -33,7 +35,7 @@ interface CategoryForm {
 type Errors = Partial<Record<keyof CategoryForm, string>>;
 
 const CategoryForm = ({}) => {
-    const { selectedCategory, manageMode, setManageMode, setSelectedCategory, launchCategoryUpdate } = useManageCategories();
+    const { selectedCategory, manageMode, setManageMode, setSelectedCategory, launchCategoryUpdate, openModal } = useManageCategories();
     const formObject: CategoryForm = {
         discipline: selectedCategory?.discipline || Discipline.COMBAT,
         is_team: selectedCategory?.is_team || false,
@@ -129,6 +131,7 @@ const CategoryForm = ({}) => {
         e.preventDefault();
 
         try {
+            console.log(e)
             // Parseo el form
             const parsingResult = validateForm();
             if (!parsingResult)
@@ -148,18 +151,16 @@ const CategoryForm = ({}) => {
             // setLoading(false)
         }
     };
-    useEffect(() => {
-        console.log(manageMode)
-    }, [manageMode])
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2">            
+            <EditModal />
             <h1 className="flex gap-1 font-extrabold text-2xl">{manageMode === ManageModes.CREATE && <><TbCategoryPlus />Crear categoria </>}{manageMode === ManageModes.EDIT && <><Edit/>Editar categoria</>}</h1> 
             
-            <form onSubmit={handleSubmit}>
+            <form id="edit-category-form" onSubmit={handleSubmit}>
+
                 {/* <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span> */}
                 <h3 className="font-bold text-lg">Género</h3>
                 <RadioGroup className={`flex w-full gap-2 p-2 justify-between font-semibold`} name="gender" value={form.gender} onChange={(gender)=> {
-                    console.log(gender)
                     handleChange("gender", gender)
                 }}>  
                     <Radio
@@ -298,15 +299,18 @@ const CategoryForm = ({}) => {
                     </div>
                 </div>
                 <div className="flex gap-2 justify-between">
-                    <Button variant="secondary" onClick={()=>{setManageMode(ManageModes.VIEW)}}>
+                    
+                    {selectedCategory && <Button variant="secondary" onClick={()=>{
+                        setManageMode(ManageModes.VIEW)
+                    }}>
                         <div className="flex gap-1">
-                            <span className="text-orange">
-                                {"<<<"}
-                            </span>
-                            Atras
+                            Ver Info
                         </div>
-                    </Button>
-                    <Button className="w-fit" type="submit" disabled={!enableButton}>
+                    </Button>}
+                    <Button className="w-fit" disabled={!enableButton}
+                        type={manageMode === ManageModes.CREATE ? "submit" : "button"}
+                        onClick={() => openModal(CategoryModalTypes.EDIT)}
+                    >
                         {manageMode === ManageModes.CREATE ? "Crear categoría" : "Actualizar"}
                     </Button>
                 </div>

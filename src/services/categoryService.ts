@@ -60,3 +60,17 @@ export const updateCategory = async (code: string, categoryUuid: string, payload
 		);
 	}
 }
+
+export const deleteCategory = async (code: string, categoryUuid: string) => {
+	try {
+		const response = await tkdfastProtectedApi.delete(
+			`/organizer/tournament/${code}/categories/${categoryUuid}`);
+		return response.data;
+	}
+	catch (error: any) {
+		throw new Error(
+			error.response?.data?.message ||
+				"Fallo al eliminar la categoría."
+		);
+	}
+}

@@ -15,6 +15,7 @@ import React, {
     useEffect,
     useState,
 } from "react";
+import { CategoryModalTypes } from "../../types";
 
 
 interface ManageCategoriesContextType {
@@ -30,6 +31,10 @@ interface ManageCategoriesContextType {
     manageMode: ManageModes;
     setManageMode: React.Dispatch<React.SetStateAction<ManageModes>>;
     launchCategoryUpdate: () => void;
+    isDeleteModalOpen: boolean;
+    isEditModalOpen: boolean;
+    openModal: (modalType: CategoryModalTypes) => void;
+    closeModal: (modalType: CategoryModalTypes) => void;
 }
 
 const ManageCategoriesContext = createContext<
@@ -47,13 +52,27 @@ export const ManageCategoriesProvider = ({
     const [selectedCategory, setSelectedCategory] = useState<CategorySchema | null>(null);
     const [newCategory, setNewCategory] = useState<NewCategorySchema|null>(null);
     const [manageMode, setManageMode] = useState<ManageModes>(ManageModes.EDIT);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
+    const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false)
+    
+    const openModal = (modalType: CategoryModalTypes) => {
+        if(modalType === CategoryModalTypes.DELETE) setIsDeleteModalOpen(true)
+        if(modalType === CategoryModalTypes.EDIT) setIsEditModalOpen(true)
+    }
+    const closeModal = (modalType: CategoryModalTypes) => {
+        if(modalType === CategoryModalTypes.DELETE) setIsDeleteModalOpen(false)
+        if(modalType === CategoryModalTypes.EDIT) setIsEditModalOpen(false)
+    } 
 
     const _fetchCategories = async () => {
         try {
             const res = await getAllCategories(tournament.code);
             const allCategories = categorySchema.array().parse(res);
             setCategories(allCategories);
-            setSelectedCategory(allCategories[0])
+            if (selectedCategory) {
+                const updatedSelected = allCategories.find(cat => cat.uuid === selectedCategory.uuid) ?? null;
+                setSelectedCategory(updatedSelected);
+            }
         } catch (error) {
             console.error("Error al obtener torneos:", error);
             errorToast(
@@ -92,8 +111,11 @@ export const ManageCategoriesProvider = ({
                 setSelectedCategory:setSelectedCategory,
                 manageMode: manageMode,
                 setManageMode: setManageMode,
-                launchCategoryUpdate: launchCategoryUpdate
-
+                launchCategoryUpdate: launchCategoryUpdate,
+                isDeleteModalOpen:isDeleteModalOpen,
+                isEditModalOpen: isEditModalOpen,
+                openModal: openModal,
+                closeModal: closeModal,
             }}
         >
             {children}

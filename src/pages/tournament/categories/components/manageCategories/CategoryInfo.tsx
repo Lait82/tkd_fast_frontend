@@ -8,16 +8,17 @@ import DisciplineBadge from "@/components/DisciplineBadge";
 import Slider from "@/components/Slider";
 import { Edit, Trash2 } from "lucide-react";
 import { FaEye } from "react-icons/fa";
+import { CategoryModalTypes } from "../../types";
 
 
 const CategoryInfo = ({}) => {
-    const { selectedCategory, setManageMode } = useManageCategories();
+    const { selectedCategory, setManageMode, openModal } = useManageCategories();
     // SelectedCategory esta shortcircuiting para que no joda el linter
     return (selectedCategory && <>
         <div className="flex flex-col gap-2">
             <h1 className="flex gap-1 font-extrabold text-2xl"><FaEye />Información de la categoría</h1>
             
-            <h3 className="font-bold text-lg">Género</h3>
+            <h3 className="font-bold text-lg text-muted">Género</h3>
             <div className={`flex w-full gap-2 p-0 px-2 justify-between font-semibold`} >  
                 <div className={`group w-full flex items-center justify-center rounded-lg p-1.5 ${selectedCategory.gender === Gender.MALE ? "bg-super-elevated" : ""}`}>
                     <TbGenderMale className={`size-3 transition ${selectedCategory.gender === Gender.MALE ? "text-orange" : "text-muted"}`} />
@@ -29,13 +30,13 @@ const CategoryInfo = ({}) => {
                 </div>
             </div>
             <div className="flex flex-col">
-                <h3 className="font-bold text-lg">Disciplina</h3>
+                <h3 className="font-bold text-lg text-muted">Disciplina</h3>
                 <div className="flex gap-1 p-1 pb-0 justify-center">
                     <DisciplineBadge discipline={selectedCategory.discipline} isTeam={selectedCategory.is_team} />
                 </div>
             </div>
             <div className="flex flex-col gap-1">
-                <h3 className="font-bold text-lg">Edad</h3>
+                <h3 className="font-bold text-lg text-muted">Edad</h3>
                 <Slider 
                     min={0} 
                     max={90}
@@ -45,7 +46,7 @@ const CategoryInfo = ({}) => {
                 />
             </div>
             <div className="flex flex-col gap-1">
-                <h3 className="font-bold text-lg">Peso</h3>
+                <h3 className="font-bold text-lg text-muted">Peso</h3>
                 
                 <Slider 
                     min={40} 
@@ -64,7 +65,7 @@ const CategoryInfo = ({}) => {
             </div>
         </div>
         <div className="flex flex-col">
-            <h3 className="font-bold text-lg">Graduacion</h3>
+            <h3 className="font-bold text-lg text-muted">Graduacion</h3>
             <div className="flex gap-2 justify-between p-2">
                 <span className="flex flex-col text-muted w-full gap-1">
                     Desde
@@ -83,12 +84,23 @@ const CategoryInfo = ({}) => {
             </div>
         </div>
         <div className="grid grid-cols-2 justify-between gap-2 items-end">
-            <Button variant="secondary" type="submit" iconLeft={<Trash2 className="transition-all ease-fluid fill-transparent stroke-red-700 hover:ease-fluid group-hover:fill-red-700 cursor-pointer" />} >
+            <Button 
+                variant="secondary"
+                type="submit" 
+                onClick={()=>{
+                    openModal(CategoryModalTypes.DELETE)
+                }}
+                iconLeft={<Trash2 className="transition-all ease-fluid fill-transparent stroke-red-700 hover:ease-fluid group-hover:fill-red-700 cursor-pointer" />} 
+            >
                 Eliminar
             </Button>
-            <Button type="button" iconLeft={<Edit className="transition-all" onClick={()=>{
-                setManageMode(ManageModes.EDIT);
-            }} />} >
+            <Button 
+                type="button"
+                onClick={()=>{
+                    setManageMode(ManageModes.EDIT);
+                }} 
+                iconLeft={<Edit className="transition-all" />}
+            >
                 Editar
             </Button>
         </div>        

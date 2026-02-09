@@ -47,7 +47,6 @@ const Modal = ({ isOpen, closeModal, title, children }: ModalProps) => {
 									className="text-2xl gap-1 font-extrabold text-neutrallight flex w-full justify-center"
 								>
 									{title}
-									ESTE ES EL MODAL COMPONENTE
 								</DialogTitle>
 								<div className="mt-1">{children}</div>
 							</DialogPanel>

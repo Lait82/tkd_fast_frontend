@@ -20,6 +20,7 @@ const Button: React.FC<ButtonProps> = ({
 	className = "",
 	disabled = false,
 	loading = false,
+	type = "submit",
 	...props
 }) => {
 	const primaryClasses =
@@ -43,7 +44,7 @@ const Button: React.FC<ButtonProps> = ({
 	};
 	return (
 		<button
-			type="submit"
+			type={type}
 			{...props}
 			style={style}
 			className={`px-1 py-0.5 rounded-full font-extrabold transition-all ease-fluid border-2 border-neutrallight inline-flex items-center decoration-0 justify-center 

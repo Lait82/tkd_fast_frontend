@@ -10,13 +10,14 @@ import { Edit, Pause, Trash2, X } from "lucide-react";
 import { RiBoxingFill } from "react-icons/ri";
 import { useManageCategories } from "../ManageCategoryContext";
 import { useEffect, useState } from "react";
+import { CategoryModalTypes } from "../../../types";
 
 interface CategoryRowProps {
     category: CategorySchema;
 }
 
 const CategoryRow = ({category} : CategoryRowProps) => {
-    const { selectedCategory, setSelectedCategory, setManageMode } = useManageCategories();
+    const { selectedCategory, setSelectedCategory, setManageMode, openModal } = useManageCategories();
 
     const genderColor = {
         [Gender.FEMALE]: "text-[#AD1F50]",
@@ -73,7 +74,12 @@ const CategoryRow = ({category} : CategoryRowProps) => {
                     </div>
                     </Tooltip>
                     <Tooltip text="Eliminar categoría">
-                        <div className="group flex transition-all p-1 rounded-full hover:bg-red-700/10">
+                        <div
+                             onClick={(e)=>{
+                                // e.stopPropagation()
+                                openModal(CategoryModalTypes.DELETE)
+                            }}
+                            className="group flex transition-all p-1 rounded-full hover:bg-red-700/10">
                             <Trash2 className="transition-all ease-fluid fill-transparent stroke-red-700 hover:ease-fluid group-hover:fill-red-700 cursor-pointer" />
                         </div>
                     </Tooltip>
