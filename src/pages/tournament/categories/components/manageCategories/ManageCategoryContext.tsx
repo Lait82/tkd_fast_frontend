@@ -26,6 +26,10 @@ interface ManageCategoriesContextType {
     loadingCategories: boolean;
     selectedCategory: CategorySchema | null;
     setSelectedCategory: React.Dispatch<
+    React.SetStateAction<CategorySchema | null>
+    >;
+    categoryToDelete: CategorySchema | null;
+    setCategoryToDelete: React.Dispatch<
         React.SetStateAction<CategorySchema | null>
     >;
     manageMode: ManageModes;
@@ -50,6 +54,7 @@ export const ManageCategoriesProvider = ({
     const [categories, setCategories] = useState<CategorySchema[]>([]);
     const [loadingCategories, setLoadingCategories] = useState<boolean>(false);
     const [selectedCategory, setSelectedCategory] = useState<CategorySchema | null>(null);
+    const [categoryToDelete, setCategoryToDelete] = useState<CategorySchema | null>(null);
     const [newCategory, setNewCategory] = useState<NewCategorySchema|null>(null);
     const [manageMode, setManageMode] = useState<ManageModes>(ManageModes.EDIT);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false)
@@ -116,6 +121,8 @@ export const ManageCategoriesProvider = ({
                 isEditModalOpen: isEditModalOpen,
                 openModal: openModal,
                 closeModal: closeModal,
+                categoryToDelete: categoryToDelete,
+                setCategoryToDelete: setCategoryToDelete
             }}
         >
             {children}

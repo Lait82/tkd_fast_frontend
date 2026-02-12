@@ -31,4 +31,4 @@ const CategoriesList = ({}) => {
     );
 }
 
-export default CategoriesList; DESPUES DE CREAR UNA CATEGORIA EL FORM NO CAMBIA, SE QUEDA EN EDIT Y SI CLICKEAS RAPIDO EN CREAR CATEGORIA SE QUEDA EL FORM DE EDIT PORQUE PATTERNS NO LLEVA PESO.
+export default CategoriesList;

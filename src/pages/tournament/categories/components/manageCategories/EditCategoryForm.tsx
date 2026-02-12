@@ -7,9 +7,9 @@ import { TbCategoryPlus, TbGenderFemale, TbGenderMale } from "react-icons/tb";
 // import IconSelect from "@/components/IconSelect";
 import {IconSelect as FormIconSelect} from "@/components/forms/IconSelect";
 import { ALL_RANKS_OPTIONS, DISCIPLINE_OPTIONS, DISCIPLINE_TEAM_OPTIONS } from "@/constants/selectOptions";
-import { CategorySchema, categorySchema, NewCategorySchema, newCategorySchema } from "@/types/schemas/primitiveSchemas";
+import { EditCategorySchema, editCategorySchema } from "@/types/schemas/primitiveSchemas";
 import { errorToast, successToast } from "@/services/toasts";
-import { createCategory, updateCategory } from "@/services/categoryService";
+import { updateCategory } from "@/services/categoryService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import Checkbox from "@/components/forms/Checkbox";
 import FormInput from "@/components/forms/FormInput";
@@ -20,7 +20,7 @@ import { Edit } from "lucide-react";
 import EditModal from "./EditModal";
 import { CategoryModalTypes } from "../../types";
 
-interface CategoryForm {
+interface EditCategoryFormT {
     discipline: Discipline,
     is_team: boolean,
     min_rank: Rank,
@@ -32,67 +32,108 @@ interface CategoryForm {
     gender: Gender
 }
 
-type Errors = Partial<Record<keyof CategoryForm, string>>;
+type Errors = Partial<Record<keyof EditCategoryFormT, string>>;
 
-const CategoryForm = ({}) => {
-    const { selectedCategory, manageMode, setManageMode, setSelectedCategory, launchCategoryUpdate, openModal } = useManageCategories();
-    const formObject: CategoryForm = {
+const EditCategoryForm = ({}) => {
+    const { selectedCategory, manageMode, setManageMode, launchCategoryUpdate, openModal } = useManageCategories();
+    const formObject: EditCategoryFormT = {
         discipline: selectedCategory?.discipline || Discipline.COMBAT,
         is_team: selectedCategory?.is_team || false,
         min_rank: selectedCategory?.min_rank || Rank.WHITE,
         max_rank: selectedCategory?.max_rank || Rank.DAN_9,
-        min_weight: selectedCategory?.min_weight.toString() || "",
-        max_weight: selectedCategory?.max_weight.toString() || "",
+        min_weight: selectedCategory?.min_weight?.toString() || "",
+        max_weight: selectedCategory?.max_weight?.toString() || "",
         min_age: selectedCategory?.min_age.toString() || "3",
         max_age: selectedCategory?.max_age.toString() || "70",
         gender: selectedCategory?.gender || Gender.FEMALE,
     };
     
     const { tournament } = useTournamentStore();
-    const [form, setForm] = useState<CategoryForm>(formObject);
+    const [form, setForm] = useState<EditCategoryFormT>(formObject);
     const [hasInteracted, setHasInteracted] = useState<boolean>(false)
     
 	const [formErrors, setFormErrors] = useState<Errors>({});
     
     // Submit buttons behaviors
-    const isWeightAndAgeComplete =
-    [form.min_weight, form.max_weight, form.min_age, form.max_age]
+    const isAgeComplete =
+    [form.min_age, form.max_age]
         .every((val) => val !== "");
+
     const zodResult = useMemo(
-        () => newCategorySchema.safeParse(form),
+        () => editCategorySchema.safeParse(form),
         [form]
     );
     const isFormValid = zodResult.success
-    const enableButton = hasInteracted ? (isWeightAndAgeComplete && isFormValid) : false;
+    const enableButton = hasInteracted ? (isAgeComplete && isFormValid) : false;
 
-    // Succesful submission behavior
-    useEffect(() => {
-    if (manageMode === ManageModes.VIEW) {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    }
-    }, [manageMode]);
+    useEffect(()=> {
+        setForm({
+            discipline: selectedCategory?.discipline || Discipline.COMBAT,
+            is_team: selectedCategory?.is_team || false,
+            min_rank: selectedCategory?.min_rank || Rank.WHITE,
+            max_rank: selectedCategory?.max_rank || Rank.DAN_9,
+            min_weight: selectedCategory?.min_weight?.toString() || "",
+            max_weight: selectedCategory?.max_weight?.toString() || "",
+            min_age: selectedCategory?.min_age.toString() || "3",
+            max_age: selectedCategory?.max_age.toString() || "70",
+            gender: selectedCategory?.gender || Gender.FEMALE,
+        })
+    },[selectedCategory])
 
-    const handleChange = (field_name: string, value: any) => {
-        if(!hasInteracted)setHasInteracted(true)
-        if (formErrors  && formErrors[field_name as keyof CategoryForm]) {
-            const newFormErrors = {...formErrors};
-            delete newFormErrors[field_name as keyof CategoryForm];
-            setFormErrors(newFormErrors);
+    function parseFormAndGetErrors(form: EditCategoryFormT): Errors
+    {
+        const parsingResult = editCategorySchema.safeParse({
+                ...form,
+            });
+        console.log(parsingResult)
+        const fieldErrors: Errors = {};
+        if (!parsingResult.success) {
+            parsingResult.error.issues.forEach((issue) => {
+                const key = issue.path[0] as keyof EditCategoryFormT;
+                fieldErrors[key] = issue.message;
+            });
         }
+        return fieldErrors
+    }
+
+    const handleChange = (fieldName: string, value: any) => {
+        if(!hasInteracted)setHasInteracted(true)
+        const rankFields = ['min_rank', 'max_rank']
+        const isRankField = rankFields.some((rankField) => fieldName === rankField )
+        const fieldsToDelete = isRankField ? rankFields : [fieldName]
+
+        // Deletes errors when user interacts with the erroring form.
+        for(const ftd of fieldsToDelete){
+            if (formErrors  && formErrors[ftd as keyof EditCategoryFormT]) {
+                const newFormErrors = {...formErrors};
+                    delete newFormErrors[ftd as keyof EditCategoryFormT];
+                    setFormErrors(newFormErrors);
+            }
+        }
+
+        // If it is a rank field shows the error.
+        if(isRankField){
+            const errors = parseFormAndGetErrors({...form, [fieldName]: value})
+            const {min_rank, max_rank} = errors;
+            if(min_rank || max_rank){
+                setFormErrors({min_rank, max_rank});
+            }
+        }
+
         setForm((prev) => ({
             ...prev,
-            [field_name]: value,
+            [fieldName]: value,
         }));
     }
     
     const validateForm = () => {
-        const parsingResult = newCategorySchema.safeParse({
+        const parsingResult = editCategorySchema.safeParse({
                 ...form,
             });
         if (!parsingResult.success) {
             const fieldErrors: Errors = {};
             parsingResult.error.issues.forEach((issue) => {
-                const key = issue.path[0] as keyof CategoryForm;
+                const key = issue.path[0] as keyof EditCategoryFormT;
                 fieldErrors[key] = issue.message;
             });
             setFormErrors(fieldErrors);
@@ -102,7 +143,7 @@ const CategoryForm = ({}) => {
         return parsingResult
     }
 
-    const handleEditSubmit = async (result: ZodSafeParseResult<NewCategorySchema>) => {
+    const handleEditSubmit = async (result: ZodSafeParseResult<EditCategorySchema>) => {
         if(!selectedCategory) throw new Error("No se ha seleccionado una categoría para editar");
 
         await updateCategory(
@@ -113,18 +154,8 @@ const CategoryForm = ({}) => {
         successToast("Categoría actualizada con exito");
 
         // Side Effects de la actualización
-    }
+        window.scrollTo({ top: 0, behavior: "smooth" });
 
-    const handleCreateSubmit = async (validationFormResult: ZodSafeParseResult<NewCategorySchema>) => {
-        const res = await createCategory(
-            tournament.code,
-            validationFormResult.data
-        );
-        const newCategory = categorySchema.parse(res)
-        successToast("Categoría actualizada con exito");
-        // Side Effects de la creación
-        setSelectedCategory(newCategory)
-        setManageMode(ManageModes.VIEW)
     }
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -140,15 +171,11 @@ const CategoryForm = ({}) => {
                 return
             }
             
-            if(manageMode === ManageModes.EDIT) handleEditSubmit(parsingResult);
-            if(manageMode === ManageModes.CREATE) handleCreateSubmit(parsingResult);
+            handleEditSubmit(parsingResult);
             launchCategoryUpdate()
             setManageMode(ManageModes.VIEW)
         } catch (err: any) {
             errorToast(err.message);
-            // setError(err.message || "Error al editar el torneo")
-        } finally {
-            // setLoading(false)
         }
     };
     return (
@@ -231,8 +258,7 @@ const CategoryForm = ({}) => {
                         </div> */}
                     </div>
                 </div>
-                {/* LO PROXIMO QUE HAY QUE HACER ES ACOMODAR LOS TIPADOS PARA QUE COINCIDA CON EL PESO OPCIONAL EN LA CATEGORIA DE FORMAS */}
-                {form.discipline !== Discipline.PATTERNS &&
+                {form.discipline === Discipline.COMBAT &&
                     <div className="flex flex-col">
                         <span className="col-start-2 text-xs text-red">{formErrors?.min_rank && formErrors.min_rank}</span>
                         <h3 className="font-bold text-lg">Peso</h3>
@@ -276,7 +302,7 @@ const CategoryForm = ({}) => {
                 }
                 <div className="flex flex-col">
                     <h3 className="font-bold text-lg">Graduacion</h3>
-                    <span className="col-start-2 text-xs text-red">{formErrors?.max_rank ? `* ${formErrors?.max_rank}` : "\u00A0"}</span>
+                    <span className="col-start-2 text-xs text-red">{(formErrors?.max_rank || formErrors?.min_rank) ? `* ${[formErrors?.max_rank, formErrors?.min_rank][0]}` : "\u00A0"}</span>
                     <div className="flex gap-2 justify-between p-2">
                         <span className="flex flex-col text-muted w-full gap-1">
                             Desde
@@ -308,10 +334,10 @@ const CategoryForm = ({}) => {
                         </div>
                     </Button>}
                     <Button className="w-fit" disabled={!enableButton}
-                        type={manageMode === ManageModes.CREATE ? "submit" : "button"}
+                        type="button"
                         onClick={() => openModal(CategoryModalTypes.EDIT)}
                     >
-                        {manageMode === ManageModes.CREATE ? "Crear categoría" : "Actualizar"}
+                        Actualizar
                     </Button>
                 </div>
             </form>
@@ -319,4 +345,4 @@ const CategoryForm = ({}) => {
     );
 }
 
-export default CategoryForm;
+export default EditCategoryForm;

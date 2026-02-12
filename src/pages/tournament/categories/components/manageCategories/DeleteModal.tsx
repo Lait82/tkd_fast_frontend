@@ -6,14 +6,16 @@ import Button from "@/components/Button";
 import { deleteCategory } from "@/services/categoryService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import { errorToast, successToast } from "@/services/toasts";
+// import { CategorySchema } from "@/types/schemas/primitiveSchemas";
+
 const DeleteModal = () => {
-    const {selectedCategory, isDeleteModalOpen, closeModal, launchCategoryUpdate} = useManageCategories();
+    const {categoryToDelete, isDeleteModalOpen, closeModal, launchCategoryUpdate} = useManageCategories();
     const {tournament} = useTournamentStore()
     
     const handleDelete = async ()  => {
-        if (!selectedCategory) return
+        if (!categoryToDelete) return
         try{
-            await deleteCategory(tournament.code, selectedCategory.uuid)
+            await deleteCategory(tournament.code, categoryToDelete.uuid)
         }
         catch (error: any){
             errorToast(
@@ -40,7 +42,7 @@ const DeleteModal = () => {
             </span>
             <span className="text-neutrallight capitalize italic">
                 {/* {<IconsCategoryName category={selectedCategory }/>} */}
-                {selectedCategory && buildCategoryName(selectedCategory)}
+                {categoryToDelete && buildCategoryName(categoryToDelete)}
             </span>
         </p>
 

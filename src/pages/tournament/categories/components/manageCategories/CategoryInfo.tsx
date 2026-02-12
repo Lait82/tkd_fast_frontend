@@ -45,24 +45,26 @@ const CategoryInfo = ({}) => {
                     withValueLabels
                 />
             </div>
-            <div className="flex flex-col gap-1">
-                <h3 className="font-bold text-lg text-muted">Peso</h3>
-                
-                <Slider 
-                    min={40} 
-                    max={130}
-                    value={[selectedCategory.min_weight, selectedCategory.max_weight]}
-                    disabled={true}
-                />
-                <div className="flex gap-1 p-1">
-                    <div className="flex items-center text-muted gap-1">
-                        Desde <span className="text-neutrallight font-bold text-xl">{selectedCategory.min_weight.toFixed(1)}</span>
-                    </div>
-                    <div className="flex items-center text-muted gap-1">
-                        hasta <span className="text-neutrallight font-bold text-xl">{selectedCategory.max_weight.toFixed(1)}</span> Kgs
+            { selectedCategory.min_weight && selectedCategory.max_weight &&
+                <div className="flex flex-col gap-1">
+                    <h3 className="font-bold text-lg text-muted">Peso</h3>
+                    
+                    <Slider 
+                        min={40} 
+                        max={130}
+                        value={[selectedCategory.min_weight, selectedCategory.max_weight]}
+                        disabled={true}
+                    />
+                    <div className="flex gap-1 p-1">
+                        <div className="flex items-center text-muted gap-1">
+                            Desde <span className="text-neutrallight font-bold text-xl">{selectedCategory.min_weight.toFixed(1)}</span>
+                        </div>
+                        <div className="flex items-center text-muted gap-1">
+                            hasta <span className="text-neutrallight font-bold text-xl">{selectedCategory.max_weight.toFixed(1)}</span> Kgs
+                        </div>
                     </div>
                 </div>
-            </div>
+            }
         </div>
         <div className="flex flex-col">
             <h3 className="font-bold text-lg text-muted">Graduacion</h3>

@@ -40,7 +40,7 @@ const AvailableCategories = () => {
 	return (
 		<div className="bg-elevated flex flex-col gap-2 shadow-lg justify-center p-3 rounded-lg">
 			<h1 className="font-extrabold text-3xl">Categorias</h1>
-			<div className="flex flex-col gap-3">
+			<div className="grid grid-cols-[35%_13%_13%_auto_auto] gap-y-3">
 				{availableCategories.map((category, i) =>
 					loading ? (
 						<div> Cargando competidores...</div>

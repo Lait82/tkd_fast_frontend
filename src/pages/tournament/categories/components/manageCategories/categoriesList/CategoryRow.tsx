@@ -17,7 +17,7 @@ interface CategoryRowProps {
 }
 
 const CategoryRow = ({category} : CategoryRowProps) => {
-    const { selectedCategory, setSelectedCategory, setManageMode, openModal } = useManageCategories();
+    const { selectedCategory, setSelectedCategory, setManageMode, openModal, setCategoryToDelete } = useManageCategories();
 
     const genderColor = {
         [Gender.FEMALE]: "text-[#AD1F50]",
@@ -76,8 +76,9 @@ const CategoryRow = ({category} : CategoryRowProps) => {
                     <Tooltip text="Eliminar categoría">
                         <div
                              onClick={(e)=>{
-                                // e.stopPropagation()
+                                e.stopPropagation()
                                 openModal(CategoryModalTypes.DELETE)
+                                setCategoryToDelete(category)
                             }}
                             className="group flex transition-all p-1 rounded-full hover:bg-red-700/10">
                             <Trash2 className="transition-all ease-fluid fill-transparent stroke-red-700 hover:ease-fluid group-hover:fill-red-700 cursor-pointer" />

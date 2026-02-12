@@ -52,11 +52,16 @@ export function getRankName(rank: Rank) {
 
 export function buildCategoryName(category: CategorySchema) {
     const teamOrIndividual = category.is_team ? "Equipos" : "Individual";
-    return `${_discipline[category.discipline]} ${teamOrIndividual} | ${
+    const categoryName =
+    `${_discipline[category.discipline]} ${teamOrIndividual} | ${
         _gender[category.gender]
     } | ${getRankName(category.min_rank)} - ${getRankName(
         category.max_rank
-    )} | ${category.min_weight} Kg - ${category.max_weight} Kg`;
+    )}`;
+    if (category.discipline !== Discipline.PATTERNS){
+        categoryName.concat(` | ${category.min_weight} Kg - ${category.max_weight} Kg`)
+    }
+    return categoryName
 }
 
 export function getGenderLabel(gender: Gender){

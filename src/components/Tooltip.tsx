@@ -6,6 +6,7 @@ interface TooltipProps {
 	text: string;
 	side?: "top" | "right" | "bottom" | "left";
 	align?: "start" | "center" | "end";
+	bgClass?: string;
 }
 
 const Tooltip = ({
@@ -13,17 +14,18 @@ const Tooltip = ({
 	text,
 	side = "top",
 	align = "start",
+	bgClass = ""
 }: TooltipProps) => {
 	return (
 		<TooltipRdx.Provider delayDuration={200}>
 			<TooltipRdx.Root>
-				<TooltipRdx.Trigger asChild>{children}</TooltipRdx.Trigger>
+				<TooltipRdx.Trigger asChild><span>{children}</span></TooltipRdx.Trigger>
 				<TooltipRdx.Portal>
 					<TooltipRdx.Content
 						side={side}
 						align={align}
 						sideOffset={6}
-						className="z-50 rounded-lg bg-super-elevated px-1 py-0.5 text-s font-bold text-neutrallight shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95"
+						className={`z-50 rounded-lg bg-super-elevated px-1 py-0.5 text-s font-bold text-neutrallight shadow-lg animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 ${bgClass}`}
 					>
 						{text}
 						<TooltipRdx.Arrow className="fill-orange" />

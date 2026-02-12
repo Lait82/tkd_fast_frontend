@@ -1,10 +1,11 @@
 import { ManageModes } from "@/types/enums";
 import CategoriesList from "./CategoriesList";
-import CategoryForm from "./CategoryForm";
 import CategoryInfo from "./CategoryInfo";
 import { useManageCategories } from "./ManageCategoryContext";
 import { useMemo } from "react";
 import DeleteModal from "./DeleteModal";
+import EditCategoryForm from "./EditCategoryForm";
+import CreateCategoryForm from "./CreateCategoryForm";
 
 interface ManageCategoryProps {
 
@@ -24,9 +25,9 @@ const ManageCategories = ({} : ManageCategoryProps) => {
                 { selectedCategory && manageMode === ManageModes.VIEW 
                 && <CategoryInfo /> }
                 { selectedCategory && manageMode === ManageModes.EDIT 
-                && <CategoryForm /> }
+                && <EditCategoryForm /> }
                 { manageMode === ManageModes.CREATE
-                && <CategoryForm /> }
+                && <CreateCategoryForm /> }
             </div>
         </div>
     );

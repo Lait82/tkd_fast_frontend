@@ -1,39 +1,31 @@
 import BeltIcon from "@/components/icons/BeltIcon";
-import BoxingGloves from "@/components/icons/BoxingGloves";
+// import BoxingGloves from "@/components/icons/BoxingGloves";
 import { CategorySchema } from "@/types/schemas/primitiveSchemas";
 import { getDisciplineLabel, getGenderLabel, getIsTeamLabel, getRankName } from "@/utils/utils";
-import { FaMedal } from "react-icons/fa";
+import { FaMedal, FaUsers } from "react-icons/fa";
 import "../../../../styles/Categories.css"
+import { Discipline } from "@/types/enums";
+import Tooltip from "@/components/Tooltip";
 
 interface SingleCategoryProps {
     category: CategorySchema;
 }
 
 const SingleCategory = ({category} : SingleCategoryProps) => {
+    const isPatternsCategory = category.discipline !== Discipline.PATTERNS
 
     return (
-        <div className="bg-super-elevated rounded-lg shadow-md overflow-hidden">
-            <div className="grid grid-cols-[40fr_17fr_17fr_26fr]">
+        <>
                 {/* Description */}
-                <div className={`flex flex-col col-span-1 pl-2.5 py-2 gap-1 ${(category.discipline).toString().toLowerCase()}`}>
-                    {/* <h1 className="font-extrabold text-2xl bg-orange/20 p-1 w-fit rounded-4xl backdrop-blur-xs"> */}
-                    <div className="relative inline-block">
+                <div className={`flex flex-col col-span-1 rounded-l-md pl-1.5 pt-1.5 pb-1 gap-1 h-full ${(category.discipline).toString().toLowerCase()}`}>
+                    <div className="flex">
                         <span className="text-2xl md:text-3xl font-bold">
                             {`${getGenderLabel(category.gender)} ${getDisciplineLabel(category.discipline)} ${getIsTeamLabel(category.is_team)}`}
 
                         </span>
-                        <span className="absolute -bottom-1 left-0 w-full h-1 bg-linear-to-r from-red-500 via-orange-400 to-yellow-600 rounded-full"></span>
                     </div>
-
-                        {/* {`${getGenderLabel(category.gender)} ${getDisciplineLabel(category.discipline)} ${getIsTeamLabel(category.is_team)}`} */}
-                    {/* </h1> */}
-                    <div className="flex h-full items-center">
-                        <div className="grid grid-cols-[auto_1fr] ml-1 text-neutrallight p-1 rounded-3xl justify-around gap-y-1.5 gap-x-1">
-                            {/* <span className="backdrop-blur-xs rounded-4xl bg-background-500/20">
-                            </span> */}
-                            <BoxingGloves/> 27 Competidores
-                            {/* <span className="backdrop-blur-xs rounded-4xl bg-background-500/20">
-                            </span> */}
+                    <div className="flex items-center">
+                        <div className="grid grid-cols-[auto_1fr] ml-1 text-neutrallight rounded-3xl justify-around gap-y-1.5 gap-x-1">
                             <FaMedal className="ml-[0.4rem]"/> 3er Puesto definido por lucha
                         </div>
 
@@ -41,53 +33,59 @@ const SingleCategory = ({category} : SingleCategoryProps) => {
                 </div>
 
                 {/* Age */}
-                <div className="flex flex-col col-span-1 gap-0.5 justify-start py-2">
+                <div className="flex flex-col col-span-1 gap-0.5 justify-start py-1.5 bg-super-elevated">
                     Edad:
                     <div className="flex flex-col ml-1 text-muted justify-around gap-1.5">
-                        <div className="flex min-w-fit max-w-[5rem] justify-between">
-                            Desde: 
+                        <div className="flex min-w-fit max-w-[5rem] items-center justify-between gap-0.5">
                             <span className="text-neutrallight">{category.min_age}</span>
-                        </div>
-                        <div className="flex min-w-fit max-w-[5rem] justify-between">
-                            Hasta:
-                            <span className="text-neutrallight">{category.max_age}</span>
+                            <span className="text-3xl">→</span>
+                            <span className="text-neutrallight">{category.max_age} Años</span>
                         </div>
                     </div>
                 </div>
 
                 {/* Weight */}
-                <div className="flex flex-col col-span-1 gap-0.5 justify-start py-2">
-                    Peso:
-                    <div className="flex flex-col ml-1 text-muted justify-around gap-1.5">
-                        <div className="flex min-w-fit max-w-[5rem] justify-between">
-                            Desde: 
-                            <span className="text-neutrallight">{category.min_weight}</span>
+                {
+                    <div className="flex flex-col col-span-1 gap-0.5 justify-start py-1.5 bg-super-elevated">
+                        Peso:
+                        { isPatternsCategory ?
+                                <div className="flex min-w-fit max-w-[5rem] items-center justify-between gap-0.5 ml-1">
+                                    <span className="text-neutrallight">{category.min_weight}</span>
+                                    <span className="text-3xl">→</span>
+                                    <span className="text-neutrallight">{category.max_weight} Kg</span>
+                                </div>
+                            :
+                            <span className="text-muted italic ml-1"> N/A </span>
+                        }
+                    </div>
+                }
+
+                {/* Rank and total competitors */}
+                <div className="flex flex-col col-span-1 gap-0.5 justify-start pb-1 pt-1.5 bg-super-elevated">
+                    Categoria:
+                    <div className="flex ml-1 text-muted gap-0.5 justify-around">
+                        <div className="flex flex-col min-w-0 items-center gap-1 justify-between">
+                            <BeltIcon size={19} rank={category.min_rank} />
+                            <span className="text-neutrallight truncate">{getRankName(category.min_rank)}</span>
                         </div>
-                        <div className="flex min-w-fit max-w-[5rem] justify-between">
-                            Hasta:
-                            <span className="text-neutrallight">{category.max_weight}</span>
+                        <span className="flex text-3xl items-center">→</span>
+                        <div className="flex flex-col min-w-0 items-center gap-1 justify-between">
+                            <BeltIcon size={19} rank={category.max_rank} />
+                            <span className="text-neutrallight truncate">{getRankName(category.max_rank)}</span>
                         </div>
                     </div>
                 </div>
 
-                {/* Rank */}
-                <div className="flex flex-col col-span-1 gap-0.5 justify-start pr-2.5 py-2">
-                    Categoria:
-                    <div className="flex flex-col ml-1 text-muted justify-around gap-0.5">
-                        <div className="flex items-center gap-1 min-w-fit max-w-[5rem] justify-between">
-                            Desde: 
-                            <BeltIcon rank={category.min_rank} />
-                            <span className="text-neutrallight">{getRankName(category.min_rank)}</span>
-                        </div>
-                        <div className="flex items-center gap-1 min-w-fit max-w-[5rem] justify-between">
-                            Hasta:
-                            <BeltIcon rank={category.max_rank} />
-                            <span className="text-neutrallight">{getRankName(category.max_rank)}</span>
-                        </div>
-                    </div>
+                <div className="flex rounded-r-md justify-end bg-super-elevated pr-1.5 pt-1.5">
+                    <Tooltip text="27 competidores inscriptos">
+                        <span className="flex w-fit h-fit text-sm gap-0.5 px-1 py-0.5 cursor-pointer text-muted rounded-full bg-elevated">
+                                <FaUsers size={20} className="transition-all cursor-pointer " />    
+                                27
+                        </span>
+                    </Tooltip>
+
                 </div>
-            </div>
-        </div>
+                </>
     );
 }
 

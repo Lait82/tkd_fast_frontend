@@ -34,8 +34,10 @@ const IconsCategoryName = ({
 			{` ${getRankName(category.min_rank)} - `}
 			<BeltIcon size={15} rank={category.max_rank} />
 			{` ${getRankName(category.max_rank)}`}
-			{` | `}
-			{`${category.min_weight} Kg - ${category.max_weight} Kg`}
+			{
+				category.discipline !== Discipline.PATTERNS &&
+				` | ${category.min_weight} Kg - ${category.max_weight} Kg`
+			}
 		</span>
 	);
 };
