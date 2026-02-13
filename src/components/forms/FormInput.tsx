@@ -109,7 +109,7 @@ interface InputProps {
 	value: string;
 	onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 	placeholder?: string;
-	title: ReactNode | string;
+	title?: ReactNode | string;
 	alignment?: "left" | "center" | "right";
 }
 
@@ -123,7 +123,7 @@ const FormInput = ({
 	value,
 	onChange,
 	placeholder,
-	title,
+	title = "",
 	alignment
 }: InputProps) => {
 	return (

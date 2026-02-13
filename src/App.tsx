@@ -18,6 +18,7 @@ import dayjs from "dayjs";
 import es from "dayjs/locale/es";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import Categories from "./pages/tournament/categories/Categories";
+import Invites from "./pages/tournament/invites/Invites";
 
 function App() {
 	dayjs.locale({
@@ -148,6 +149,16 @@ function App() {
 				}
 			>
 			</Route>
+			<Route
+				path="/:tournamentCode/invites"
+				element={
+					<ProtectedRoute>
+						<TournamentLoader>
+							<Invites />
+						</TournamentLoader>
+					</ProtectedRoute>
+				}
+			/>
 		</Routes>
 		// </AuthProvider>
 	);
