@@ -19,6 +19,7 @@ import es from "dayjs/locale/es";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import Categories from "./pages/tournament/categories/Categories";
 import Invites from "./pages/tournament/invites/Invites";
+import { ManageInvitesProvider } from "./pages/tournament/invites/InvitesContext";
 
 function App() {
 	dayjs.locale({
@@ -154,7 +155,9 @@ function App() {
 				element={
 					<ProtectedRoute>
 						<TournamentLoader>
-							<Invites />
+							<ManageInvitesProvider>
+								<Invites />
+							</ManageInvitesProvider>
 						</TournamentLoader>
 					</ProtectedRoute>
 				}

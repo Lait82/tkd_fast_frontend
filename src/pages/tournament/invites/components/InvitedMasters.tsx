@@ -3,7 +3,7 @@ interface InstructorListProps {
     invitees: object[]
 }
 
-const InviteesList = ({invitees}:InstructorListProps) => {
+const InvitedMasters = ({invitees}:InstructorListProps) => {
     
     return(									
     <div className="bg-super-elevated rounded-lg p-1.5 border border-elevated-400">
@@ -11,8 +11,8 @@ const InviteesList = ({invitees}:InstructorListProps) => {
             const isSelected = selectedMasterId === master.id;
 
             return (
-                <button
-                    type="button"
+                <div
+                    // type="button"
                     key={master.id}
                     onClick={() => setSelectedMasterId(master.id)}
                     className={`w-full grid grid-cols-1 md:grid-cols-12 gap-1 md:gap-2 text-left px-1.5 py-1 border-b border-elevated-400 transition-colors ${
@@ -29,7 +29,7 @@ const InviteesList = ({invitees}:InstructorListProps) => {
                         {statusIcon(master.status)}
                         {STATUS_TEXT[master.status]}
                     </span>
-                </button>
+                </div>
             );
         })}
 
@@ -76,4 +76,4 @@ const InviteesList = ({invitees}:InstructorListProps) => {
         </form>
     </div>);
 }
-export default InviteesList
+export default InvitedMasters

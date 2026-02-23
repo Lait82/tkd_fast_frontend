@@ -1,6 +1,6 @@
 import Category from "./Category";
 import { useEffect, useState } from "react";
-import { getCompetitorsByCategory } from "@/services/tournamentService";
+import { getCompetitorsByCategory } from "@/services/tournament/tournamentService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import {
 	CompetitorsByCategoryResponseSchema,

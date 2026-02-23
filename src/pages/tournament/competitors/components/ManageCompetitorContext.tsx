@@ -1,7 +1,7 @@
 // CompetitorContext.tsx
 import { getAvailableCategories } from "@/services/categoryService";
 import { errorToast } from "@/services/toasts";
-import { getTeams } from "@/services/tournamentService";
+import { getTeams } from "@/services/tournament/tournamentService";
 import { getUserCompetitors } from "@/services/userService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import {

@@ -95,7 +95,7 @@ const CreateTeam = () => {
                 </h1>
                 <div className="flex gap-2">
                     <div
-                        className="flex-shrink-0 flex rounded-full overflow-ellipsis justify-center items-center bg-background text-orange text-5xl"
+                        className="shrink-0 flex rounded-full overflow-ellipsis justify-center items-center bg-background text-orange text-5xl"
                         style={{
                             height: "130px",
                             width: "130px",

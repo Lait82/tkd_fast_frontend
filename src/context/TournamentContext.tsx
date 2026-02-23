@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Role, TournamentActions } from '@/types/enums';
-import { getTournamentInfo } from '@/services/tournamentService';
+import { getTournamentInfo } from '@/services/tournament/tournamentService';
 
 type Tournament = {
   id: number;

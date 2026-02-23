@@ -2,7 +2,7 @@ import Datepicker from "@/components/Datepicker";
 import FormInput from "@/components/forms/FormInput";
 import IconSelect from "@/components/IconSelect";
 import { errorToast, successToast } from "@/services/toasts";
-import { createCompetitor } from "@/services/tournamentService";
+import { createCompetitor } from "@/services/tournament/tournamentService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import { useManageCompetitors } from "./ManageCompetitorContext";
 import { competitorSchema } from "@/types/schemas/primitiveSchemas";

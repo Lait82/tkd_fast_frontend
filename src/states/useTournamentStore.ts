@@ -2,7 +2,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { Role, TournamentActions } from "@/types/enums";
-import { getTournamentInfo } from "@/services/tournamentService";
+import { getTournamentInfo } from "@/services/tournament/tournamentService";
 import {
 	TournamentSchema,
 	tournamentSchema,

@@ -10,7 +10,7 @@ import FormInput from "@/components/forms/FormInput";
 import { Hash } from "lucide-react";
 import { FormEvent, useState } from "react";
 import Button from "@/components/Button";
-import { claimTournament } from "@/services/tournamentService";
+import { claimTournament } from "@/services/tournament/tournamentService";
 // import { toast } from "sonner";
 // import { RxCheckCircled } from "react-icons/rx";
 import { errorToast, successToast } from "@/services/toasts";

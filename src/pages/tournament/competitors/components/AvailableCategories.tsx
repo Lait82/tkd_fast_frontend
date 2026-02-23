@@ -259,7 +259,7 @@ import EnrollableCategory from "./EnrollableCategory";
 import EnrolledCategory from "./EnrolledCategory";
 import UnavailableCategory from "./UnavailableCategory";
 import { errorToast, successToast } from "@/services/toasts";
-import { enrollCompetitor } from "@/services/tournamentService";
+import { enrollCompetitor } from "@/services/tournament/tournamentService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import { enrollTeam } from "@/services/teamService";
 
