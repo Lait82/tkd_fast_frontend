@@ -1,6 +1,6 @@
 import { getGenderLabel, getRankName } from "@/utils/utils";
 import { useManageCategories } from "./ManageCategoryContext";
-import { Gender, ManageModes} from "@/types/enums";
+import { Discipline, Gender, ManageModes} from "@/types/enums";
 import { TbGenderFemale, TbGenderMale } from "react-icons/tb";
 import Button from "@/components/Button";
 import BeltIcon from "@/components/icons/BeltIcon";
@@ -45,7 +45,7 @@ const CategoryInfo = ({}) => {
                     withValueLabels
                 />
             </div>
-            { selectedCategory.min_weight && selectedCategory.max_weight &&
+            { selectedCategory.discipline !== Discipline.PATTERNS && selectedCategory.min_weight && selectedCategory.max_weight &&
                 <div className="flex flex-col gap-1">
                     <h3 className="font-bold text-lg text-muted">Peso</h3>
                     

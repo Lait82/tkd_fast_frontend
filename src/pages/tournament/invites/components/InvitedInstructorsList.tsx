@@ -4,40 +4,40 @@ import Tooltip from "@/components/Tooltip";
 import { useManageInvites } from "../InvitesContext";
 import { createInstructorSlot, deleteInvitee } from "@/services/tournament/invitationService";
 import { useTournamentStore } from "@/states/useTournamentStore";
-import { errorToast } from "@/services/toasts";
+import { useState } from "react";
+import DeleteInstructorModal from "./DeleteInstructorModal";
+import { Kind } from "../types";
 
 interface InstructorListProps {
     instructors: InviteeSchemaT[]
 }
 
-// TODO: REMOVE THIS AND IMPLEMENT THE REAL SELECT INVITEE
-const setSelectedMasterId = (someuuid: any) => {
-    console.log(someuuid);
-} 
-
 const InvitedInstructorsList = ({instructors}:InstructorListProps) => {
     // const {} = useManageInvites()
     const {tournament} = useTournamentStore();
-    const {launchUpdateInvitees} = useManageInvites()
-    
+    const {launchUpdateInvitees, setSelectedInvitee, selectedInvitee} = useManageInvites()
+
+    const [isOpen, setIsOpen] = useState<boolean>(false)
+    const [instructorToDelete, setInstructorToDelete] = useState<InviteeSchemaT>();
+
+    const closeModal = () => {
+        if (isOpen) setIsOpen(false);
+    }
     return(									
     <div className="flex flex-col text-neutrallight transition-all rounded-lg gap-0.5">
+        {instructorToDelete && <DeleteInstructorModal isOpen={isOpen} closeModal={closeModal} instructor={instructorToDelete} />}
         {instructors.map((instructor) => {
-            // const isSelected = selectedMasterId === instructor.id;
-            const isVacant = !instructor.email
+            const isSelected = selectedInvitee?.uuid === instructor.uuid;
 
             return (
-                isVacant 
-                ? <div className={`w-full flex justify-between gap-1 text-left px-1.5 py-1 transition-colors`}>
+                instructor.kind === Kind.VACANT
+                ? <div className={`w-full flex justify-between gap-1 text-left px-1.5 py-1 transition-colors`} key={instructor.uuid}>
                     <span className="md:col-span-4 text-muted italic">
                         {"Lugar vacante"}
                     </span>
                     <Tooltip text="Eliminar vacante">
                         <div
-                             onClick={(e)=>{
-                                // e.stopPropagation()
-                                // openModal(CategoryModalTypes.DELETE)
-                                // setCategoryToDelete(category)
+                             onClick={()=>{
                                 deleteInvitee(instructor.uuid)
                                 launchUpdateInvitees();
                             }}
@@ -51,11 +51,10 @@ const InvitedInstructorsList = ({instructors}:InstructorListProps) => {
                 : (<div
                     // type="button"
                     key={instructor.uuid}
-                    onClick={() => setSelectedMasterId(instructor.uuid)}
-                    className={`w-full grid grid-cols-[1fr_1fr_1fr_auto] rounded-lg items-center gap-1 text-left px-1.5 py-1 transition-colors border border-transparent hover:cursor-pointer hover:border-orange ${
-                        // isSelected ? "bg-elevated rounded" : "hover:bg-elevated/60"
-                        "rounded"
-                    }`}
+                    onClick={() => setSelectedInvitee(instructor)}
+                    className={`w-full grid grid-cols-[1fr_1fr_1fr_auto] rounded-lg items-center gap-1 text-left px-1.5 transition-colors border border-transparent hover:cursor-pointer hover:border-orange hover:has-[.child:hover]:border-transparent
+                        ${isSelected ? "border-orange!": ""}
+                        rounded`}
                 >
                     <span className="">
                         {instructor.firstname} {instructor.lastname}
@@ -74,12 +73,12 @@ const InvitedInstructorsList = ({instructors}:InstructorListProps) => {
                     <Tooltip text="Eliminar instructor">
                         <div
                              onClick={(e)=>{
-                                // e.stopPropagation()
-                                // openModal(CategoryModalTypes.DELETE)
-                                // setCategoryToDelete(category)
+                                e.stopPropagation()
+                                setInstructorToDelete(instructor)
+                                setIsOpen(true)
                                 console.log("test")
                             }}
-                            className="group flex transition-all hover:cursor-pointer p-1 rounded-full hover:bg-red-700/10">
+                            className="group child flex transition-all hover:cursor-pointer p-1 rounded-full hover:bg-red-700/10">
                             <Trash2 className="transition-all ease-fluid fill-transparent stroke-red-700 hover:ease-fluid group-hover:fill-red-700 cursor-pointer" />
                         </div>
                     </Tooltip>

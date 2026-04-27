@@ -1,11 +1,6 @@
 import { getInvitees } from "@/services/tournament/invitationService";
 import { useTournamentStore } from "@/states/useTournamentStore";
 import { Role } from "@/types/enums";
-import {
-    CategorySchema,
-    categorySchema,
-    NewCategorySchema,
-} from "@/types/schemas/primitiveSchemas";
 import React, {
     createContext,
     ReactNode,
@@ -14,32 +9,33 @@ import React, {
     useMemo,
     useState,
 } from "react";
-import { inviteeSchema, InviteeSchemaT } from "./schemas";
+import { inviteeSchema, InviteeSchemaT, InvitedMasterT, FilledInstructorSchemaT } from "./schemas";
 import { errorToast } from "@/services/toasts";
+import { Kind } from "./types";
 
 
 interface ManageInvitesContextType {
     launchUpdateInvitees: ()=> void;
-    invitedInstructors: InviteeSchemaT[] | [];
-    invitedMasters: InviteeSchemaT[] | [];
-    invitees: InviteeSchemaT[] | [];
+    invitedInstructors: InviteeSchemaT[];
+    invitedMasters: InvitedMasterT[];
+    invitees: InviteeSchemaT[];
+    selectedInvitee?: InvitedMasterT | FilledInstructorSchemaT | undefined;
+    setSelectedInvitee: React.Dispatch<React.SetStateAction<InvitedMasterT | FilledInstructorSchemaT | undefined>>;
 }
 
 const ManageInvitesContext = createContext<
     ManageInvitesContextType | undefined
 >(undefined);
-
 export const ManageInvitesProvider = ({
     children,
 }: {
     children: ReactNode;
 }) => {
     const { tournament } = useTournamentStore()
-    // const [categories, setCategories] = useState<CategorySchema[]>([]);
-    // const [newCategory, setNewCategory] = useState<NewCategorySchema|null>(null);
     const [invitees, setInvitees] = useState<InviteeSchemaT[]>([])
     const invitedInstructors = useMemo(() => invitees.filter(invitee => invitee.role === Role.INSTRUCTOR), [invitees]);
-    const invitedMasters = useMemo(() => invitees?.filter(invitee => invitee.role === Role.MASTER), [invitees]);
+    const invitedMasters = useMemo(() => invitees?.filter(invitee => invitee.role === Role.MASTER && invitee.kind === Kind.FILLED), [invitees]);
+    const [selectedInvitee, setSelectedInvitee] = useState<InvitedMasterT | FilledInstructorSchemaT | undefined>();
 
     const _fetchInvitees = async (inviteeRole?: Role) => {
         try {
@@ -48,7 +44,7 @@ export const ManageInvitesProvider = ({
             const inviteesRes = inviteeSchema.array().parse(res);
             setInvitees(inviteesRes);
         } catch (error) {
-            console.log(error.issues)
+            console.log(error)
             errorToast(
                 "Ha ocurrido un error al obtener los invitados, por favor recarga la página."
             );
@@ -72,14 +68,12 @@ export const ManageInvitesProvider = ({
     return (
         <ManageInvitesContext.Provider
             value={{
-                // draftCategory: categorySchema.parse({}),
-                // setNewCategory: setNewCategory,
-                // newCategory: newCategory,
-                // categories: categories,
                 launchUpdateInvitees: launchUpdateInvitees,
                 invitedInstructors: invitedInstructors,
                 invitedMasters: invitedMasters,
-                invitees: invitees
+                invitees: invitees,
+                selectedInvitee: selectedInvitee,
+                setSelectedInvitee: setSelectedInvitee
 
             }}
         >

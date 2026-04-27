@@ -18,6 +18,7 @@ type TournamentState = {
 	error: string | null;
 	getTournamentInfo: (code: string) => Promise<void>;
 	can: (action: TournamentActions) => boolean;
+	resetTournamentStore: () => void;
 };
 
 export const useTournamentStore = create<TournamentState>()(
@@ -78,6 +79,16 @@ export const useTournamentStore = create<TournamentState>()(
 					role.includes(allowedRole)
 				);
 			},
+
+			resetTournamentStore: () => {
+				set({
+					tournament: tournamentSchema.parse({}),
+					role: [Role.NONE],
+					loading: false,
+					error: null,
+				});
+				useTournamentStore.persist.clearStorage(); // Limpia el almacenamiento persistente
+			}
 		}),
 		{
 			name: "tournament-storage", // clave en localStorage

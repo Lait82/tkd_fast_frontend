@@ -1,6 +1,7 @@
 import { useTournamentStore } from "@/states/useTournamentStore";
 import { Role } from "@/types/enums";
 import { getHighestRole } from "@/utils/utils";
+import { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const TournamentNavbar = () => {
@@ -34,7 +35,7 @@ const TournamentNavbar = () => {
 	};
 
 	const organizersOptions = [info, competitors, categories, invites];
-	const mastersOptions = [info, competitors, categories, invites];
+	const mastersOptions = [info, competitors, invites];
 	const instructorAndBelowOptions = [info, competitors, categories];
 
 	const availableOptions = {
@@ -46,6 +47,7 @@ const TournamentNavbar = () => {
 	};
 
 	const options = availableOptions[getHighestRole(tournament.role)];
+	
 	return (
 		<div className="flex gap-3 bg-elevated shadow-card rounded-full font-extrabold w-fit py-1 px-1.5">
 			{options.map((option) => (

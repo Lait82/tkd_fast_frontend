@@ -55,7 +55,7 @@ export type TournamentSchema = z.infer<typeof tournamentSchema>;
 
 export const competitorWithUserSchema = z.object({
 	firstname: z.string(),
-	email: z.email(),
+	email: z.string().email(),
 	lastname: z.string(),
 	rank: z.enum(Rank),
 	school: z.string().nullable(),

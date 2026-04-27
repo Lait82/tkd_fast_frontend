@@ -1,9 +1,13 @@
-import { Role } from "@/types/enums";
 
 export enum InvitationStatus {
     PENDING = "PENDING",
     ACCEPTED = "ACCEPTED",
     EXPIRED = "EXPIRED",
+}
+
+export enum Kind {
+    FILLED = "FILLED",
+    VACANT = "VACANT"
 }
 
 // export type InviteeT = {

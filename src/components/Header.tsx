@@ -7,14 +7,21 @@ import "../styles/Header.css";
 import ButtonLink from "./ButtonLink";
 import Button from "./Button";
 import { useAuthStore } from "@/states/useAuthStore";
+import { useTournamentStore } from "@/states/useTournamentStore";
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
 	const { isAuthenticated, logout } = useAuthStore();
+	const { resetTournamentStore } = useTournamentStore();
 
 	const toggleMenu = () => {
 		setIsOpen(!isOpen);
 	};
+
+	const logoutRoutine = () => {
+		resetTournamentStore();
+		logout();
+	}
 
 	return (
 		<header className="header">
@@ -70,7 +77,7 @@ const Header = () => {
 
 				<div className="auth-buttons hidden md:flex">
 					{isAuthenticated ? (
-						<Button variant="secondary" onClick={logout}>
+						<Button variant="secondary" onClick={logoutRoutine}>
 							Cerrar Sesión
 						</Button>
 					) : (

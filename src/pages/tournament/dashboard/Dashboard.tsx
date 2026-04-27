@@ -56,12 +56,12 @@ const Dashboard = () => {
 			description:
 				"Invitá a todos tus instructores enviandoles un link para que puedan inscribir a sus alumnos.",
 			allowed: can(TournamentActions.INVITE_INSTRUCTOR),
-			action: () => navigate("/"),
+			action: () => navigate(`/${tournament.code}/invites`)
 		},
 		{
 			icon: <FaGear />,
 			title: "Administrar Competidores y Equipos",
-			description: `Inscribí competidores, ADSGADGADGADG. ${tournament?.code}`,
+			description: `Inscribí competidores a las categorias o administra tus equipos. ${tournament?.code}`,
 			allowed: can(TournamentActions.MANAGE_COMPETITORS),
 			action: () => navigate(`/${tournament.code}/competitors`),
 		},
@@ -71,7 +71,7 @@ const Dashboard = () => {
 			description:
 				"Agregá categorias, editá los pesos y cinturones de cada categoría.",
 			allowed: can(TournamentActions.MANAGE_CATEGORIES),
-			action: () => navigate("/"),
+			action: () => navigate(`/${tournament.code}/categories`)
 		},
 		{
 			icon: <FaGear />,
@@ -79,7 +79,7 @@ const Dashboard = () => {
 			description:
 				"Invita formalmente a maestros de otras escuelas/asociaciones para que puedan invitar a sus instructores.",
 			allowed: can(TournamentActions.INVITE_MASTER),
-			action: () => navigate("/"),
+			action: () => navigate(`/${tournament.code}/invites`)
 		},
 		{
 			icon: <FaGear />,
