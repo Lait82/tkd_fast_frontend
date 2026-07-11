@@ -5,8 +5,8 @@ import { Role } from "@/types/enums";
 import { FilledInstructorSchemaT, InvitedMasterT } from "../schemas";
 import { InvitationStatus } from "../types";
 
-const statusIcon = (status: string) => {
-    if (status === "ACCEPTED") {
+const statusIcon = (status: InvitationStatus) => {
+    if (status === InvitationStatus.ACCEPTED) {
         return <IoCheckmarkCircleOutline className="text-green" size={18} />;
     }
 

@@ -23,6 +23,7 @@ type AuthState = {
 		navigate: (path: string) => void
 	) => Promise<void>;
 	signup: (userData: any, navigate: (path: string) => void) => Promise<void>;
+	setSession: (token: string, user: UserSchema) => void;
 	// logout: (navigate: (path: string) => void) => void;
 	logout: () => void;
 };
@@ -73,6 +74,15 @@ export const useAuthStore = create<AuthState>()(
 				} finally {
 					set({ loading: false });
 				}
+			},
+
+			setSession: (token, user) => {
+				set({
+					user,
+					token,
+					isAuthenticated: true,
+					error: null,
+				});
 			},
 
 			logout: () => {

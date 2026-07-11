@@ -12,6 +12,49 @@ const _gender = {
 };
 
 
+/** Compara dos objetos por igualdad superficial de sus propias claves. */
+export function shallowEqual<T extends object>(a: T, b: T): boolean {
+    const aKeys = Object.keys(a) as (keyof T)[];
+    if (aKeys.length !== Object.keys(b).length) return false;
+    return aKeys.every((key) => a[key] === b[key]);
+}
+
+/**
+ * Mergea una lista fresca contra la actual preservando referencias para evitar
+ * re-renders innecesarios (el "stutter" de reemplazar todo el array de golpe):
+ * - Items sin cambios mantienen su referencia previa (no re-renderizan).
+ * - Items que cambiaron se reemplazan por la versión fresca.
+ * - Nuevos se appendean al final, en orden de llegada.
+ * - Eliminados (ya no vienen en `fresh`) se descartan.
+ *
+ * Asume que `fresh` es la lista completa. Por defecto identifica por `uuid`.
+ */
+export function mergeByKey<T extends object>(
+    prev: T[],
+    fresh: T[],
+    getKey: (item: T) => PropertyKey = (item) =>
+        (item as { uuid: PropertyKey }).uuid
+): T[] {
+    const freshByKey = new Map(fresh.map((item) => [getKey(item), item]));
+    const merged: T[] = [];
+
+    // Recorre los previos en orden: mantiene referencia si no cambió,
+    // los descarta si ya no vienen.
+    for (const item of prev) {
+        const updated = freshByKey.get(getKey(item));
+        if (!updated) continue;
+        merged.push(shallowEqual(item, updated) ? item : updated);
+        freshByKey.delete(getKey(item));
+    }
+
+    // Lo que queda en el map son los nuevos: se appendean en orden de llegada.
+    for (const item of freshByKey.values()) {
+        merged.push(item);
+    }
+
+    return merged;
+}
+
 export function getHighestRole(roles: Role[]): Role {
     return roles.reduce(
         (carry, role) =>

@@ -24,14 +24,14 @@ const Button: React.FC<ButtonProps> = ({
 	...props
 }) => {
 	const primaryClasses =
-		"bg-neutrallight cursor-pointer text-background hover:bg-transparent hover:text-neutrallight";
+		"group bg-neutrallight cursor-pointer text-background hover:bg-transparent hover:text-neutrallight";
 	const secondaryClasses =
-		"bg-transparent cursor-pointer text-neutrallight hover:bg-neutrallight hover:text-background";
+		"group bg-transparent cursor-pointer text-neutrallight hover:bg-neutrallight hover:text-background";
 
 	const primaryDisabledClasses =
-		"bg-white-800 border-white-800 text-neutrallight-600 cursor-not-allowed";
+		"group bg-white-800 border-white-800 text-neutrallight-600 cursor-not-allowed";
 	const secondaryDisabledClasses =
-		"bg-transparent border-white-800 cursor-not-allowed";
+		"group bg-transparent border-white-800 cursor-not-allowed";
 
 	const getClasses = () => {
 		return variant === "primary"

@@ -49,7 +49,7 @@ const StepOne = () => {
 				value={formData.email}
 				onChange={handleChange}
 				error={errors.email}
-				disabled={loading}
+				disabled={loading || !!formData.invitation_token}
 				placeholder="Email"
 			/>
 

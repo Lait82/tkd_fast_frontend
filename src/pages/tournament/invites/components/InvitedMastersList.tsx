@@ -41,7 +41,7 @@ const invitationForm = z.object({
 type InvitationFormValuesT = z.infer<typeof invitationForm>;
 
 const InvitedMastersList = ({masters}:InstructorListProps) => {
-    const { selectedInvitee, setSelectedInvitee } = useManageInvites()
+    const { selectedInvitee, setSelectedInvitee, launchUpdateInvitees } = useManageInvites()
     const {tournament} = useTournamentStore()
     const [formValues, setFormValues] = useState<InvitationFormValuesT>({
         firstname: "",
@@ -69,7 +69,9 @@ const InvitedMastersList = ({masters}:InstructorListProps) => {
         }
         try{
             await inviteMaster(tournament.code, formValues)
-            // Refetch de invites
+            // Refetch + merge: trae la versión del server y appendea el nuevo
+            // sin re-renderizar los que ya estaban.
+            launchUpdateInvitees();
         }
         catch(e){
             errorToast((e as Error).message);

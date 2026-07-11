@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useAuthStore } from "@/states/useAuthStore";
 
-const API_URL = "http://localhost:8000/api/v1";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const tkdfastProtectedApi = axios.create({
 	baseURL: API_URL,

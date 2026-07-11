@@ -6,9 +6,13 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import DashboardActions from "./components/DashboardActions";
 import TournamentCard from "@/components/TournamentCard";
+import InvitationBanner, {
+	InvitationBannerData,
+} from "./components/InvitationBanner";
 import "@/styles/Dashboard.css";
 import { useAuthStore } from "@/states/useAuthStore";
 import { FC, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { getUserTournaments } from "@/services/userService";
 import { Tournament } from "@/types/tournament";
 import { tournamentSchema } from "@/types/schemas/primitiveSchemas";
@@ -17,8 +21,14 @@ import TypeItComponent from "typeit-react";
 
 const Dashboard = () => {
 	const { user } = useAuthStore();
+	const location = useLocation();
 	const [tournaments, setTournaments] = useState<Tournament[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [invitationBanner, setInvitationBanner] =
+		useState<InvitationBannerData | null>(
+			(location.state as { invitationBanner?: InvitationBannerData } | null)
+				?.invitationBanner ?? null
+		);
 
 	const TypeIt = TypeItComponent as FC<any>;
 
@@ -51,6 +61,15 @@ const Dashboard = () => {
 			<Header />
 
 			<main className="dashboard-container">
+				{invitationBanner && (
+					<div className="mb-2">
+						<InvitationBanner
+							data={invitationBanner}
+							onDismiss={() => setInvitationBanner(null)}
+						/>
+					</div>
+				)}
+
 				<div className="dashboard-content flex gap-2 p-4">
 					<div className="dashboard-left">
 						<div className="welcome-section">

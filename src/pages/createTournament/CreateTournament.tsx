@@ -33,9 +33,6 @@ const CreateTournament = () => {
 			navigate(`/${codeValue}/edit-tournament`);
 			// setSuccess(true)
 		} catch (err: any) {
-			console.log(err.message);
-			successToast(err.message);
-			errorToast(err.message);
 			errorToast(err?.message);
 		} finally {
 			setLoading(false);
@@ -63,7 +60,7 @@ const CreateTournament = () => {
 							onSubmit={handleSubmit}
 						>
 							<FormInput
-								icon={<Hash />}
+								iconLeft={<Hash />}
 								name="code"
 								inputClassName="font-extrabold text-center"
 								placeholder="Tu código aquí"

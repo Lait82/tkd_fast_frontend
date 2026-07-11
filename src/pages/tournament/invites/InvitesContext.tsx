@@ -12,6 +12,7 @@ import React, {
 import { inviteeSchema, InviteeSchemaT, InvitedMasterT, FilledInstructorSchemaT } from "./schemas";
 import { errorToast } from "@/services/toasts";
 import { Kind } from "./types";
+import { mergeByKey } from "@/utils/utils";
 
 
 interface ManageInvitesContextType {
@@ -42,7 +43,9 @@ export const ManageInvitesProvider = ({
             // API fetch
             const res = await getInvitees(tournament.code, inviteeRole);
             const inviteesRes = inviteeSchema.array().parse(res);
-            setInvitees(inviteesRes);
+            // Merge contra el estado actual preservando referencias para
+            // evitar el stutter de reemplazar toda la lista de golpe.
+            setInvitees((prev) => mergeByKey(prev, inviteesRes));
         } catch (error) {
             console.log(error)
             errorToast(

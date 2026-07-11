@@ -8,9 +8,9 @@ export const inviteMaster = async (code: string, payload: object) => {
         );
         return response.data;
     } catch (error: any) {
-        console.log("LLEGA AL ERROR DEL CATCH DEL SERVICE")
+        // console.log("LLEGA AL ERROR DEL CATCH DEL SERVICE")
         throw new Error(
-            error.response?.data?.message || "Fallo al crear equipo."
+            error.response?.data?.message || "Fallo al invitar el maestro."
         );
     }
 };

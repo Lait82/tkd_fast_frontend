@@ -1,7 +1,7 @@
 "use client";
 
 import type { FormEvent } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { FaExclamationTriangle } from "react-icons/fa";
 // import { useAuth } from "../context/AuthContext"
 import Header from "@/components/Header";
@@ -17,6 +17,16 @@ import { useAuthStore } from "@/states/useAuthStore";
 const SignupWithProvider = () => {
 	const { signup, loading, error } = useAuthStore();
 	const navigate = useNavigate();
+	const [searchParams] = useSearchParams();
+
+	// Datos pre-cargados cuando se llega desde una invitación.
+	const invitationToken = searchParams.get("token") ?? "";
+	const invitedEmail = searchParams.get("email") ?? "";
+	const initialData = {
+		...(invitationToken ? { invitation_token: invitationToken } : {}),
+		...(invitedEmail ? { email: invitedEmail } : {}),
+	};
+
 	const handleSubmit = async (formData: any) => {
 		// Format date from yyyy-mm-dd to dd-mm-yyyy
 		const formattedData = { ...formData };
@@ -29,7 +39,7 @@ const SignupWithProvider = () => {
 	};
 
 	return (
-		<SignupFormProvider loading={loading}>
+		<SignupFormProvider loading={loading} initialData={initialData}>
 			<SignupContent onSubmit={handleSubmit} error={error} />
 		</SignupFormProvider>
 	);

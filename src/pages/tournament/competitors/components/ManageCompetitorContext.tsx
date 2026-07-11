@@ -93,7 +93,7 @@ export const ManageCompetitorsProvider = ({
     );
 
     const [manageType, setManageType] = useState<ManageCompetitorTypes>(
-        ManageCompetitorTypes.TEAM
+        ManageCompetitorTypes.COMPETITOR
     );
 
     const [userCompetitors, setUserCompetitors] = useState<CompetitorSchema[]>(

@@ -20,6 +20,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import Categories from "./pages/tournament/categories/Categories";
 import Invites from "./pages/tournament/invites/Invites";
 import { ManageInvitesProvider } from "./pages/tournament/invites/InvitesContext";
+import RedeemInvitation from "./pages/redeemInvitation/RedeemInvitation";
 
 function App() {
 	dayjs.locale({
@@ -82,6 +83,8 @@ function App() {
 					</OnlyPublicRoute>
 				}
 			/>
+
+			<Route path="/invite" element={<RedeemInvitation />} />
 
 			<Route
 				path="/dashboard"

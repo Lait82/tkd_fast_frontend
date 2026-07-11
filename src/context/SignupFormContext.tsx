@@ -23,6 +23,7 @@ interface SignupFormData {
   password: string
   password_confirmation: string
   invite_token: string
+  invitation_token: string
 }
 
 // Define the context shape
@@ -57,11 +58,19 @@ const initialFormData: SignupFormData = {
   password: "",
   password_confirmation: "",
   invite_token: "",
+  invitation_token: "",
 }
 
 // Provider component
-export const SignupFormProvider: React.FC<{ children: ReactNode; loading: boolean }> = ({ children, loading }) => {
-  const [formData, setFormData] = useState<SignupFormData>(initialFormData)
+export const SignupFormProvider: React.FC<{
+  children: ReactNode
+  loading: boolean
+  initialData?: Partial<SignupFormData>
+}> = ({ children, loading, initialData }) => {
+  const [formData, setFormData] = useState<SignupFormData>({
+    ...initialFormData,
+    ...initialData,
+  })
   const [currentStep, setCurrentStep] = useState(1)
   const [errors, setErrors] = useState<Record<string, string>>({})
 
